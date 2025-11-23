@@ -192,9 +192,9 @@ TextureImporter:
       name: human dude sprite sheet_3
       rect:
         serializedVersion: 2
-        x: 1217
+        x: 1214
         y: 2258
-        width: 379
+        width: 382
         height: 840
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -303,9 +303,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 810
-        y: 1430
+        y: 1412
         width: 387
-        height: 817
+        height: 835
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
