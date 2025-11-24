@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 98378fa8cf74b854abea6378dc09dc43
+guid: e689d65b1d6452b428fd37701dd3f274
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: inventory bgg_0
+      name: test_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 1080
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cc7cfbac49f2654b833166a5d930830
-      internalID: 46854726
+      spriteID: 9327333349ea13a4fb14b1f754849809
+      internalID: 1063246687
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0db0f4e08c27f1a4eb3b90ec4cec009a
+    spriteID: 2132c3e2f4888f34e9927723f5f0cb4c
     internalID: 0
     vertices: []
     indices: 
@@ -158,7 +158,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      inventory bgg_0: 46854726
+      test_0: 1063246687
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
