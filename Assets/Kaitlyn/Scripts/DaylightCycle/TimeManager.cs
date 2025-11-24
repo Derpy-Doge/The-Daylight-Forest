@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+// if days go from 7am to 8pm(or 20:00) itll be abt 6 and a half minutes of farm play time
+
 public class TimeManager : MonoBehaviour
 {
     private int minutes;
@@ -34,29 +36,55 @@ public class TimeManager : MonoBehaviour
     public Light globalLight;
 
     private float currentTime;
-    public float dayDuration = 180; // minutes? idek atp...
+    public float dayDuration = 720; // minutes? idek atp...
 
     public bool isDay;
     public bool isNight;
 
+    public GameStateManager gsm;
+    public TimeStateChange tsc;
+
 
     void Start()
     {
-        Time.timeScale = 1f; // __ times faster than rl seconds
+        if (isDay) // hopefully doing this stops me from having to do a seperate cycle for time on the farm and time in the forest :sob:
+        {
+            if(gsm != null)
+            {
+                gsm.SetTimeState(TimeState.Running);
+            }
 
-        globalLight.intensity = .75f;
-        hours = 7;
-        globalLight.colorTemperature = 2981f;
-        globalLight.color = new Color(1f, 0.8039216f, 0.627451f); // sunset color...
-        //start an hour after sunrise
+            Time.timeScale = 1f; // __ times faster than rl seconds... didnt end up using it cause like i cant do math :skull:
 
+            globalLight.intensity = .75f;
+            hours = 7;
+            globalLight.colorTemperature = 2981f;
+            globalLight.color = new Color(1f, 0.8039216f, 0.627451f); // sunset color...
+                                                                      //start an hour after sunrise
+            isNight = false;
+        }
+        else if (isNight)
+        {
+            if(gsm != null)
+            {
+                gsm.SetTimeState(TimeState.Running);
+            }
+
+            Time.timeScale = 1f;;
+
+            globalLight.intensity = .4f;
+            hours = 21; // i keep almost forgetting to do 24 hr time :sob:
+            globalLight.colorTemperature = 15000f;
+            globalLight.color = new Color(0.6862745f, 0.8117647f, 0.9058824f); // night color
+            isDay = false;
+        }
 
     }
 
     void Update()
     {
         tempSeconds = Time.deltaTime + tempSeconds;
-        if(tempSeconds >= .5f) // the seconds in each minute, resets each minute
+        if(tempSeconds >= .25f) // the seconds in each minute, resets each minute
         {
             minutes ++;
             tempSeconds = 0;
@@ -95,6 +123,17 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientNightToSunrise, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
+            Debug.Log("ill turn back soon..."); // i feel like a villain :skull: <--(copilot thought i wanted to say that...) ... anyway. ill replace this with dialogue later when we have that
+        }
+        else if (value == 7 && isNight) // when youre locked from doing stuff caus you gotta go back to the farm
+        {
+            isDay = true;
+            isNight = false;
+            if (gsm != null && tsc != null)
+            {
+                gsm.SetTimeState(TimeState.Paused);
+                tsc.OnEnable();
+            }
         }
         else if (value == 8) //day
         {
@@ -106,10 +145,21 @@ public class TimeManager : MonoBehaviour
             StartCoroutine(LerpLight(gradientDayToSunset, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
         }
-        else if(value == 22) //night
+        else if(value == 20) //night
         {
             StartCoroutine(LerpLight(gradientSunsetToNight, 5f));
             StartCoroutine(FadeLightIntesity(.4f, 15000f, 5f));
+            Debug.Log("ill turn soon..."); // also a villain :skull: (BRUH)
+        }
+        else if(value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
+        {
+            isNight = true;
+            isDay = false;
+            if (gsm != null && tsc != null)
+            {
+                gsm.SetTimeState(TimeState.Paused);
+                tsc.OnEnable();
+            }
         }
     }
 
