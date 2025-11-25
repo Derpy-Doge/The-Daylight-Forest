@@ -88,7 +88,7 @@ public class TimeManager : MonoBehaviour
         {
             minutes ++;
             tempSeconds = 0;
-            Debug.Log ("holy gleebus it works"); // i didnt think I was allowed to put swears in here :skull:
+            //Debug.Log ("holy gleebus it works"); // i didnt think I was allowed to put swears in here :skull:
         }
 
         OnMinuteChange(minutes);
