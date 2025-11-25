@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 [Serializable]
 
@@ -20,6 +21,8 @@ public class Dialogue : MonoBehaviour
     public TMPro.TMP_Text dialogueName; 
     public TMPro.TMP_Text dialogueText;
 
+    private int dialogueIndex;
+
     public void StartDialogue()
     {
         gameObject.SetActive(true);
@@ -30,6 +33,22 @@ public class Dialogue : MonoBehaviour
     public void StopDialogue()
     {
         gameObject.SetActive(false);
+    }
+
+    public void NextDialogueOrStop(InputAction.CallbackContext ctx)
+    {
+        if (ctx.ReadValue<float>() == 0)
+            return;
+
+        ++dialogueIndex;
+
+        if (dialogueIndex >= dialogue.Count)
+        {
+            StopDialogue();
+            return;
+        }
+
+        StartCoroutine(WriteDialoguePiece(dialogue[dialogueIndex]));
     }
 
     public IEnumerator WriteDialoguePiece(DialoguePiece dialogue)
