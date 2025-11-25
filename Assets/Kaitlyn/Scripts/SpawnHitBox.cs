@@ -14,7 +14,7 @@ public class SpawnHitBox : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(transform.position, Vector3.back * 2, Color.red);
+
     }
 
     public void Attack(InputAction.CallbackContext ctx)
