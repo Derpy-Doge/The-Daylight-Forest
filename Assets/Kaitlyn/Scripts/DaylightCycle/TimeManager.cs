@@ -84,11 +84,11 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         tempSeconds = Time.deltaTime + tempSeconds;
-        if(tempSeconds >= .1f) // the seconds in each minute, resets each minute
+        if(tempSeconds >= .25f) // the seconds in each minute, resets each minute
         {
             minutes ++;
             tempSeconds = 0;
-            Debug.Log ("holy gleebus it works"); // i didnt think I was allowed to put swears in here :skull:
+            //Debug.Log ("holy gleebus it works"); // i didnt think I was allowed to put swears in here :skull:
         }
 
         OnMinuteChange(minutes);
