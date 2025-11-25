@@ -4,7 +4,7 @@ public class Enemy_AI_Dashing : MonoBehaviour
 {
     public Rigidbody myRigidbody;
     public GameObject player;
-    public float movespeed = 1f;
+    public float Emovespeed = 1f;
     public float xfollow;
     public float zfollow;
     public float dashTimer;
@@ -22,20 +22,20 @@ public class Enemy_AI_Dashing : MonoBehaviour
             Vector3 newVelocity = new(xfollow, 0, zfollow);
             newVelocity.Normalize();
 
-            newVelocity.x *= movespeed;
-            newVelocity.z *= movespeed;
+            newVelocity.x *= Emovespeed;
+            newVelocity.z *= Emovespeed;
             myRigidbody.linearVelocity = newVelocity;
         }
         //Dash-Timer
         dashTimer = dashTimer + Time.deltaTime;
         if (dashTimer >= 5f)
         {
-            movespeed = 1;
+            Emovespeed = 1;
             dashTimer = 0f;
         }
         if (dashTimer >= 4.8f)
         {
-            movespeed = 30;
+            Emovespeed = 30;
         }
     }
     void FixedUpdate()
