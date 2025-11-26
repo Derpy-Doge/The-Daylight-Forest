@@ -3,48 +3,51 @@ using UnityEngine.SceneManagement;
 
 public class Skill_Tree : MonoBehaviour
 {
+    public Player_Movement player_Movement;
+    public Enemy_AI enemy_AI;
+
     public void Movement()
     {
-        Speed = Speed + 1;
+        player_Movement.movespeed = player_Movement.movespeed + 1;
     }
     public void Enemy_Speed_and_Move_Speed()
     {
-        Speed = Speed + 2;
-        Emovespeed = Emovespeed + 2;
+        player_Movement.movespeed = player_Movement.movespeed + 2;
+        enemy_AI.movespeed = enemy_AI.movespeed + 2;
     }
     public void Move_Speed()
     {
 
     }
-    public void Movement()
+    public void Farming()
     {
 
     }
-    public void Movement()
+    public void EXP_Gain()
     {
 
     }
-    public void Movement()
+    public void New_Plant()
     {
 
     }
-    public void Movement()
+    public void Grow_Speed()
     {
 
     }
-    public void Movement()
+    public void Attack()
     {
 
     }
-    public void Movement()
+    public void Attack_Power()
     {
 
     }
-    public void Movement()
+    public void Attack_Speed()
     {
 
     }
-    public void Movement()
+    public void Knockback()
     {
 
     }
