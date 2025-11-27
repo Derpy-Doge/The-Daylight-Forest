@@ -22,12 +22,19 @@ public class SpawnHitBox : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext ctx)
     {
+        if (ctx.ReadValue<float>() == 0) return;
+
         Physics.SphereCast(transform.position, attackRadius, dh.playerDirection * .25f, out RaycastHit hitInfo, attackRange, attackLayer);
 
         if (hitInfo.collider)
         {
             Debug.Log("Hit " + hitInfo.collider.gameObject.name);
-            Destroy(hitInfo.collider.gameObject);
+            
+            if (hitInfo.collider.TryGetComponent(out Stats enemy) && TryGetComponent(out Stats player))
+            {
+                float calculatedDamage = player.Attack_Power - enemy.Defense;
+                enemy.Health_Current -= calculatedDamage;
+            }
         }
         else
         {
