@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DirectionHandler : MonoBehaviour
 {
-    private Vector3 playerDirection;
+    [HideInInspector] public Vector3 playerDirection;
 
     Vector2 currentInput;
     Vector2 lastInput;
@@ -14,7 +14,7 @@ public class DirectionHandler : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(transform.position, playerDirection * .5f, Color.red);
+        Debug.DrawRay(transform.position, playerDirection * .25f, Color.red);
         LastDirection();
 
         currentInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));

@@ -1608,10 +1608,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f6619b9cce2074f9a60f1d718144f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRadius: 0.5
+  attackRadius: 0.12
+  attackRange: 0.3
   attackLayer:
     serializedVersion: 2
     m_Bits: 8
+  dh: {fileID: 1642506287}
 --- !u!114 &1642506286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1743,6 +1745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14ba1fa60bf9ff459fe79a7d2ef5605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDirection: {x: 0, y: 0, z: 0}
 --- !u!1001 &1680724558
 PrefabInstance:
   m_ObjectHideFlags: 0

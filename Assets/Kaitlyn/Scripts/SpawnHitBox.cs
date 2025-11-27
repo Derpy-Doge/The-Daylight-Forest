@@ -4,8 +4,11 @@ using static UnityEngine.UI.Image;
 
 public class SpawnHitBox : MonoBehaviour
 {
-    public float attackRadius = 1f;
+    public float attackRadius = .12f;
+    public float attackRange = .3f;
     public LayerMask attackLayer;
+
+    public DirectionHandler dh;
 
     void Start()
     {
@@ -19,11 +22,12 @@ public class SpawnHitBox : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext ctx)
     {
-        Physics.SphereCast(transform.position, attackRadius, transform.forward, out RaycastHit hitInfo, 1.5f, attackLayer);
+        Physics.SphereCast(transform.position, attackRadius, dh.playerDirection * .25f, out RaycastHit hitInfo, attackRange, attackLayer);
 
         if (hitInfo.collider)
         {
             Debug.Log("Hit " + hitInfo.collider.gameObject.name);
+            Destroy(hitInfo.collider.gameObject);
         }
         else
         {
@@ -33,6 +37,6 @@ public class SpawnHitBox : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.DrawWireSphere(transform.position + dh.playerDirection * .25f, attackRadius);
     }
 }
