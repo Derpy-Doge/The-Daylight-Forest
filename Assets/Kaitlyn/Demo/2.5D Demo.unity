@@ -613,6 +613,7 @@ GameObject:
   - component: {fileID: 856464672}
   - component: {fileID: 856464671}
   - component: {fileID: 856464673}
+  - component: {fileID: 856464674}
   m_Layer: 3
   m_Name: emnemy
   m_TagString: Untagged
@@ -748,6 +749,7 @@ MonoBehaviour:
   Speed: 0
   player: {fileID: 0}
   ai: {fileID: 856464671}
+  tm: {fileID: 0}
 --- !u!54 &856464673
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -775,6 +777,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &856464674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856464666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e96155802b28af4d84cf707354d5756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStats: {fileID: 856464672}
 --- !u!1001 &863767536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1887,7 +1902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f6619b9cce2074f9a60f1d718144f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRadius: 0.12
+  attackRadius: 0.25
   attackRange: 0.3
   attackLayer:
     serializedVersion: 2
@@ -2047,6 +2062,7 @@ MonoBehaviour:
   Speed: 0
   player: {fileID: 1642506280}
   ai: {fileID: 0}
+  tm: {fileID: 1113549742}
 --- !u!1001 &1680724558
 PrefabInstance:
   m_ObjectHideFlags: 0

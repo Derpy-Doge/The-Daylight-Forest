@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Stats : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Stats : MonoBehaviour
 
     public Player_Movement player;
     public Enemy_AI ai;
+
+    public TimeManager tm; //trust me on this :skull:
 
     void Start()
     {
@@ -31,10 +34,19 @@ public class Stats : MonoBehaviour
 
     void Update()
     {
-        if (Health_Current <= 0)
+        if (Health_Current <= 0 && ai != null)
         {
             Destroy(gameObject);
         }
+        if (Health_Current <= 0 && player != null)
+        {
+            SceneManager.LoadScene("Game-Over");
+            if (tm != null)
+            {
+                tm.enabled = false;
+            }
+        }
+
 
         if (Health_Current > Health_Max)
         {

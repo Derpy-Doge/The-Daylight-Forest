@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour
 {
-    public void Continue()
+    public void Continue(string SceneName)
     {
-        SceneManager.LoadScene("Shu's scene");
+        SceneManager.LoadScene(SceneName);
     }
     public void Main_Menu()
     {
