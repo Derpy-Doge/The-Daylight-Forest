@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
@@ -15,14 +16,18 @@ public class EnemySpawnHitbox : MonoBehaviour
     public EnemyDirectionHandler dh;
     public Stats enemy;
 
+    public GameObject player;
+
 
     void Update()
     {
         Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer);
+        Vector3.Distance(transform.position, player.transform.position);
 
-        if (hitInfo.collider && canAttack)
+        if (Vector3.Distance(transform.position, player.transform.position) <= attackRadius && canAttack)
         {
                 StartCoroutine(Attack());
+            Debug.Log("work?");
         }
         else
         {
@@ -32,6 +37,7 @@ public class EnemySpawnHitbox : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        Debug.Log("it work");
         canAttack = false;
 
         if(Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer))

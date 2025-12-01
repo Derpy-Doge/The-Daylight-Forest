@@ -742,7 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d012a58bd0b9640a7dd7dd5ecf302c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health_Max: 100
+  Health_Max: 80
   Health_Current: 0
   Attack_Speed: 1
   Attack_Power: 25
@@ -838,11 +838,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRadius: 0.5
-  attackRange: 0.3
+  attackRange: 0.5
   canAttack: 1
   attackCooldown: 1
   dh: {fileID: 856464675}
   enemy: {fileID: 856464672}
+  player: {fileID: 0}
 --- !u!1001 &863767536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2398,7 +2399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1902206876}
   player: {fileID: 1642506278}
-  movespeed: 0.65
+  movespeed: 0
   xfollow: 0
   zfollow: 0
 --- !u!114 &1902206878
@@ -2413,7 +2414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d012a58bd0b9640a7dd7dd5ecf302c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health_Max: 100
+  Health_Max: 40
   Health_Current: 0
   Attack_Speed: 1
   Attack_Power: 35
@@ -2549,6 +2550,7 @@ MonoBehaviour:
   attackCooldown: 1
   dh: {fileID: 1902206874}
   enemy: {fileID: 1902206878}
+  player: {fileID: 0}
 --- !u!1001 &1987990437
 PrefabInstance:
   m_ObjectHideFlags: 0
