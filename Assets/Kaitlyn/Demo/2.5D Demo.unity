@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 856464673}
   - component: {fileID: 856464674}
   - component: {fileID: 856464675}
+  - component: {fileID: 856464676}
   m_Layer: 3
   m_Name: emnemy
   m_TagString: Untagged
@@ -805,6 +806,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyRb: {fileID: 856464673}
   enemyDirection: {x: 0, y: 0, z: 0}
+--- !u!114 &856464676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856464666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c7e45591b839247b5b9f1bd745b023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shb: {fileID: 1642506285}
+  rb: {fileID: 856464673}
 --- !u!1001 &863767536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1922,12 +1937,15 @@ MonoBehaviour:
     m_Bits: 8
   slashRadius: 0.15
   slashRange: 0.4
+  isSlashing: 0
+  canSlash: 1
+  slashCooldown: 0.5
   stunRadius: 1.5
   stunDuration: 2
-  isStunning: 0
-  canStun: 1
   stunCooldown: 5
   knockbackRadius: 1
+  knockbackForce: 100
+  knckbackCooldown: 3
   dh: {fileID: 1642506287}
 --- !u!114 &1642506286
 MonoBehaviour:
@@ -2059,6 +2077,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0ac29ff9-016a-4804-9133-9d50d0806f68
     m_ActionName: 'Player/Stun[/Mouse/rightButton,/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1642506285}
+        m_TargetAssemblyTypeName: SpawnHitBox, Assembly-CSharp
+        m_MethodName: Knockback
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 916fdf92-e453-452e-98a8-c842cffcd40b
+    m_ActionName: 'Player/Knockback[/Keyboard/leftShift,/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2263,6 +2297,7 @@ GameObject:
   - component: {fileID: 1902206876}
   - component: {fileID: 1902206875}
   - component: {fileID: 1902206874}
+  - component: {fileID: 1902206883}
   m_Layer: 3
   m_Name: emnemy (1)
   m_TagString: Untagged
@@ -2453,6 +2488,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1902206883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902206873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c7e45591b839247b5b9f1bd745b023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shb: {fileID: 1642506285}
+  rb: {fileID: 1902206876}
 --- !u!1001 &1987990437
 PrefabInstance:
   m_ObjectHideFlags: 0

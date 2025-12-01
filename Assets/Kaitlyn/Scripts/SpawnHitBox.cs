@@ -9,16 +9,21 @@ public class SpawnHitBox : MonoBehaviour
 
     public float slashRadius = .12f;
     public float slashRange = .3f;
+    public bool isSlashing = false;
+    public bool canSlash = true;
+    public float slashCooldown = .5f;
 
     public float stunRadius = 1.5f;
     public float stunDuration = 2f;
-    public bool isStunning = false; // :skull:
-    public bool canStun = true;
+    private bool isStunning = false; // :skull:
+    private bool canStun = true;
     public float stunCooldown = 5f;
-    private Vector3 savedEnemyVelocity;
-    private Vector3 savedEnemyAngularVelocity;
 
     public float knockbackRadius = 1f;
+    public float knockbackForce = 100f;
+    private bool isKnockingBack = false;
+    private bool canKnockback = true;
+    public float knckbackCooldown = 3f;
 
 
     public DirectionHandler dh;
@@ -27,17 +32,9 @@ public class SpawnHitBox : MonoBehaviour
     {
         if (ctx.ReadValue<float>() == 0) return;
 
-        Physics.SphereCast(transform.position, slashRadius, dh.playerDirection * .25f, out RaycastHit hitInfo, slashRange, attackLayer);
-
-        if (hitInfo.collider)
+        if (canSlash)
         {
-            Debug.Log("Hit " + hitInfo.collider.gameObject.name);
-
-            if (hitInfo.collider.TryGetComponent(out Stats enemy) && TryGetComponent(out Stats player))
-            {
-                float calculatedDamage = player.Attack_Power - enemy.Defense;
-                enemy.Health_Current -= calculatedDamage;
-            }
+            StartCoroutine(Slash());
         }
         else
         {
@@ -51,31 +48,69 @@ public class SpawnHitBox : MonoBehaviour
 
         Physics.OverlapSphere(transform.position, stunRadius, attackLayer, QueryTriggerInteraction.Ignore);
 
+        if (!isKnockingBack && canStun)
+        {
         StartCoroutine(Stun());
+        }
+        else
+        {
+            Debug.Log("you cant stun yet");
+        }
+    }
+
+    public void Knockback(InputAction.CallbackContext ctx) 
+    {
+        if (ctx.ReadValue<float>() == 0) return;
+
+        Physics.OverlapSphere(transform.position, knockbackRadius, attackLayer, QueryTriggerInteraction.Ignore);
+
+        if (!isStunning && canKnockback) //knockback uses physics so it literally doesnt work when stun pauses physics :skull:
+        {         
+            StartCoroutine(Knockback());
+        }
+        else
+        {
+            Debug.Log("you cant knockback yet");
+        }
+    }
+
+    IEnumerator Slash()
+    {
+        canSlash = false;
+        isSlashing = true;
+
+        Physics.SphereCast(transform.position, slashRadius, dh.playerDirection * .25f, out RaycastHit hitInfo, slashRange, attackLayer);
+
+        if (hitInfo.collider)
+        {
+            Debug.Log("Hit " + hitInfo.collider.gameObject.name);
+
+            if (hitInfo.collider.TryGetComponent(out Stats enemy) && TryGetComponent(out Stats player))
+            {
+                float calculatedDamage = player.Attack_Power - enemy.Defense;
+                enemy.Health_Current -= calculatedDamage;
+            }
+        }
+        isSlashing = false;
+
+        yield return new WaitForSeconds(slashCooldown);
+
+        canSlash = true;
     }
 
     IEnumerator Stun() // uhhh so like thi sdidnt work :sob: 
     //"setting linear velocity of a kenematic rigidbody is not supported" ... ill figure it our later
+    // its just cause enemy movement sets velocity even when kinematic is on so ill just ignore it :man_juggling:
     {
         canStun = false;
         isStunning = true;
 
         foreach (Collider hitCollider in Physics.OverlapSphere(transform.position, stunRadius, attackLayer, QueryTriggerInteraction.Ignore))
         {
-            if (hitCollider.TryGetComponent(out Rigidbody rb))
+            if (hitCollider.TryGetComponent(out StunManager sm))
             {
 
-                savedEnemyVelocity = rb.linearVelocity;
-                savedEnemyAngularVelocity = rb.angularVelocity;
-
-                rb.isKinematic = true;
-
-                yield return new WaitForSeconds(stunDuration);
-
-                rb.isKinematic = false;
-
-                rb.linearVelocity = savedEnemyVelocity;
-                rb.angularVelocity = savedEnemyAngularVelocity;
+                StartCoroutine(sm.Stun());
             }
         }
 
@@ -86,11 +121,34 @@ public class SpawnHitBox : MonoBehaviour
         canStun = true;
     }
 
+    IEnumerator Knockback()
+    {
+        canKnockback = false;
+        isKnockingBack = true;
+
+        foreach (Collider hitCollider in Physics.OverlapSphere(transform.position, knockbackRadius, attackLayer, QueryTriggerInteraction.Ignore))
+        {
+            if (hitCollider.TryGetComponent(out Rigidbody rb))
+            {
+                Vector3 knockbackDirection = (hitCollider.transform.position - transform.position).normalized;
+                rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+            }
+        }
+
+        isKnockingBack = false;
+
+        yield return new WaitForSeconds(knckbackCooldown);
+
+        canKnockback = true;
+    }
+
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + dh.playerDirection * .25f, slashRadius);
 
         Gizmos.DrawWireSphere(transform.position, stunRadius); 
+
+        Gizmos.DrawWireSphere(transform.position, knockbackRadius);
     }
 }
