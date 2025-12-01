@@ -22,10 +22,17 @@ public class Dialogue : MonoBehaviour
     public TMPro.TMP_Text dialogueText;
 
     private int dialogueIndex;
+    private bool IsDialogueRunning;
+
+    private static Dialogue currentDialogue;
 
     public void StartDialogue()
     {
+        currentDialogue = this;
+
+        StopAllCoroutines();
         gameObject.SetActive(true);
+        dialogueIndex = 0;
 
         StartCoroutine(WriteDialoguePiece(dialogue[0]));
     }
@@ -37,18 +44,18 @@ public class Dialogue : MonoBehaviour
 
     public void NextDialogueOrStop(InputAction.CallbackContext ctx)
     {
-        if (ctx.ReadValue<float>() == 0)
+        if (ctx.ReadValue<float>() == 0 || currentDialogue.IsDialogueRunning)
             return;
 
-        ++dialogueIndex;
+        ++currentDialogue.dialogueIndex;
 
-        if (dialogueIndex >= dialogue.Count)
+        if (currentDialogue.dialogueIndex >= currentDialogue.dialogue.Count)
         {
-            StopDialogue();
+            currentDialogue.StopDialogue();
             return;
         }
 
-        StartCoroutine(WriteDialoguePiece(dialogue[dialogueIndex]));
+        currentDialogue.StartCoroutine(currentDialogue.WriteDialoguePiece(currentDialogue.dialogue[currentDialogue.dialogueIndex]));
     }
 
     public IEnumerator WriteDialoguePiece(DialoguePiece dialogue)
@@ -56,13 +63,16 @@ public class Dialogue : MonoBehaviour
         dialogueName.SetText(dialogue.name);
         dialogueText.SetText("");
 
+        IsDialogueRunning = true;
+
         for (int i=0; i < dialogue.dialogue.Length; ++i)
         {
             dialogueText.text += dialogue.dialogue[i];
             yield return new WaitForSeconds(textSpeed);
         }
 
-        yield return null;
+        IsDialogueRunning = false;
+
 
     }
 }
