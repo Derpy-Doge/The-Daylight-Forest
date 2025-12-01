@@ -1239,6 +1239,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d012a58bd0b9640a7dd7dd5ecf302c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health_Max: 0
+  Health_Current: 0
+  Attack_Speed: 0
+  Attack_Power: 0
+  Defense: 0
+  Crop_Exp: 0
+  Crop_Growth: 0
+  Speed: 0
+  Passive_Attack: 0
+  player: {fileID: 0}
+  ai: {fileID: 0}
+  tm: {fileID: 0}
 --- !u!54 &512581147
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3965,8 +3977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b394b345bc32c8e40baa7ff55063e814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_Movement: {fileID: 0}
-  enemy_AI: {fileID: 0}
+  player_Movement: {fileID: 512581148}
+  enemy_AI: {fileID: 1811849048}
 --- !u!1 &1743158786
 GameObject:
   m_ObjectHideFlags: 0
