@@ -616,6 +616,7 @@ GameObject:
   - component: {fileID: 856464674}
   - component: {fileID: 856464675}
   - component: {fileID: 856464676}
+  - component: {fileID: 856464677}
   m_Layer: 3
   m_Name: emnemy
   m_TagString: Untagged
@@ -749,6 +750,7 @@ MonoBehaviour:
   Crop_Exp: 0
   Crop_Growth: 0
   Speed: 0
+  Passive_Attack: 0
   player: {fileID: 0}
   ai: {fileID: 856464671}
   tm: {fileID: 0}
@@ -820,6 +822,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shb: {fileID: 1642506285}
   rb: {fileID: 856464673}
+--- !u!114 &856464677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856464666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b38db08405781540a33881f6b34ec75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  attackRadius: 0.5
+  attackRange: 0.3
+  attackCooldown: 1
+  dh: {fileID: 856464675}
+  enemy: {fileID: 856464672}
 --- !u!1001 &863767536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2131,6 +2153,7 @@ MonoBehaviour:
   Crop_Exp: 1
   Crop_Growth: 1
   Speed: 0
+  Passive_Attack: 0
   player: {fileID: 1642506280}
   ai: {fileID: 0}
   tm: {fileID: 1113549742}
@@ -2298,6 +2321,7 @@ GameObject:
   - component: {fileID: 1902206875}
   - component: {fileID: 1902206874}
   - component: {fileID: 1902206883}
+  - component: {fileID: 1902206884}
   m_Layer: 3
   m_Name: emnemy (1)
   m_TagString: Untagged
@@ -2373,7 +2397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1902206876}
   player: {fileID: 1642506278}
-  movespeed: 1
+  movespeed: 0.65
   xfollow: 0
   zfollow: 0
 --- !u!114 &1902206878
@@ -2391,11 +2415,12 @@ MonoBehaviour:
   Health_Max: 100
   Health_Current: 0
   Attack_Speed: 1
-  Attack_Power: 25
-  Defense: 5
+  Attack_Power: 35
+  Defense: 10
   Crop_Exp: 0
   Crop_Growth: 0
   Speed: 0
+  Passive_Attack: 0
   player: {fileID: 0}
   ai: {fileID: 1902206877}
   tm: {fileID: 0}
@@ -2443,7 +2468,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cb96e12e6b51134e873bd71952ec9c9, type: 2}
+  - {fileID: 2100000, guid: 3bfe845c04f917444858037b5d322721, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2502,6 +2527,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shb: {fileID: 1642506285}
   rb: {fileID: 1902206876}
+--- !u!114 &1902206884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902206873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b38db08405781540a33881f6b34ec75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  attackRadius: 0.5
+  attackRange: 0.3
+  attackCooldown: 1
+  dh: {fileID: 1902206874}
+  enemy: {fileID: 1902206878}
 --- !u!1001 &1987990437
 PrefabInstance:
   m_ObjectHideFlags: 0

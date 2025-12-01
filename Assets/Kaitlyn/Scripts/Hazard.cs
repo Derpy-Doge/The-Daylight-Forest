@@ -9,7 +9,11 @@ public class Hazard : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Stats playerStats))
         {
-            float calculatedDamage = enemyStats.Attack_Power - playerStats.Defense;
+            float calculatedDamage = enemyStats.Passive_Attack - playerStats.Defense;
+            if (calculatedDamage < 0)
+            {
+                calculatedDamage = 0;
+            }
             playerStats.Health_Current -= calculatedDamage;
             Debug.Log("Player hit a hazard! Damage taken: " + calculatedDamage);
         }
