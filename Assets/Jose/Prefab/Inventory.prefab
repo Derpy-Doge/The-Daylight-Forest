@@ -409,6 +409,11 @@ MonoBehaviour:
   itemPrefab: {fileID: 6869786493504927929, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
     type: 3}
   contentPanel: {fileID: 8043135611562361685}
+  itemDescription: {fileID: 5155342385312839569}
+  image: {fileID: 21300000, guid: 1e42e750931826e4cb9701e163efd917, type: 3}
+  quantity: 1
+  title: Seeds
+  description: Used to plant fruits/vegtables
 --- !u!1 &2689572555778859122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,6 +1017,7 @@ GameObject:
   - component: {fileID: 1849538515264421133}
   - component: {fileID: 2128554503700352897}
   - component: {fileID: 7561995714330728015}
+  - component: {fileID: 5155342385312839569}
   m_Layer: 5
   m_Name: InventoryDescription
   m_TagString: Untagged
@@ -1124,6 +1130,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5155342385312839569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875567731693051873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcac09461a6ac14d95a06ce77a2fa43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemImage: {fileID: 1674522439372590148}
+  title: {fileID: 763770333553331749}
+  description: {fileID: 5087135965531004916}
 --- !u!1 &7616283640835591723
 GameObject:
   m_ObjectHideFlags: 0
