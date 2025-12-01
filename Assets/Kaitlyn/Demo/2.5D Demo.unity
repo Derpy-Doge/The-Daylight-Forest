@@ -839,6 +839,7 @@ MonoBehaviour:
     m_Bits: 64
   attackRadius: 0.5
   attackRange: 0.3
+  canAttack: 1
   attackCooldown: 1
   dh: {fileID: 856464675}
   enemy: {fileID: 856464672}
@@ -2544,6 +2545,7 @@ MonoBehaviour:
     m_Bits: 64
   attackRadius: 0.5
   attackRange: 0.3
+  canAttack: 1
   attackCooldown: 1
   dh: {fileID: 1902206874}
   enemy: {fileID: 1902206878}
