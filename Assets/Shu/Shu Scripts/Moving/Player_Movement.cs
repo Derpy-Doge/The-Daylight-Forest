@@ -4,6 +4,7 @@ public class Player_Movement : MonoBehaviour
 {
     public Rigidbody myRigidbody;
     public float movespeed = 10f;
+    public Animator myAnimator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +43,7 @@ public class Player_Movement : MonoBehaviour
 
             myRigidbody.linearVelocity = newVelocity;
         }
-
+        myAnimator.SetFloat("X direction", myRigidbody.linearVelocity);
+        myAnimator.SetFloat("Z direction", myRigidbody.linearVelocity);
     }
 }
