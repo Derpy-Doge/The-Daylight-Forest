@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 3608860899596155889}
-  inventorysize: 10
+  inventorysize: 30
 --- !u!54 &283813769
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -701,7 +701,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769095079}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -854,6 +854,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970797141600827904, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970797141600827904, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7970797141600827904, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -1352,11 +1362,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory
       objectReference: {fileID: 0}
-    - target: {fileID: 2630198132047679233, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2947732996970483786, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1474,9 +1479,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7418750014721110321, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
         type: 3}
+      propertyPath: image2
+      value: 
+      objectReference: {fileID: 21300000, guid: 9423496a54cb5ed41982cf4e1c455826,
+        type: 3}
+    - target: {fileID: 7418750014721110321, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
+        type: 3}
       propertyPath: mouseFollower
       value: 
       objectReference: {fileID: 1946903648}
+    - target: {fileID: 7418750014721110321, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
+        type: 3}
+      propertyPath: inventoryItemUIDescription
+      value: 
+      objectReference: {fileID: 3608860899596155890}
     - target: {fileID: 8043135611562361685, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1497,6 +1513,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8043135611562361685, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1512,6 +1533,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6468ce34777026c48a2ecfc79368cc52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3608860899596155890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5155342385312839569, guid: 321a7ab1be77faa489dbd2b2c70ce11b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3608860899596155888}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcac09461a6ac14d95a06ce77a2fa43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

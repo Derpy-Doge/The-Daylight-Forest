@@ -406,11 +406,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6468ce34777026c48a2ecfc79368cc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 6869786493504927929, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
+  inventoryItemUIPrefab: {fileID: 6869786493504927929, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
     type: 3}
   contentPanel: {fileID: 8043135611562361685}
-  itemDescription: {fileID: 5155342385312839569}
+  inventoryItemUIDescription: {fileID: 0}
+  mouseFollower: {fileID: 0}
   image: {fileID: 21300000, guid: 1e42e750931826e4cb9701e163efd917, type: 3}
+  image2: {fileID: 0}
   quantity: 1
   title: Seeds
   description: Used to plant fruits/vegtables
