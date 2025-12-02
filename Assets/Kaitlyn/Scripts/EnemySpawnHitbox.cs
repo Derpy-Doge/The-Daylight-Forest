@@ -11,7 +11,7 @@ public class EnemySpawnHitbox : MonoBehaviour
     public float attackRange = .3f;
     private bool isAttacking = false;
     private bool canAttack = true;
-    public float attackCooldown = 2f;
+    public float attackCooldown = 3f;
 
     public bool isFrozen = false;
 
@@ -26,7 +26,7 @@ public class EnemySpawnHitbox : MonoBehaviour
     {
         Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer);
 
-        if (hitInfo.collider && canAttack)
+        if (hitInfo.collider && canAttack && !isFrozen)
         {
             StartCoroutine(Attack());
             Debug.Log("work?");

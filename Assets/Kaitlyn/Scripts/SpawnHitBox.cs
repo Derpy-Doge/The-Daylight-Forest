@@ -9,8 +9,8 @@ public class SpawnHitBox : MonoBehaviour
 
     public float slashRadius = .12f;
     public float slashRange = .3f;
-    public bool isSlashing = false;
-    public bool canSlash = true;
+    private bool isSlashing = false;
+    private bool canSlash = true;
     public float slashCooldown = .5f;
 
     public float stunRadius = 1.5f;
@@ -48,7 +48,7 @@ public class SpawnHitBox : MonoBehaviour
 
         Physics.OverlapSphere(transform.position, stunRadius, attackLayer, QueryTriggerInteraction.Ignore);
 
-        if (!isKnockingBack && canStun)
+        if (!isKnockingBack  && !isSlashing && canStun)
         {
         StartCoroutine(Stun());
         }
@@ -64,7 +64,7 @@ public class SpawnHitBox : MonoBehaviour
 
         Physics.OverlapSphere(transform.position, knockbackRadius, attackLayer, QueryTriggerInteraction.Ignore);
 
-        if (!isStunning && canKnockback) //knockback uses physics so it literally doesnt work when stun pauses physics :skull:
+        if (!isStunning && !isSlashing && canKnockback) //knockback uses physics so it literally doesnt work when stun pauses physics :skull:
         {         
             StartCoroutine(Knockback());
         }
