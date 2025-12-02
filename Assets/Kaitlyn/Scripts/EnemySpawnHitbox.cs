@@ -9,12 +9,15 @@ public class EnemySpawnHitbox : MonoBehaviour
 
     public float attackRadius = .5f;
     public float attackRange = .3f;
-    public bool canAttack = true;
-    public float attackCooldown = 1f;
+    private bool isAttacking = false;
+    private bool canAttack = true;
+    public float attackCooldown = 2f;
 
+    public bool isFrozen = false;
 
     public EnemyDirectionHandler dh;
     public Stats enemy;
+    public Rigidbody rb;
 
     public GameObject player;
 
@@ -22,16 +25,24 @@ public class EnemySpawnHitbox : MonoBehaviour
     void Update()
     {
         Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer);
-        Vector3.Distance(transform.position, player.transform.position);
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= attackRadius && canAttack)
+        if (hitInfo.collider && canAttack)
         {
-                StartCoroutine(Attack());
+            StartCoroutine(Attack());
             Debug.Log("work?");
         }
         else
         {
             Debug.Log("player out of range or enemy cant attack");
+        }
+
+        if (rb.isKinematic)
+        {
+            isFrozen = true;
+        }
+        else
+        {
+            isFrozen = false;
         }
     }
 
@@ -39,6 +50,7 @@ public class EnemySpawnHitbox : MonoBehaviour
     {
         Debug.Log("it work");
         canAttack = false;
+        isAttacking = true;
 
         if(Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer))
         {
@@ -52,6 +64,7 @@ public class EnemySpawnHitbox : MonoBehaviour
                 Debug.Log("player has no stats");
             }
         }
+        isAttacking = false;
 
         yield return new WaitForSeconds(attackCooldown);
 

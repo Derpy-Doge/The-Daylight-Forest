@@ -837,13 +837,14 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackRadius: 0.5
-  attackRange: 0.5
-  canAttack: 1
-  attackCooldown: 1
+  attackRadius: 0.4
+  attackRange: 0.3
+  attackCooldown: 2.5
+  isFrozen: 0
   dh: {fileID: 856464675}
   enemy: {fileID: 856464672}
-  player: {fileID: 0}
+  rb: {fileID: 856464673}
+  player: {fileID: 1642506278}
 --- !u!1001 &863767536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1806,7 +1807,7 @@ GameObject:
   - component: {fileID: 1642506286}
   - component: {fileID: 1642506287}
   - component: {fileID: 1642506288}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BluBox
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1959,17 +1960,17 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 8
-  slashRadius: 0.15
-  slashRange: 0.4
+  slashRadius: 0.4
+  slashRange: 0.5
   isSlashing: 0
   canSlash: 1
   slashCooldown: 0.5
   stunRadius: 1.5
   stunDuration: 2
-  stunCooldown: 5
+  stunCooldown: 10
   knockbackRadius: 1
   knockbackForce: 100
-  knckbackCooldown: 3
+  knckbackCooldown: 5
   dh: {fileID: 1642506287}
 --- !u!114 &1642506286
 MonoBehaviour:
@@ -2544,13 +2545,14 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackRadius: 0.5
+  attackRadius: 0.4
   attackRange: 0.3
-  canAttack: 1
   attackCooldown: 1
+  isFrozen: 0
   dh: {fileID: 1902206874}
   enemy: {fileID: 1902206878}
-  player: {fileID: 0}
+  rb: {fileID: 1902206876}
+  player: {fileID: 1642506278}
 --- !u!1001 &1987990437
 PrefabInstance:
   m_ObjectHideFlags: 0
