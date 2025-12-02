@@ -17,7 +17,7 @@ public class Skill_Tree : MonoBehaviour
     }
     public void Move_Speed()
     {
-
+        player_Movement.movespeed = player_Movement.movespeed + 1;
     }
     public void Farming()
     {
