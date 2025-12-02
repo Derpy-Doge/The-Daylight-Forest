@@ -11,11 +11,22 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2698456861414061586}
+<<<<<<< HEAD
     m_Position: {x: 100, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3819433111042771138}
     m_Position: {x: 230, y: 150, z: 0}
   m_ChildStateMachines: []
+=======
+    m_Position: {x: 50, y: 280, z: 0}
+  m_ChildStateMachines:
+  - serializedVersion: 1
+    m_StateMachine: {fileID: -3375274324793959343}
+    m_Position: {x: 780, y: 320, z: 0}
+  - serializedVersion: 1
+    m_StateMachine: {fileID: 4698100824694533877}
+    m_Position: {x: 350, y: 320, z: 0}
+>>>>>>> a61e241d299419a11280ab9edfa67a9dfd09bdb6
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
@@ -25,13 +36,19 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -2698456861414061586}
+<<<<<<< HEAD
 --- !u!1102 &-3819433111042771138
 AnimatorState:
+=======
+--- !u!1107 &-3375274324793959343
+AnimatorStateMachine:
+>>>>>>> a61e241d299419a11280ab9edfa67a9dfd09bdb6
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: Demo Idle
   m_Speed: 1
   m_CycleOffset: 0
@@ -52,6 +69,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+=======
+  m_Name: Werewolf
+  m_ChildStates: []
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: 0}
+>>>>>>> a61e241d299419a11280ab9edfa67a9dfd09bdb6
 --- !u!1102 &-2698456861414061586
 AnimatorState:
   serializedVersion: 6
@@ -113,12 +144,19 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+<<<<<<< HEAD
 --- !u!1101 &5024162950452678137
 AnimatorStateTransition:
+=======
+--- !u!1107 &4698100824694533877
+AnimatorStateMachine:
+  serializedVersion: 6
+>>>>>>> a61e241d299419a11280ab9edfa67a9dfd09bdb6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
@@ -184,3 +222,17 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+  m_Name: Human
+  m_ChildStates: []
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: 0}
+>>>>>>> a61e241d299419a11280ab9edfa67a9dfd09bdb6

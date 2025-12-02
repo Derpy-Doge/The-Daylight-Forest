@@ -8,8 +8,7 @@ public class EnemySpawnHitbox : MonoBehaviour
 
     public float attackRadius = .5f;
     public float attackRange = .3f;
-    private bool isAttacking = false; // so uhhh why doesnt this work ?
-    private bool canAttack = true;
+    public bool canAttack = true;
     public float attackCooldown = 1f;
 
 
@@ -21,27 +20,19 @@ public class EnemySpawnHitbox : MonoBehaviour
     {
         Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer);
 
-        if (hitInfo.collider != null)
+        if (hitInfo.collider && canAttack)
         {
-            if (canAttack)
-            {
                 StartCoroutine(Attack());
-            }
-            else
-            {
-                Debug.Log("Enemy attack on cooldown");
-            }
         }
         else
         {
-            Debug.Log("player out of range");
+            Debug.Log("player out of range or enemy cant attack");
         }
     }
 
     public IEnumerator Attack()
     {
         canAttack = false;
-        isAttacking = true; // i literally use it right here...
 
         if(Physics.SphereCast(transform.position, attackRadius, dh.enemyDirection * .4f, out RaycastHit hitInfo, attackRange, attackLayer))
         {
@@ -55,7 +46,6 @@ public class EnemySpawnHitbox : MonoBehaviour
                 Debug.Log("player has no stats");
             }
         }
-        isAttacking = false;
 
         yield return new WaitForSeconds(attackCooldown);
 
