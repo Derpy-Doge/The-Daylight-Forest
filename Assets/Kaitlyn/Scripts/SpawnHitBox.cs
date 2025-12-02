@@ -83,12 +83,14 @@ public class SpawnHitBox : MonoBehaviour
 
         if (hitInfo.collider)
         {
-            Debug.Log("Hit " + hitInfo.collider.gameObject.name);
+            
 
             if (hitInfo.collider.TryGetComponent(out Stats enemy) && TryGetComponent(out Stats player))
             {
                 float calculatedDamage = player.Attack_Power - enemy.Defense;
                 enemy.Health_Current -= calculatedDamage;
+
+                Debug.Log("Hit " + hitInfo.collider.gameObject.name + " took " + calculatedDamage + " damage");
             }
         }
         isSlashing = false;
