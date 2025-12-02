@@ -43,7 +43,7 @@ public class Player_Movement : MonoBehaviour
 
             myRigidbody.linearVelocity = newVelocity;
         }
-        myAnimator.SetFloat("X direction", myRigidbody.linearVelocity);
-        myAnimator.SetFloat("Z direction", myRigidbody.linearVelocity);
+        myAnimator.SetFloat("Xmv", myRigidbody.linearVelocity.x);
+        myAnimator.SetFloat("Zmv", myRigidbody.linearVelocity.z);
     }
 }
