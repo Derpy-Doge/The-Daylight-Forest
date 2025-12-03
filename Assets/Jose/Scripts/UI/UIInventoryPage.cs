@@ -7,7 +7,7 @@ using System;
 public class UIInventoryPage : MonoBehaviour
 {
     [SerializeField]
-    private UIInventoryItem inventoryItemUIPrefab;
+    private UIInventoryItem itemPrefab;
 
     [SerializeField]
     private RectTransform contentPanel;
@@ -36,11 +36,11 @@ public class UIInventoryPage : MonoBehaviour
     }
 
     public void InitializeInventoryUI(int inventorysize)
-    { 
-        for (int i = 0; 1 < inventorysize; i++)
+    {
+        for (int i = 0; i < inventorysize; i++)
         { 
             UIInventoryItem uiItem =
-            Instantiate(inventoryItemUIPrefab, Vector3.zero, Quaternion.identity);
+            Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
             uiItem.transform.SetParent(contentPanel);
             listOfUIItems.Add(uiItem);
             uiItem.OnItemClicked += HandleItemSelection;

@@ -484,6 +484,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 916fdf92-e453-452e-98a8-c842cffcd40b
     m_ActionName: 'Player/Knockback[/Keyboard/leftShift,/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 35c0520b-5bff-4e4a-a2a2-38c50a2c5d73
+    m_ActionName: 'UI/Pause[/Keyboard/tab]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -506,8 +510,6 @@ MonoBehaviour:
     m_Bits: 8
   slashRadius: 0.15
   slashRange: 0.4
-  isSlashing: 0
-  canSlash: 1
   slashCooldown: 0.5
   stunRadius: 1.5
   stunDuration: 2
@@ -799,7 +801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 462776895}
   player: {fileID: 339269837}
-  movespeed: 7
+  movespeed: 2
   xfollow: 0
   zfollow: 0
 --- !u!1 &719708524

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -9,8 +11,7 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
-        // Temporarily disable this to prevent freezing
-        // inventoryUI.InitializeInventoryUI(inventorysize);
+        inventoryUI.InitializeInventoryUI(inventorysize);
     }
 
     public void Update()

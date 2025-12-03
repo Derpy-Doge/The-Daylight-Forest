@@ -278,9 +278,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 8
+    m_Left: 20
     m_Right: 20
-    m_Top: 8
+    m_Top: 20
     m_Bottom: 20
   m_ChildAlignment: 0
   m_StartCorner: 0
@@ -406,10 +406,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6468ce34777026c48a2ecfc79368cc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryItemUIPrefab: {fileID: 6869786493504927929, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
+  itemPrefab: {fileID: 1321823331415639577, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
     type: 3}
   contentPanel: {fileID: 8043135611562361685}
-  inventoryItemUIDescription: {fileID: 0}
+  inventoryItemUIDescription: {fileID: 5155342385312839569}
   mouseFollower: {fileID: 0}
 --- !u!1 &2689572555778859122
 GameObject:
