@@ -4,6 +4,7 @@ using UnityEngine;
 public class StunManager : MonoBehaviour
 {
     public SpawnHitBox shb;
+    public Hazard h;
     public Rigidbody rb;
 
     private Vector3 savedVelocity;
@@ -15,12 +16,14 @@ public class StunManager : MonoBehaviour
         savedAngularVelocity = rb.angularVelocity;
 
         rb.isKinematic = true;
+        h.enabled = false;
 
         yield return new WaitForSeconds(shb.stunDuration);
 
         if (rb == null) yield break;
 
         rb.isKinematic = false;
+        h.enabled = true;
         rb.linearVelocity = savedVelocity;
         rb.angularVelocity = savedAngularVelocity;
     }

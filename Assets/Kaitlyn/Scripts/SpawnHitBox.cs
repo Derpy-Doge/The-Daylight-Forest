@@ -16,7 +16,7 @@ public class SpawnHitBox : MonoBehaviour
     public float stunRadius = 1.5f;
     public float stunDuration = 2f;
     private bool isStunning = false; // :skull:
-    private bool canStun = true;
+    public bool canStun = true;
     public float stunCooldown = 5f;
 
     public float knockbackRadius = 1f;
