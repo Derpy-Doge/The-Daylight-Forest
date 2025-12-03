@@ -9,7 +9,8 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
-        inventoryUI.InitializeInventoryUI(inventorysize);
+        // Temporarily disable this to prevent freezing
+        // inventoryUI.InitializeInventoryUI(inventorysize);
     }
 
     public void Update()

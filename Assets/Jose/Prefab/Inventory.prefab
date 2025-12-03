@@ -411,11 +411,6 @@ MonoBehaviour:
   contentPanel: {fileID: 8043135611562361685}
   inventoryItemUIDescription: {fileID: 0}
   mouseFollower: {fileID: 0}
-  image: {fileID: 21300000, guid: 1e42e750931826e4cb9701e163efd917, type: 3}
-  image2: {fileID: 0}
-  quantity: 1
-  title: Seeds
-  description: Used to plant fruits/vegtables
 --- !u!1 &2689572555778859122
 GameObject:
   m_ObjectHideFlags: 0
