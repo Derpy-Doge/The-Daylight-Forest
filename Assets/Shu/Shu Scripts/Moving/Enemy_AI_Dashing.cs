@@ -9,7 +9,7 @@ public class Enemy_AI_Dashing : MonoBehaviour
     public float zfollow;
     public float dashTimer;
     public float dashTimerLength = 5f;
-    public float dashLength = 5f;
+    public float dashLength = 0.2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,7 +35,7 @@ public class Enemy_AI_Dashing : MonoBehaviour
             Emovespeed = 1;
             dashTimer = 0f;
         }
-        if (dashTimer >= ((dashTimerLength - dashLength)))
+        if (dashTimer >= (dashTimerLength - (dashLength*2/50)))
         {
             Emovespeed = 30;
         }
