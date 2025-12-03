@@ -44,6 +44,8 @@ public class TimeManager : MonoBehaviour
     public GameStateManager gsm;
     public TimeStateChange tsc;
 
+    public PlayerAttackManager pam;
+
 
     void Start()
     {
@@ -62,6 +64,7 @@ public class TimeManager : MonoBehaviour
             globalLight.color = new Color(1f, 0.8039216f, 0.627451f); // sunset color...
                                                                       //start an hour after sunrise
             isNight = false;
+            pam.OnNnightDisable();
         }
         else if (isNight)
         {
@@ -77,6 +80,7 @@ public class TimeManager : MonoBehaviour
             globalLight.colorTemperature = 15000f;
             globalLight.color = new Color(0.6862745f, 0.8117647f, 0.9058824f); // night color
             isDay = false;
+            pam.OnNightEnable();
         }
 
     }
@@ -84,7 +88,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         tempSeconds = Time.deltaTime + tempSeconds;
-        if(tempSeconds >= .25f) // the seconds in each minute, resets each minute
+        if(tempSeconds >= .15f) // the seconds in each minute, resets each minute
         {
             minutes ++;
             tempSeconds = 0;
