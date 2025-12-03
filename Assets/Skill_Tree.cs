@@ -5,6 +5,7 @@ public class Skill_Tree : MonoBehaviour
 {
     public Player_Movement player_Movement;
     public Enemy_AI enemy_AI;
+    public Stats stats;
 
     public void Movement()
     {
@@ -41,10 +42,10 @@ public class Skill_Tree : MonoBehaviour
     }
     public void Attack_Power()
     {
-
+        stats.Attack_Power =+ 10;
     }
     public void Attack_Speed()
-    {
+    {stats.Attack_Speed =+ 1;
 
     }
     public void Knockback()
