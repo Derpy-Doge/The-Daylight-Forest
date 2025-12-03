@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class MouseFollower : MonoBehaviour
 {
-    [SerializeField]
     private Canvas canvas;
-    
-
-    [SerializeField]
     private UIInventoryItem item;
 
     public void Awake()
