@@ -79,7 +79,7 @@ public class SpawnHitBox : MonoBehaviour
         canSlash = false;
         isSlashing = true;
 
-        Physics.SphereCast(transform.position, slashRadius, dh.playerDirection * .25f, out RaycastHit hitInfo, slashRange, attackLayer);
+        Physics.SphereCast(transform.position, slashRadius, dh.playerDirection * .3f, out RaycastHit hitInfo, slashRange, attackLayer);
 
         if (hitInfo.collider)
         {

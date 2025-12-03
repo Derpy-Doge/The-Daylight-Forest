@@ -1855,6 +1855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1642506279}
   movespeed: 2.5
+  myAnimator: {fileID: 0}
 --- !u!65 &1642506281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1962,8 +1963,6 @@ MonoBehaviour:
     m_Bits: 8
   slashRadius: 0.4
   slashRange: 0.5
-  isSlashing: 0
-  canSlash: 1
   slashCooldown: 0.5
   stunRadius: 1.5
   stunDuration: 2
@@ -2553,6 +2552,74 @@ MonoBehaviour:
   enemy: {fileID: 1902206878}
   rb: {fileID: 1902206876}
   player: {fileID: 1642506278}
+--- !u!1001 &1975461031
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.17811975
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.058
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.3509157
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799110699690364464, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7254188822189121391, guid: daa54c6b8f5736d43b8da2ff529413fc,
+        type: 3}
+      propertyPath: m_Name
+      value: Red_Alder_Test 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: daa54c6b8f5736d43b8da2ff529413fc, type: 3}
 --- !u!1001 &1987990437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2955,3 +3022,4 @@ SceneRoots:
   - {fileID: 856464670}
   - {fileID: 1902206882}
   - {fileID: 1633985339}
+  - {fileID: 1975461031}
