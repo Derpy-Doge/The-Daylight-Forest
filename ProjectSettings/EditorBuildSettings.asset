@@ -26,6 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Shu/Shu Scenes/Shu's scene.unity
     guid: eabbb14f5739c20428ea3bd76ab3db11
+  - enabled: 1
+    path: Assets/Kaitlyn/Day Testing Scene.unity
+    guid: e2e10ee6a8d99b249a49fcd2b5c16304
+  - enabled: 1
+    path: Assets/Kaitlyn/Night Testing Scene.unity
+    guid: 4ec84d8f7ee1cd24495ba62e0cd6c65a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c465cf6eef8c49444904123cb4809af2,
       type: 2}
