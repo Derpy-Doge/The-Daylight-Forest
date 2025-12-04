@@ -33,7 +33,7 @@ public class EnemySpawnHitbox : MonoBehaviour
         }
         else
         {
-            Debug.Log("player out of range or enemy cant attack");
+            //Debug.Log("player out of range or enemy cant attack");
         }
 
         if (rb.isKinematic)

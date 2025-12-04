@@ -8,7 +8,7 @@ public class PlayerAttackManager : MonoBehaviour
 
     public GameObject healthBar;
 
-    public void OnNnightDisable()
+    public void OnDayDisable()
     {
         dh.enabled = false;
         shb.enabled = false;

@@ -14,10 +14,15 @@ public class Stats : MonoBehaviour
     public float Speed;
     [HideInInspector] public float Passive_Attack; // for enemies only, damage you take when you run into them
 
-    public Player_Movement player;
+    private Player_Movement player;
     public Enemy_AI ai;
 
     public TimeManager tm; //trust me on this :skull:
+
+    void Awake()
+    {
+        player = FindFirstObjectByType <Player_Movement>();
+    }
 
     void Start()
     {

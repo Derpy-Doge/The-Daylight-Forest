@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 spawnAreaMax;
     public Vector3 spawnPosition;
     public int minEnemies = 1;
-    public int maxEnemies = 5;
+    public int maxEnemies = 3;
 
     public TimeManager tm;
 

@@ -47,11 +47,11 @@ public class TimeManager : MonoBehaviour
     public PlayerAttackManager pam;
 
 
-    void Start()
+    private void Awake()
     {
         if (isDay) // hopefully doing this stops me from having to do a seperate cycle for time on the farm and time in the forest :sob:
         {
-            if(gsm != null)
+            if (gsm != null)
             {
                 gsm.SetTimeState(TimeState.Running);
             }
@@ -64,24 +64,35 @@ public class TimeManager : MonoBehaviour
             globalLight.color = new Color(1f, 0.8039216f, 0.627451f); // sunset color...
                                                                       //start an hour after sunrise
             isNight = false;
-            pam.OnNnightDisable();
+            if (pam != null)
+            {
+                pam.OnDayDisable();
+            }
         }
         else if (isNight)
         {
-            if(gsm != null)
+            if (gsm != null)
             {
                 gsm.SetTimeState(TimeState.Running);
             }
 
-            Time.timeScale = 1f;;
+            Time.timeScale = 1f; ;
 
             globalLight.intensity = .4f;
             hours = 21; // i keep almost forgetting to do 24 hr time :sob:
             globalLight.colorTemperature = 15000f;
             globalLight.color = new Color(0.6862745f, 0.8117647f, 0.9058824f); // night color
             isDay = false;
-            pam.OnNightEnable();
+            if (pam != null)
+            {
+                pam.OnNightEnable();
+            }
         }
+    }
+
+    void Start()
+    {
+      
 
     }
 
@@ -139,23 +150,31 @@ public class TimeManager : MonoBehaviour
                 tsc.OnEnable();
             }
         }
+        else if (value == 7 && isDay)
+        {
+            if (gsm != null && tsc != null && pam != null)
+            {
+                gsm.SetTimeState(TimeState.Running);
+                pam.OnDayDisable();
+            }
+        }
         else if (value == 8) //day
         {
             StartCoroutine(LerpLight(gradientSunriseToDay, 5f));
             StartCoroutine(FadeLightIntesity(1f, 5000, 5f));
         }
-        else if(value == 18) //sunset
+        else if (value == 18) //sunset
         {
             StartCoroutine(LerpLight(gradientDayToSunset, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
         }
-        else if(value == 20) //night
+        else if (value == 20) //night
         {
             StartCoroutine(LerpLight(gradientSunsetToNight, 5f));
             StartCoroutine(FadeLightIntesity(.4f, 15000f, 5f));
             Debug.Log("ill turn soon..."); // also a villain :skull: (BRUH)
         }
-        else if(value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
+        else if (value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
         {
             isNight = true;
             isDay = false;
@@ -163,6 +182,13 @@ public class TimeManager : MonoBehaviour
             {
                 gsm.SetTimeState(TimeState.Paused);
                 tsc.OnEnable();
+            }
+        }
+        else if (value == 21 && isNight)
+        {
+            if (gsm != null && tsc != null)
+            {
+                gsm.SetTimeState(TimeState.Running);
             }
         }
     }

@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class StunManager : MonoBehaviour
 {
-    public SpawnHitBox shb;
+    private SpawnHitBox shb;
     public Hazard h;
     public Rigidbody rb;
 
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
+
+    private void Awake()
+    {
+        shb = FindFirstObjectByType<SpawnHitBox>();
+    }
 
     public IEnumerator Stun()
     {
