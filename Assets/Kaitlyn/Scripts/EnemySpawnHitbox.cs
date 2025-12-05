@@ -19,8 +19,12 @@ public class EnemySpawnHitbox : MonoBehaviour
     public Stats enemy;
     public Rigidbody rb;
 
-    public GameObject player;
+    private GameObject player;
 
+    public void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
 
     void Update()
     {
@@ -29,11 +33,6 @@ public class EnemySpawnHitbox : MonoBehaviour
         if (hitInfo.collider && canAttack && !isFrozen)
         {
             StartCoroutine(Attack());
-            Debug.Log("work?");
-        }
-        else
-        {
-            //Debug.Log("player out of range or enemy cant attack");
         }
 
         if (rb.isKinematic)

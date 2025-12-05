@@ -3,10 +3,16 @@ using UnityEngine;
 public class Enemy_AI : MonoBehaviour
 {
     public Rigidbody myRigidbody;
-    public GameObject player;
+    private GameObject player;
     public float movespeed = 1f;
     public float xfollow;
     public float zfollow;
+
+    void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

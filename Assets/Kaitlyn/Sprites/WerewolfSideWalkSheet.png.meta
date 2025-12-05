@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35e62a47e5cbd4742b7e917e2b5308b9
+guid: 3833c4346b8cddc4b989c367add26845
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WerewolfIdlePlaceholder_0
+      name: WerewolfSideWalkSheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1121
-        height: 965
+        width: 1120
+        height: 966
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27e00d603755b8544be9084f88843372
-      internalID: 1383982101
+      spriteID: 794b618a34dd60543a32db5253ed8163
+      internalID: -1290767014
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WerewolfIdlePlaceholder_1
+      name: WerewolfSideWalkSheet_1
       rect:
         serializedVersion: 2
-        x: 1162
+        x: 1120
         y: 0
-        width: 593
-        height: 965
+        width: 1109
+        height: 966
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4026d17bff29c9e45973ca0b6171cc27
-      internalID: 1925748100
+      spriteID: 802f6ae6d2c3e0c42a41bf723ff90f11
+      internalID: -1763107276
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WerewolfIdlePlaceholder_2
+      name: WerewolfSideWalkSheet_2
       rect:
         serializedVersion: 2
-        x: 1912
+        x: 2233
         y: 0
-        width: 557
-        height: 965
+        width: 1108
+        height: 966
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,8 +182,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cd59a8dfb7ecf846b12616e6f6f58fe
-      internalID: 1483992320
+      spriteID: a62d946f308c5b346af808cc91ccdaa8
+      internalID: -1714002474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WerewolfSideWalkSheet_3
+      rect:
+        serializedVersion: 2
+        x: 3341
+        y: 0
+        width: 1132
+        height: 966
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82d7ba67b1f29f148992b9401e37719e
+      internalID: -1449071294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WerewolfSideWalkSheet_4
+      rect:
+        serializedVersion: 2
+        x: 4474
+        y: 0
+        width: 1126
+        height: 966
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca4a5290c7a772b46ac41e72711b2e50
+      internalID: -201348551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WerewolfSideWalkSheet_5
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 0
+        width: 1120
+        height: 966
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4ca6846d967e724c9fe05ac0aa204e3
+      internalID: 1711597373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WerewolfSideWalkSheet_6
+      rect:
+        serializedVersion: 2
+        x: 6720
+        y: 0
+        width: 1120
+        height: 966
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ee21c1f68395742af8faa323ef022b
+      internalID: -1157310168
       vertices: []
       indices: 
       edges: []
@@ -192,7 +280,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a99ad1c5a07b9c84b9bfa2cdcceb3f38
+    spriteID: f8134a7134faa4944875da1387d2ada6
     internalID: 0
     vertices: []
     indices: 
@@ -202,9 +290,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WerewolfIdlePlaceholder_0: 1383982101
-      WerewolfIdlePlaceholder_1: 1925748100
-      WerewolfIdlePlaceholder_2: 1483992320
+      WerewolfSideWalkSheet_0: -1290767014
+      WerewolfSideWalkSheet_1: -1763107276
+      WerewolfSideWalkSheet_2: -1714002474
+      WerewolfSideWalkSheet_3: -1449071294
+      WerewolfSideWalkSheet_4: -201348551
+      WerewolfSideWalkSheet_5: 1711597373
+      WerewolfSideWalkSheet_6: -1157310168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
