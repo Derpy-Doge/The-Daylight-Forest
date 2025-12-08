@@ -17,11 +17,12 @@ public class Stats : MonoBehaviour
     private Player_Movement player;
     public Enemy_AI ai;
 
-    public TimeManager tm; //trust me on this :skull:
+    private TimeManager tm; //trust me on this :skull:
 
     void Awake()
     {
-        player = FindFirstObjectByType <Player_Movement>();
+        player = GetComponent<Player_Movement>();
+        tm = FindFirstObjectByType<TimeManager>();
     }
 
     void Start()
