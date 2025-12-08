@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Combat
+  m_text: Slashing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -434,6 +434,7 @@ MonoBehaviour:
   Crop_Growth: 1
   Speed: 0
   Passive_Attack: 0
+  player: {fileID: 167931804}
   ai: {fileID: 0}
   tm: {fileID: 0}
 --- !u!114 &167931800
@@ -664,7 +665,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167931798}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdd87f9c63bc63d45a965e3fb7014fe9, type: 3}
   m_Name: 
@@ -1406,7 +1407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stun Duration
+  m_text: 'Stun
 
 '
   m_isRightToLeft: 0
@@ -2086,74 +2087,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477810661}
   m_CullTransparentMesh: 1
---- !u!1001 &533707176
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1812.0526
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 715.48627
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2190.4785
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3816738825750328119, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6456671790110689551, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-        type: 3}
-      propertyPath: m_Name
-      value: Save Data
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6bc181f3936fa2648b36b22a0c8dc752, type: 3}
 --- !u!1 &538597641
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,7 +2144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Attack Speed
+  m_text: Slash Speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3399,9 +3332,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Knockback Force
-
-'
+  m_text: Push Slash
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3704,18 +3635,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1716002479}
         m_TargetAssemblyTypeName: Skill_Tree, Assembly-CSharp
         m_MethodName: Return
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Day Testing Scene
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1955498772}
-        m_TargetAssemblyTypeName: SaveData, Assembly-CSharp
-        m_MethodName: LoadPlayerData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4849,7 +4768,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Attack Power
+  m_text: Slash Power
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5501,6 +5420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1811849049}
+  player: {fileID: 167931798}
   movespeed: 7
   xfollow: 0
   zfollow: 0
@@ -5828,18 +5748,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929151687}
   m_CullTransparentMesh: 1
---- !u!114 &1955498772 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8753578902209517235, guid: 6bc181f3936fa2648b36b22a0c8dc752,
-    type: 3}
-  m_PrefabInstance: {fileID: 533707176}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71563afcc9d1b4d43b59fe3e4936e7ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1964456886
 GameObject:
   m_ObjectHideFlags: 0
@@ -6157,10 +6065,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 3840, y: 2160}
+  m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6649,4 +6557,3 @@ SceneRoots:
   - {fileID: 1811849053}
   - {fileID: 167931808}
   - {fileID: 2007197457}
-  - {fileID: 533707176}

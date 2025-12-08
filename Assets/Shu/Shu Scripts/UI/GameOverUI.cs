@@ -9,6 +9,6 @@ public class GameOverUI : MonoBehaviour
     }
     public void Main_Menu()
     {
-        SceneManager.LoadScene("Start Menu");
+        SceneManager.LoadScene("Main Menu");
     }
 }

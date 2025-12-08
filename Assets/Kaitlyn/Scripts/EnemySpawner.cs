@@ -7,19 +7,14 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 spawnAreaMin;
     public Vector3 spawnAreaMax;
     public Vector3 spawnPosition;
-    private int minEnemies = 1;
-    private int maxEnemies = 3;
+    public int minEnemies = 1;
+    public int maxEnemies = 3;
 
-    private TimeManager tm;
-
-    void Awake()
-    {
-        tm = Object.FindFirstObjectByType<TimeManager>();
-    }
+    public TimeManager tm;
 
     void Start()
     {
-        
+        SpawnEnemiesOnLoad();
     }
 
     void Update()
@@ -60,14 +55,6 @@ public class EnemySpawner : MonoBehaviour
              maxEnemies = 30;
         }
 
-        if (tm.isNight)
-        {
-            SpawnEnemiesOnLoad();
-        }
-        else if (!tm.isNight)
-        {
-            // No enemy spawning during the day
-        }
     }
 
     void SpawnEnemiesOnLoad()
