@@ -20,7 +20,7 @@ public class SaveData : MonoBehaviour
 
     private TimeManager tm;
 
-    [SerializeField] private PlayerData playerData;
+    [SerializeField] public PlayerData playerData;
     private string savePath;
 
     private Button saveButton; // trust me on this
