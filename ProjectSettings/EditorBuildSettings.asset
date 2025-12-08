@@ -6,32 +6,29 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Breanna/Menu/Level 1.unity
-    guid: 23ace7d985de57c479adbe49cfa1b9f5
-  - enabled: 1
     path: Assets/Breanna/Menu/Start Menu.unity
     guid: 7072160db8aec3548a20c7de57f12f63
   - enabled: 1
-    path: Assets/Breanna/Menu/Credits.unity
-    guid: 4466ca02d25bcd54ab3dc45344423747
+    path: Assets/Shu/Shu Scenes/Skill_Tree.unity
+    guid: 7521bb800cd998345b165390fefadc92
   - enabled: 1
     path: Assets/Shu/Shu Scenes/Game-Over.unity
     guid: 63f81808a3b39054899532735fde4611
   - enabled: 1
-    path: Assets/Shu/Shu Scenes/Main Menu.unity
-    guid: f947694241269b041b22cda59e41fb87
+    path: Assets/Breanna/Menu/Credits.unity
+    guid: 4466ca02d25bcd54ab3dc45344423747
+  - enabled: 1
+    path: Assets/Kaitlyn/Kaitlyn Credits.unity
+    guid: 95d88ad19200bf5438937ca22ebe1720
+  - enabled: 1
+    path: Assets/Breanna/Menu/Level 1.unity
+    guid: 23ace7d985de57c479adbe49cfa1b9f5
   - enabled: 1
     path: Assets/Shu/Shu Scenes/Shu's scene.unity
     guid: eabbb14f5739c20428ea3bd76ab3db11
   - enabled: 1
     path: Assets/Kaitlyn/Day Testing Scene.unity
     guid: e2e10ee6a8d99b249a49fcd2b5c16304
-  - enabled: 1
-    path: Assets/Kaitlyn/Night Testing Scene.unity
-    guid: 4ec84d8f7ee1cd24495ba62e0cd6c65a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c465cf6eef8c49444904123cb4809af2,
       type: 2}

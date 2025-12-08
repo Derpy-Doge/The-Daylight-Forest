@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 // if days go from 7am to 8pm(or 20:00) itll be abt 6 and a half minutes of farm play time
 
 public class TimeManager : MonoBehaviour
 {
+    public static TimeManager instance;
+
     private int minutes;
     public int Minutes
     {
@@ -46,15 +50,35 @@ public class TimeManager : MonoBehaviour
 
     public PlayerAttackManager pam;
 
+    private GameObject fog;
+
+    public GameObject[] dialogueBoxes;
+
+    public GameObject saveData;
+    public SaveData sd;
+    private string mainScene;
+    private string mainMenu;
+
 
     private void Awake()
     {
-        if (isDay) // hopefully doing this stops me from having to do a seperate cycle for time on the farm and time in the forest :sob:
+        if (instance != null && instance != this)
         {
-            if (gsm != null)
-            {
-                gsm.SetTimeState(TimeState.Running);
-            }
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        saveData = GameObject.FindWithTag("SaveData");
+        sd = saveData.GetComponent<SaveData>();
+        mainMenu = sd.mainMenu;
+        mainScene = sd.mainScene;
+
+        if (isDay && globalLight != null) // hopefully doing this stops me from having to do a seperate cycle for time on the farm and time in the forest :sob:
+        {
 
             Time.timeScale = 1f; // __ times faster than rl seconds... didnt end up using it cause like i cant do math :skull:
 
@@ -64,17 +88,9 @@ public class TimeManager : MonoBehaviour
             globalLight.color = new Color(1f, 0.8039216f, 0.627451f); // sunset color...
                                                                       //start an hour after sunrise
             isNight = false;
-            if (pam != null)
-            {
-                pam.OnDayDisable();
-            }
         }
-        else if (isNight)
+        else if (isNight && globalLight != null)
         {
-            if (gsm != null)
-            {
-                gsm.SetTimeState(TimeState.Running);
-            }
 
             Time.timeScale = 1f; ;
 
@@ -83,17 +99,31 @@ public class TimeManager : MonoBehaviour
             globalLight.colorTemperature = 15000f;
             globalLight.color = new Color(0.6862745f, 0.8117647f, 0.9058824f); // night color
             isDay = false;
-            if (pam != null)
-            {
-                pam.OnNightEnable();
-            }
         }
     }
 
-    void Start()
+    public void OnEnable()
     {
-      
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    public void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == mainScene)
+        {
+            globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
+            fog = GameObject.FindWithTag("Fog"); // make sure all fog is childed to one thing with the fog tag and the individual fogs dont have the tag
+        }
+        else if (scene.name == mainMenu)
+        {
+            Destroy(this.gameObject);
+            globalLight = null;
+        }
     }
 
     void Update()
@@ -106,19 +136,61 @@ public class TimeManager : MonoBehaviour
             //Debug.Log ("holy gleebus it works"); // i didnt think I was allowed to put swears in here :skull:
         }
 
-        OnMinuteChange(minutes);
-        OnHourChange(hours);
+        if(globalLight != null)
+        {
+            OnMinuteChange(minutes);
+            OnHourChange(hours);
+        }
 
         currentTime = Time.deltaTime + currentTime;
 
         float rotationAngle = ((currentTime / 720f) * 360f);
 
-        globalLight.transform.rotation = Quaternion.Euler(50f, rotationAngle, 0f);
+        if(globalLight != null)
+        {
+            globalLight.transform.rotation = Quaternion.Euler(50f, rotationAngle, 0f);
+        }
+
+        if(minutes == 1 && hours == 6 || minutes == 1 && hours == 20)
+        {
+            //dialogueBoxes[4].GetComponent<Dialogue>().StartDialogue(); // make "Turning Dialogue" 5th in the array
+        }
+
+        if (isNight)
+        {
+            if (pam != null)
+                pam.OnNightEnable();
+            if (fog != null)
+                fog.GetComponentInChildren<Collider>().enabled = false;
+        }
+        else if (isDay)
+        {
+            if (pam != null)
+                pam.OnDayDisable();
+            if (fog != null)
+                fog.GetComponentInChildren<Collider>().enabled = true;
+        }
+
+        if(hours == 21 && minutes == 0 && isDay)
+        {
+            //dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
+        }
+        else if(hours == 7 && minutes == 0 && isNight)
+        {
+            //dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
+        }
+
+        if(hours == 7 && minutes == 0 && days > 0)
+        {
+            sd.SavePlayerData();
+            Debug.Log("Daily Auto Save!");
+        }
     }
 
     private void OnMinuteChange(int value)
     {
-        globalLight.transform.Rotate(Vector3.up, (1f / dayDuration) * 1f, Space.World);
+        if(globalLight != null)
+            globalLight.transform.Rotate(Vector3.up, (1f / dayDuration) * 1f, Space.World);
         if(value >= 60) //after 60 minutes add 1 hour and reset minutes after 24 hours add 1 day and reset hours, days never reset
         {
             hours++;
@@ -138,25 +210,11 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientNightToSunrise, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
-            Debug.Log("ill turn back soon..."); // i feel like a villain :skull: <--(copilot thought i wanted to say that...) ... anyway. ill replace this with dialogue later when we have that
         }
         else if (value == 7 && isNight) // when youre locked from doing stuff caus you gotta go back to the farm
         {
             isDay = true;
             isNight = false;
-            if (gsm != null && tsc != null)
-            {
-                gsm.SetTimeState(TimeState.Paused);
-                tsc.OnEnable();
-            }
-        }
-        else if (value == 7 && isDay)
-        {
-            if (gsm != null && tsc != null && pam != null)
-            {
-                gsm.SetTimeState(TimeState.Running);
-                pam.OnDayDisable();
-            }
         }
         else if (value == 8) //day
         {
@@ -172,24 +230,11 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientSunsetToNight, 5f));
             StartCoroutine(FadeLightIntesity(.4f, 15000f, 5f));
-            Debug.Log("ill turn soon..."); // also a villain :skull: (BRUH)
         }
         else if (value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
         {
             isNight = true;
             isDay = false;
-            if (gsm != null && tsc != null)
-            {
-                gsm.SetTimeState(TimeState.Paused);
-                tsc.OnEnable();
-            }
-        }
-        else if (value == 21 && isNight)
-        {
-            if (gsm != null && tsc != null)
-            {
-                gsm.SetTimeState(TimeState.Running);
-            }
         }
     }
 
@@ -197,6 +242,7 @@ public class TimeManager : MonoBehaviour
     {
         for (float i = 0; i < time; i += Time.deltaTime)
         {
+            if (globalLight == null) yield break;
             globalLight.color = lightGradient.Evaluate(i / time);
             yield return null;
         }
@@ -210,6 +256,7 @@ public class TimeManager : MonoBehaviour
 
         while(timer < duration)
         {
+            if (globalLight == null) yield break;
             timer += Time.deltaTime;
             float t = timer / duration;
             globalLight.intensity = Mathf.Lerp(startIntensity, endIntensity, t);
