@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 spawnPosition;
     private int minEnemies = 1;
     private int maxEnemies = 3;
+    private bool canSpawn = true;
 
     private TimeManager tm;
 
@@ -60,13 +61,14 @@ public class EnemySpawner : MonoBehaviour
              maxEnemies = 30;
         }
 
-        if (tm.isNight)
+        if (tm.isNight && canSpawn)
         {
             SpawnEnemiesOnLoad();
+            canSpawn = false;
         }
         else if (!tm.isNight)
         {
-            // No enemy spawning during the day
+            canSpawn = true;
         }
     }
 

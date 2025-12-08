@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Player2Data
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerData
+  health: 0
+  attackSpeed: 0
+  attackPower: 0
+  defense: 0
+  cropExp: 0
+  cropGrowth: 0
+  speed: 0
+  slashRange: 0
+  slashCooldown: 0
+  stunRadius: 0
+  stunDuration: 0
+  stunCooldown: 0
+  knockbackRadius: 0
+  knockbackForce: 0
+  knckbackCooldown: 0
+  playerPosition: {x: 0, y: 0, z: 0}
+  minutes: 0
+  hours: 0
+  days: 0

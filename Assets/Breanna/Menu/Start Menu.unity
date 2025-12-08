@@ -1455,8 +1455,8 @@ RectTransform:
   m_Children:
   - {fileID: 1108182803}
   - {fileID: 1529111757}
-  - {fileID: 68867648}
   - {fileID: 954795081}
+  - {fileID: 68867648}
   m_Father: {fileID: 213586470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Credit
+  m_text: Credits
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
