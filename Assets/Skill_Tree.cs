@@ -3,23 +3,33 @@ using UnityEngine.SceneManagement;
 
 public class Skill_Tree : MonoBehaviour
 {
+    private SaveData sd;
+
     public Player_Movement player_Movement;
     public Enemy_AI enemy_AI;
     public Stats stats;
     public SpawnHitBox spawnHitBox;
 
+    private void Awake()
+    {
+        sd = GameObject.FindGameObjectWithTag("SaveData").GetComponent<SaveData>();
+    }
+
     public void Movement()
     {
         player_Movement.movespeed += 1;
+        sd.SavePlayerData();
     }
     public void Enemy_Speed_and_Move_Speed()
     {
         stats.Speed += 2;
         enemy_AI.movespeed += 2;
+        sd.SavePlayerData();
     }
     public void Move_Speed()
     {
         stats.Speed += 1;
+        sd.SavePlayerData();
     }
     public void Farming()
     {
@@ -49,26 +59,32 @@ public class Skill_Tree : MonoBehaviour
     {
         stats.Attack_Power += 10;
         stats.Attack_Speed += 1;
+        sd.SavePlayerData();
     }
     public void Attack_Power()
     {
         stats.Attack_Power += 10;
+        sd.SavePlayerData();
     }
     public void Attack_Speed()
     {
         stats.Attack_Speed += + 1;
+        sd.SavePlayerData();
     }
     public void Knockback()
     {
         spawnHitBox.knockbackForce += 50;
+        sd.SavePlayerData();
     }
     public void Stun()
     {
         spawnHitBox.stunDuration += 1;
+        sd.SavePlayerData();
     }
-    public void Return()
+    public void Return(string sceneName)
     {
-        SceneManager.LoadScene("Shu's scene");
+        SceneManager.LoadScene(sceneName);
+        sd.LoadPlayerData();
     }
 
 }

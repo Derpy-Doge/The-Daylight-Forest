@@ -28,6 +28,11 @@ public class SpawnHitBox : MonoBehaviour
 
     public DirectionHandler dh;
 
+    public void Awake()
+    {
+        dh = GetComponent<DirectionHandler>();
+    }
+
     public void Slash(InputAction.CallbackContext ctx)
     {
         if (ctx.ReadValue<float>() == 0) return;
