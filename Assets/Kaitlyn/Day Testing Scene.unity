@@ -218,16 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66323882ab79fe04ca473a6bf88747de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabs:
-  - {fileID: 1810832288220622077, guid: bed0740cf6984a34981c8e42fa6940c3, type: 3}
-  - {fileID: 1867383962364050655, guid: 6d6e7a4a8a1d52c46ae5da38afb89fdf, type: 3}
-  spawnPoints:
-  - {fileID: 2001148996}
-  - {fileID: 1657478404}
-  - {fileID: 1144677290}
-  spawnAreaMin: {x: 0, y: 0, z: 0}
-  spawnAreaMax: {x: 0, y: 0, z: 0}
-  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &133923163
 Transform:
   m_ObjectHideFlags: 0
@@ -2390,8 +2380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e2bd750696aa04f9768520ae1602c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 1642506288}
-  healthBar: {fileID: 1167782207}
 --- !u!114 &1167782206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4221,20 +4209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f6619b9cce2074f9a60f1d718144f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  slashRadius: 0.4
-  slashRange: 0.5
-  slashCooldown: 0.5
-  stunRadius: 1.5
-  stunDuration: 2
-  canStun: 1
-  stunCooldown: 10
-  knockbackRadius: 1
-  knockbackForce: 100
-  knckbackCooldown: 5
-  dh: {fileID: 1642506287}
 --- !u!114 &1642506286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4402,7 +4376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14ba1fa60bf9ff459fe79a7d2ef5605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &1642506288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5447,12 +5420,12 @@ PrefabInstance:
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isDay
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isNight
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
@@ -5547,6 +5520,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1979794840}
     m_Modifications:
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 0.02745098
+      objectReference: {fileID: 0}
     - target: {fileID: 2708936912720725550, guid: 78eba38b07429f94f9a0b737bd2190bb,
         type: 3}
       propertyPath: m_LocalPosition.x
