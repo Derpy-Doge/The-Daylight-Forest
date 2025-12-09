@@ -218,6 +218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66323882ab79fe04ca473a6bf88747de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPrefabs: []
+  spawnPoints: []
+  spawnAreaMin: {x: 0, y: 0, z: 0}
+  spawnAreaMax: {x: 0, y: 0, z: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &133923163
 Transform:
   m_ObjectHideFlags: 0
@@ -2380,6 +2385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e2bd750696aa04f9768520ae1602c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!114 &1167782206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3921,6 +3928,7 @@ GameObject:
   - component: {fileID: 1633985336}
   - component: {fileID: 1633985340}
   - component: {fileID: 1633985341}
+  - component: {fileID: 1633985342}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4040,6 +4048,103 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 496355465}
+--- !u!82 &1633985342
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633985335}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 33ac9439cf218854f9f2d629d45a18a3, type: 3}
+  m_Resource: {fileID: 8300000, guid: 33ac9439cf218854f9f2d629d45a18a3, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1642506278
 GameObject:
   m_ObjectHideFlags: 0
@@ -4209,6 +4314,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f6619b9cce2074f9a60f1d718144f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  slashRadius: 0.12
+  slashRange: 0.3
+  slashCooldown: 0.5
+  stunRadius: 1.5
+  stunDuration: 2
+  canStun: 1
+  stunCooldown: 5
+  knockbackRadius: 1
+  knockbackForce: 100
+  knckbackCooldown: 3
+  dh: {fileID: 0}
 --- !u!114 &1642506286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4376,6 +4495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14ba1fa60bf9ff459fe79a7d2ef5605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &1642506288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5420,12 +5540,12 @@ PrefabInstance:
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isDay
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isNight
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
@@ -5465,7 +5585,7 @@ PrefabInstance:
     - target: {fileID: 5429940205589778302, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -105.47098
+      value: 8.6
       objectReference: {fileID: 0}
     - target: {fileID: 5429940205589778302, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
@@ -5522,13 +5642,53 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
         type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 667
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
         type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 32960
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime3
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.a
-      value: 0.02745098
+      value: 0.04914914
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key3.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 797220007881233997, guid: 78eba38b07429f94f9a0b737bd2190bb,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2708936912720725550, guid: 78eba38b07429f94f9a0b737bd2190bb,
         type: 3}
