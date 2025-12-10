@@ -16,6 +16,7 @@ public class Stats : MonoBehaviour
 
     private Player_Movement player;
     public Enemy_AI ai;
+    public Enemy_AI_Dashing ai_dashing;
 
     private EnemySpawner spawner;
     private XPController xp;
@@ -41,11 +42,15 @@ public class Stats : MonoBehaviour
         {
             Speed = ai.movespeed;
         }
+        if (ai_dashing != null)
+        {
+            Speed = ai_dashing.Emovespeed;
+        }
     }
 
     void Update()
     {
-        if (Health_Current <= 0 && ai != null || tm.isDay && ai != null)
+        if (Health_Current <= 0 && ai != null || ai_dashing != null || tm.isDay && ai != null || ai_dashing != null)
         { 
             foreach(EnemySpawnPoint esp in spawner.spawners)
             {

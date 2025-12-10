@@ -434,10 +434,10 @@ TextureImporter:
       name: Tile map_14
       rect:
         serializedVersion: 2
-        x: 750
-        y: 740
-        width: 225
-        height: 226
+        x: 753
+        y: 744
+        width: 219
+        height: 219
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -457,7 +457,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 47
-        y: 340
+        y: 344
         width: 225
         height: 220
       alignment: 0
@@ -500,7 +500,7 @@ TextureImporter:
       name: Tile map_19
       rect:
         serializedVersion: 2
-        x: 46
+        x: 48
         y: 116
         width: 225
         height: 223
@@ -544,8 +544,8 @@ TextureImporter:
       name: Tile map_21
       rect:
         serializedVersion: 2
-        x: 485
-        y: 329
+        x: 487
+        y: 331
         width: 226
         height: 218
       alignment: 0

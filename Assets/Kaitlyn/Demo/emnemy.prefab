@@ -127,18 +127,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d012a58bd0b9640a7dd7dd5ecf302c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health_Max: 80
+  Health_Max: 40
   Health_Current: 0
   Attack_Speed: 1
   Attack_Power: 25
-  Defense: 5
+  Defense: 15
   Crop_Exp: 0
   Crop_Growth: 0
   Speed: 0
   Passive_Attack: 0
-  player: {fileID: 0}
   ai: {fileID: 1129991329459979940}
-  tm: {fileID: 0}
 --- !u!114 &1129991329459979940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 7896004084464923390}
-  player: {fileID: 0}
   movespeed: 1
   xfollow: 0
   zfollow: 0
@@ -222,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c7e45591b839247b5b9f1bd745b023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shb: {fileID: 0}
   h: {fileID: 4363095948131543926}
   rb: {fileID: 7896004084464923390}
 --- !u!114 &5731095953223183591
@@ -247,4 +243,3 @@ MonoBehaviour:
   dh: {fileID: 2442349614995716488}
   enemy: {fileID: 7976314286757553153}
   rb: {fileID: 7896004084464923390}
-  player: {fileID: 0}
