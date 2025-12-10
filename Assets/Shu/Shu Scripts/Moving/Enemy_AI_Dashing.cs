@@ -3,13 +3,20 @@ using UnityEngine;
 public class Enemy_AI_Dashing : MonoBehaviour
 {
     public Rigidbody myRigidbody;
-    public GameObject player;
+    private GameObject player;
     public float Emovespeed = 1f;
     public float xfollow;
     public float zfollow;
     public float dashTimer;
     public float dashTimerLength = 5f;
     public float dashLength = 0.2f;
+
+    void Awake()
+    {
+        myRigidbody = GetComponent<Rigidbody>();
+        player = GameObject.FindWithTag("Player");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
