@@ -13,6 +13,7 @@ public class SaveData : MonoBehaviour
     public string mainScene;
 
     private GameObject player;
+    private XPController XPController;
     private Stats playerStats;
     private SpawnHitBox attackStats;
     private Player_Movement moveSpeed; // not sure if ill actually need this one yet or if i can just use the stat from stat script
@@ -66,6 +67,7 @@ public class SaveData : MonoBehaviour
                 pauseMenu.SetActive(false);
 
                 player = GameObject.FindWithTag("Player");
+                XPController = FindFirstObjectByType<XPController>();
                 playerStats = player.GetComponent<Stats>();
                 attackStats = player.GetComponent<SpawnHitBox>();
                 moveSpeed = player.GetComponent<Player_Movement>();
@@ -140,6 +142,7 @@ public class SaveData : MonoBehaviour
 
         #region stats
         playerData.health = playerStats.Health_Current;
+        playerData.exp = XPController.CurrentXp;
         playerData.attackSpeed = playerStats.Attack_Speed;
         playerData.attackPower = playerStats.Attack_Power;
         playerData.defense = playerStats.Defense;
@@ -183,6 +186,7 @@ public class SaveData : MonoBehaviour
 
             #region stats
             playerStats.Health_Current = playerData.health;
+            XPController.CurrentXp = playerData.exp;
             playerStats.Attack_Speed = playerData.attackSpeed;
             playerStats.Attack_Power = playerData.attackPower;
             playerStats.Defense = playerData.defense;
@@ -228,6 +232,7 @@ public class PlayerData : ScriptableObject
 
 
     public float health;
+    public float exp;
     public float attackSpeed;
     public float attackPower;
     public float defense;

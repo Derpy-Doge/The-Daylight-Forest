@@ -1,21 +1,18 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs;
-    public Transform[] spawnPoints;
-    public Vector3 spawnAreaMin;
-    public Vector3 spawnAreaMax;
-    public Vector3 spawnPosition;
-    private int minEnemies = 1;
-    private int maxEnemies = 3;
-    private bool canSpawn = true;
+    public List<EnemySpawnPoint> spawners;
 
     private TimeManager tm;
 
     void Awake()
     {
-        tm = Object.FindFirstObjectByType<TimeManager>();
+        tm = FindFirstObjectByType<TimeManager>();
     }
 
     void Start()
@@ -25,72 +22,101 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if(tm.Days == 0)
+        foreach (EnemySpawnPoint esp in spawners)
         {
-            minEnemies = 1;
-            maxEnemies = 3;
+            if (tm.isNight && esp.canSpawn)
+            {
+                StartCoroutine(SpawnEnemies(esp));
+            }
         }
-        else if(tm.Days <=4)
+
+        #region dificulty scaling
+
+        if (tm.Days == 0)
         {
-            minEnemies = 2;
-            maxEnemies = 4;
+            return;
         }
-        else if(tm.Days <=9)
+        if (tm.Days == 5 && tm.Hours == 7 && tm.Minutes == 0) //morning of day 5
         {
-            minEnemies = 3;
-            maxEnemies = 7;
+            foreach(EnemySpawnPoint esp in spawners)
+            {
+                ChangeRespawnTime(esp.ID);
+            }
         }
-        else if(tm.Days <= 15)
+        else if(tm.Days == 10 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            minEnemies = 6;
-            maxEnemies = 10;
+            foreach (EnemySpawnPoint esp in spawners)
+            {
+                ChangeRespawnTime(esp.ID);
+            }
         }
-        else if(tm.Days <= 20)
+        else if(tm.Days == 15 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            minEnemies = 9;
-            maxEnemies = 15;
+            foreach (EnemySpawnPoint esp in spawners)
+            {
+                ChangeRespawnTime(esp.ID);
+            }
         }
-        else if (tm.Days <=40)
+        else if(tm.Days == 20 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            minEnemies = 12;
-            maxEnemies = 20;
+            foreach (EnemySpawnPoint esp in spawners)
+            {
+                ChangeRespawnTime(esp.ID);
+            }
+        }
+        else if(tm.Days == 30 && tm.Hours == 7 && tm.Minutes == 0)
+        {
+            foreach (EnemySpawnPoint esp in spawners)
+            {
+                ChangeRespawnTime(esp.ID);
+            }
+        }
+        else if (tm.Days == 40 && tm.Hours == 7 && tm.Minutes == 0)
+        {
+            foreach (EnemySpawnPoint esp in spawners)
+            {
+                ChangeRespawnTime(esp.ID);
+            }
         }
         else
         {
-             minEnemies = 15;
-             maxEnemies = 30;
+            return;
         }
+        #endregion
 
-        if (tm.isNight && canSpawn)
-        {
-            SpawnEnemiesOnLoad();
-            canSpawn = false;
-        }
-        else if (!tm.isNight)
-        {
-            canSpawn = true;
-        }
     }
 
-    void SpawnEnemiesOnLoad()
+    public IEnumerator SpawnEnemies(EnemySpawnPoint esp)
     {
-        int enemyCount = Random.Range(minEnemies, maxEnemies + 1);
+        esp.canSpawn = false;
 
-        for(int i = 0; i < enemyCount; i++)
+        Instantiate(esp.enemyType, esp.spawnPoint.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(esp.respawnTime);
+
+        esp.canSpawn = true;
+    }
+
+    void ChangeRespawnTime(int enemyID)
+    {
+        foreach (EnemySpawnPoint esp in spawners)
         {
-            GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-            if(spawnPoints.Length > 0)
+            if(esp.ID == enemyID)
             {
-               spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+                float newCooldown = esp.respawnTime * 0.8f;
+                esp.respawnTime = newCooldown;
+                break;
             }
-            else
-            {
-                float randomX = Random.Range(spawnAreaMin.x, spawnAreaMax.x);
-                float randomY = Random.Range(spawnAreaMin.y, spawnAreaMax.y);
-                float randomZ = Random.Range(spawnAreaMin.z, spawnAreaMax.z);
-            }
-
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         }
     }
+}
+
+[System.Serializable]
+public class EnemySpawnPoint
+{
+    [Tooltip("Start at 1 and go on from there. 1 will be the weakest enemy type with the lowest cooldown.")] public int ID;
+    public GameObject enemyType;
+    public Transform spawnPoint;
+    public float respawnTime;
+    public bool canSpawn;
 }

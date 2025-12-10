@@ -136,9 +136,7 @@ MonoBehaviour:
   Crop_Growth: 0
   Speed: 0
   Passive_Attack: 0
-  player: {fileID: 0}
   ai: {fileID: 2662361662646043836}
-  tm: {fileID: 0}
 --- !u!114 &2662361662646043836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,8 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 4519329644392610057}
-  player: {fileID: 0}
-  movespeed: 0
+  movespeed: 0.65
   xfollow: 0
   zfollow: 0
 --- !u!54 &4519329644392610057
@@ -222,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c7e45591b839247b5b9f1bd745b023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shb: {fileID: 0}
   h: {fileID: 5509531016666637138}
   rb: {fileID: 4519329644392610057}
 --- !u!114 &2535379039771382453
@@ -247,4 +243,3 @@ MonoBehaviour:
   dh: {fileID: 6218862956245896345}
   enemy: {fileID: 8514250551555035138}
   rb: {fileID: 4519329644392610057}
-  player: {fileID: 0}

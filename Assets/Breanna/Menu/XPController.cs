@@ -8,7 +8,6 @@ public class XPController : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI LevelText;
-    [SerializeField] private TextMeshProUGUI ExperienceText;
     [SerializeField] private int Level;
     public float CurrentXp;
     [SerializeField] private float TargetXp;
