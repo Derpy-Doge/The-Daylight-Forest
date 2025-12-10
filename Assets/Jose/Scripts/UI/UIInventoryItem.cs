@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 namespace Inventory.Ui
 {
     public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,
-        IEndDragHandler, IDropHandler
+        IEndDragHandler, IDropHandler, IDragHandler
     {
         [SerializeField]
         private Image itemImage;
@@ -83,6 +83,11 @@ namespace Inventory.Ui
         public void OnDrop(PointerEventData eventData)
         {
             OnItemDroppedOn?.Invoke(this);
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+
         }
     }
 }
