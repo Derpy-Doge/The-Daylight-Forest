@@ -3,9 +3,16 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Stats stats;
+    private Stats stats;
+    private GameObject player;
 
     public Image healthBar;
+
+    void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+        stats = player.GetComponent<Stats>();
+    }
 
     void Start()
     {

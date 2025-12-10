@@ -17,10 +17,14 @@ public class Stats : MonoBehaviour
     private Player_Movement player;
     public Enemy_AI ai;
 
+    private EnemySpawner spawner;
+    private XPController xp;
     private TimeManager tm; //trust me on this :skull:
 
     void Awake()
     {
+        spawner = FindFirstObjectByType<EnemySpawner>();
+        xp = FindFirstObjectByType<XPController>();
         player = GetComponent<Player_Movement>();
         tm = FindFirstObjectByType<TimeManager>();
     }
@@ -41,8 +45,23 @@ public class Stats : MonoBehaviour
 
     void Update()
     {
-        if (Health_Current <= 0 && ai != null)
-        {
+        if (Health_Current <= 0 && ai != null || tm.isDay && ai != null)
+        { 
+            foreach(EnemySpawnPoint esp in spawner.spawners)
+            {
+                if (esp.ID == 1)
+                {
+                    xp.EnemyXp1();
+                }
+                else if (esp.ID == 2)
+                {
+                    xp.EnemyXp2();
+                }
+                else if (esp.ID == 3)
+                {
+                    xp.EnemyXp3();
+                }
+            }
             Destroy(gameObject);
         }
         if (Health_Current <= 0 && player != null)

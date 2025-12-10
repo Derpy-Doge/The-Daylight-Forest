@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StunManager : MonoBehaviour
 {
-    private SpawnHitBox shb;
+    private SpawnHitBox shb; // player spawn hitbox
     public Hazard h;
     public Rigidbody rb;
 

@@ -54,6 +54,10 @@ public class TimeManager : MonoBehaviour
 
     public GameObject[] dialogueBoxes;
 
+    private AudioSource BGM;
+    public AudioClip dayBGM;
+    public AudioClip nightBGM;
+
     public GameObject saveData;
     public SaveData sd;
     private string mainScene;
@@ -72,6 +76,7 @@ public class TimeManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+        BGM = FindFirstObjectByType<AudioSource>();
         saveData = GameObject.FindWithTag("SaveData");
         sd = saveData.GetComponent<SaveData>();
         mainMenu = sd.mainMenu;
@@ -87,6 +92,8 @@ public class TimeManager : MonoBehaviour
             globalLight.colorTemperature = 2981f;
             globalLight.color = new Color(1f, 0.8039216f, 0.627451f); // sunset color...
                                                                       //start an hour after sunrise
+            BGM.clip = dayBGM;
+            BGM.Play();
             isNight = false;
         }
         else if (isNight && globalLight != null)
@@ -98,6 +105,8 @@ public class TimeManager : MonoBehaviour
             hours = 21; // i keep almost forgetting to do 24 hr time :sob:
             globalLight.colorTemperature = 15000f;
             globalLight.color = new Color(0.6862745f, 0.8117647f, 0.9058824f); // night color
+            BGM.clip = nightBGM;
+            BGM.Play();
             isDay = false;
         }
     }
@@ -210,6 +219,11 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientNightToSunrise, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
+            if(dayBGM != null)
+            {
+                BGM.clip = dayBGM;
+                BGM.Play();
+            }
         }
         else if (value == 7 && isNight) // when youre locked from doing stuff caus you gotta go back to the farm
         {
@@ -225,6 +239,11 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientDayToSunset, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
+            if(nightBGM != null)
+            {
+                BGM.clip = nightBGM;
+                BGM.Play();
+            }
         }
         else if (value == 20) //night
         {
