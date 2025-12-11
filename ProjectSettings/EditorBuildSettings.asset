@@ -29,6 +29,27 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Kaitlyn/Day Testing Scene.unity
     guid: e2e10ee6a8d99b249a49fcd2b5c16304
+  - enabled: 1
+    path: Assets/Breanna/Menu/Kaitlyn.unity
+    guid: 6474cc4e5f5282548b7feb97d5910682
+  - enabled: 1
+    path: Assets/Breanna/Menu/Breanna.unity
+    guid: a280d38a1ae27954ca8c99d89cbba8f5
+  - enabled: 1
+    path: Assets/Breanna/Menu/Shu.unity
+    guid: 8e880fb797a62164faaebb7037937798
+  - enabled: 1
+    path: Assets/Breanna/Menu/Isabel.unity
+    guid: 9565c099184d88e41b0ea81f32228280
+  - enabled: 1
+    path: Assets/Breanna/Menu/Orel.unity
+    guid: 8ece744bd4fb5704ea1483975e7d677d
+  - enabled: 1
+    path: Assets/Breanna/Menu/Jolie.unity
+    guid: 463aa232751aaa74dbb4baa45cd12096
+  - enabled: 1
+    path: Assets/Breanna/Menu/Jose.unity
+    guid: 710d6e1f2d4384348b7f5e96fb8d81c8
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c465cf6eef8c49444904123cb4809af2,
       type: 2}
