@@ -66,9 +66,9 @@ public class Skill_Tree : MonoBehaviour
         stats.Attack_Power += 10;
         sd.SavePlayerData();
     }
-    public void Attack_Speed()
+    public void Defense()
     {
-        stats.Attack_Speed += + 1;
+        stats.Defense += + 7;
         sd.SavePlayerData();
     }
     public void Knockback()

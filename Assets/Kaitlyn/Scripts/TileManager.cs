@@ -13,13 +13,17 @@ public class TileManager : MonoBehaviour
     {
         foreach(var position in interactableMap.cellBounds.allPositionsWithin)
         {
-            interactableMap.SetTile(position, hiddenInteractableTile);
+            TileBase tile = interactableMap.GetTile(position);
+            if (tile != null && tile.name == "Interactable_Visible")
+            {
+                interactableMap.SetTile(position, hiddenInteractableTile);
+            }
         }
     }
 
-    public bool IsInteractable(Vector3Int position)
+    public bool IsInteractable(Vector3 position)
     {
-        TileBase tile = interactableMap.GetTile(position);
+        TileBase tile = interactableMap.GetTile(interactableMap.WorldToCell(position));
        
         if(tile != null)
         {
@@ -31,9 +35,9 @@ public class TileManager : MonoBehaviour
         return false;
     }
 
-    public void SetInteracted(Vector3Int position)
+    public void SetInteracted(Vector3 position)
     {
-        interactableMap.SetTile(position, interactedTile);
+        interactableMap.SetTile(interactableMap.WorldToCell(position), interactedTile);
     }
 
 }

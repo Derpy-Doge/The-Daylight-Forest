@@ -63,6 +63,8 @@ public class TimeManager : MonoBehaviour
     private string mainScene;
     private string mainMenu;
 
+    public TileManager tileManager; // this is pretty much a game manager atp :pensive:
+
 
     private void Awake()
     {
@@ -127,6 +129,7 @@ public class TimeManager : MonoBehaviour
         {
             globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
             fog = GameObject.FindWithTag("Fog"); // make sure all fog is childed to one thing with the fog tag and the individual fogs dont have the tag
+            tileManager = GetComponent<TileManager>();
         }
         else if (scene.name == mainMenu)
         {
