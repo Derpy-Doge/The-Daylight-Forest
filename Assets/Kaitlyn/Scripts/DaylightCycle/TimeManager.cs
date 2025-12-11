@@ -140,6 +140,8 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
+
+
         tempSeconds = Time.deltaTime + tempSeconds;
         if(tempSeconds >= .15f) // the seconds in each minute, resets each minute
         {
@@ -165,7 +167,7 @@ public class TimeManager : MonoBehaviour
 
         if(minutes == 1 && hours == 6 || minutes == 1 && hours == 20)
         {
-            //dialogueBoxes[4].GetComponent<Dialogue>().StartDialogue(); // make "Turning Dialogue" 5th in the array
+            dialogueBoxes[4].GetComponent<Dialogue>().StartDialogue(); // make "Turning Dialogue" 5th in the array
         }
 
         if (isNight)
@@ -185,11 +187,11 @@ public class TimeManager : MonoBehaviour
 
         if(hours == 21 && minutes == 0 && isDay)
         {
-            //dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
+            dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
         }
         else if(hours == 7 && minutes == 0 && isNight)
         {
-            //dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
+            dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
         }
 
         if(hours == 7 && minutes == 0 && days > 0)
