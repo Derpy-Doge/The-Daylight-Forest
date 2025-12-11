@@ -3,12 +3,10 @@ using UnityEngine.InputSystem;
 
 public class FarmingManager : MonoBehaviour
 {
-    private TileManager tileManager;
     private GameObject player;
 
     void Awake()
     {
-        tileManager = FindFirstObjectByType<TileManager>();
         player = GameObject.FindWithTag("Player");
     }
 
@@ -27,12 +25,10 @@ public class FarmingManager : MonoBehaviour
     {
         if (ctx.ReadValue<float>() == 0) return;
 
-        Vector3Int pos = new Vector3Int((int)player.transform.position.x, 0, (int)player.transform.position.z);
-
-        if (tileManager.IsInteractable(pos))
+        if (TimeManager.instance.tileManager.IsInteractable(player.transform.position))
         {
             Debug.Log("tile is interactable");
-            tileManager.SetInteracted(pos);
+            TimeManager.instance.tileManager.SetInteracted(player.transform.position);
         }
         else
         {
