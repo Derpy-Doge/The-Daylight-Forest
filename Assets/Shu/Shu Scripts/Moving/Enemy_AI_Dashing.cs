@@ -10,6 +10,7 @@ public class Enemy_AI_Dashing : MonoBehaviour
     public float dashTimer;
     public float dashTimerLength = 5f;
     public float dashLength = 0.2f;
+    public bool isDashing = false;
 
     void Awake()
     {
@@ -41,10 +42,12 @@ public class Enemy_AI_Dashing : MonoBehaviour
         {
             Emovespeed = 1;
             dashTimer = 0f;
+            isDashing = false;
         }
         if (dashTimer >= (dashTimerLength - (dashLength*2/50)))
         {
             Emovespeed = 30;
+            isDashing = true;
         }
     }
     void FixedUpdate()
