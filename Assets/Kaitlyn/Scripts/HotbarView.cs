@@ -42,7 +42,7 @@ namespace Inventory.UI
 
             List<InventoryItem> hotbarItems = hotbarController.GetHotbarItems() ?? new List<InventoryItem>();
 
-            for (int i = 0; i <= hotbarItems.Count; i++) // this isnt wrking rn but its not my biggest iddue rn either...
+            for (int i = 0; i <= hotbarItems.Count; i++) // this isnt wrking rn but its not my biggest issue rn either...
             {
                 Debug.Log("blink");
                 Sprite sprite = slotImages[i].sprite;
