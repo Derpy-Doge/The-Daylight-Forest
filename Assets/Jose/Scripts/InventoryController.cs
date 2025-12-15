@@ -1,5 +1,6 @@
 using Inventory.Model;
 using Inventory.Ui;
+using Inventory.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Inventory
     {
         [SerializeField]
         private UIInventoryPage inventoryUI;
+        [SerializeField]
+        private GameObject hotbar;
 
         [SerializeField]
         private InventorySO inventoryData;
@@ -98,6 +101,7 @@ namespace Inventory
                 if (inventoryUI.isActiveAndEnabled == false)
                 {
                     inventoryUI.Show();
+                    hotbar.SetActive(false);
                     foreach (var item in inventoryData.GetCurrentInventoryState())
                     {
                         inventoryUI.UpdateData(item.Key,
@@ -108,6 +112,7 @@ namespace Inventory
                 else
                 {
                     inventoryUI.Hide();
+                    hotbar.SetActive(true);
                 }
 
 

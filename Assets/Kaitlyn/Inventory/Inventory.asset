@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: Inventory
   m_EditorClassIdentifier: 
   inventoryItems:
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
   - quantity: 1
     item: {fileID: 11400000, guid: c88bacd8534a9154ba01fb19cef14d08, type: 2}
   - quantity: 1
@@ -43,4 +55,10 @@ MonoBehaviour:
     item: {fileID: 0}
   - quantity: 0
     item: {fileID: 0}
-  <Size>k__BackingField: 15
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  <Size>k__BackingField: 24
