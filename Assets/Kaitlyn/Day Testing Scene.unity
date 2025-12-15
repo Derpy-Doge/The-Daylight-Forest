@@ -1013,12 +1013,12 @@ PrefabInstance:
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -1033,12 +1033,12 @@ PrefabInstance:
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42.043594
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -43.8347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4309463981747101675, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -16436,6 +16436,11 @@ PrefabInstance:
       propertyPath: isDay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
+        type: 3}
+      propertyPath: dayBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: f704a437e6b28a6429f54d45ead2845c, type: 3}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isNight
