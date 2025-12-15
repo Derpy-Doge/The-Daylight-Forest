@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.UI.Image;
+// using static UnityEngine.UI.Image;
 
 public class SpawnHitBox : MonoBehaviour
 {

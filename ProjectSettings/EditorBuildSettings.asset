@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Breanna/Menu/Credits.unity
     guid: 4466ca02d25bcd54ab3dc45344423747
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kaitlyn/Kaitlyn Credits.unity
     guid: 95d88ad19200bf5438937ca22ebe1720
-  - enabled: 1
+  - enabled: 0
     path: Assets/Breanna/Menu/Level 1.unity
     guid: 23ace7d985de57c479adbe49cfa1b9f5
   - enabled: 1
