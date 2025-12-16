@@ -9,7 +9,7 @@ public class TileDataManager : MonoBehaviour
     public static TileDataManager Instance;
     public Tilemap interactableTilemap;
 
-    private Dictionary<Vector3, TileData> tileData = new Dictionary<Vector3, TileData>();
+    private Dictionary<Vector3Int, TileData> tileData = new Dictionary<Vector3Int, TileData>();
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class TileDataManager : MonoBehaviour
         }
     }
 
-    public TileData GetData(Vector3 position)
+    public TileData GetData(Vector3Int position)
     {
         if (!tileData.ContainsKey(position))
         {
@@ -47,7 +47,7 @@ public class TileDataManager : MonoBehaviour
     }
 
 
-    public void TriggerBool(Vector3 tilePosition, int boolIndex)
+    public void TriggerBool(Vector3Int tilePosition, int boolIndex)
     {
         if(tilePosition == null)
         {
