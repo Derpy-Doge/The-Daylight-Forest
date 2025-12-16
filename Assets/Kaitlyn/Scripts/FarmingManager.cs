@@ -24,6 +24,8 @@ public class FarmingManager : MonoBehaviour
     public void CanInteract(InputAction.CallbackContext ctx)
     {
         if (ctx.ReadValue<float>() == 0) return;
+        Vector3Int intPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+
 
         if (TimeManager.instance.tileManager.IsInteractable(player.transform.position))
         {
