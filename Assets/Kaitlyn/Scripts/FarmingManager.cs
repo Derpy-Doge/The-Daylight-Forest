@@ -27,7 +27,6 @@ public class FarmingManager : MonoBehaviour
 
         if (TimeManager.instance.tileManager.IsInteractable(player.transform.position))
         {
-            Debug.Log("tile is interactable");
             TimeManager.instance.tileManager.SetInteracted(player.transform.position);
         }
         else

@@ -143,7 +143,7 @@ public class TimeManager : MonoBehaviour
 
 
         tempSeconds = Time.deltaTime + tempSeconds;
-        if(tempSeconds >= .15f) // the seconds in each minute, resets each minute
+        if(tempSeconds >= .25f) // the seconds in each minute, resets each minute
         {
             minutes ++;
             tempSeconds = 0;
@@ -224,16 +224,17 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientNightToSunrise, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
-            if(dayBGM != null)
-            {
-                BGM.clip = dayBGM;
-                BGM.Play();
-            }
+
         }
         else if (value == 7 && isNight) // when youre locked from doing stuff caus you gotta go back to the farm
         {
             isDay = true;
             isNight = false;
+            if (dayBGM != null)
+            {
+                BGM.clip = dayBGM;
+                BGM.Play();
+            }
         }
         else if (value == 8) //day
         {
@@ -244,16 +245,16 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientDayToSunset, 5f));
             StartCoroutine(FadeLightIntesity(.75f, 2981f, 5f));
-            if(nightBGM != null)
-            {
-                BGM.clip = nightBGM;
-                BGM.Play();
-            }
         }
         else if (value == 20) //night
         {
             StartCoroutine(LerpLight(gradientSunsetToNight, 5f));
             StartCoroutine(FadeLightIntesity(.4f, 15000f, 5f));
+            if (nightBGM != null)
+            {
+                BGM.clip = nightBGM;
+                BGM.Play();
+            }
         }
         else if (value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
         {

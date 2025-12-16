@@ -1013,12 +1013,12 @@ PrefabInstance:
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -1033,12 +1033,12 @@ PrefabInstance:
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.043594
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -43.8347
       objectReference: {fileID: 0}
     - target: {fileID: 4309463981747101675, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -1063,7 +1063,7 @@ PrefabInstance:
     - target: {fileID: 4309463981747101675, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000038146973
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4309463981747101675, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -13441,7 +13441,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 33ac9439cf218854f9f2d629d45a18a3, type: 3}
   m_Resource: {fileID: 8300000, guid: 33ac9439cf218854f9f2d629d45a18a3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.165
+  m_Volume: 0.075
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -14091,6 +14091,20 @@ MonoBehaviour:
   Seed1Tile: {fileID: 11400000, guid: 5af21fbf84391794dbc1a453a9f4ba5f, type: 2}
   Seed2Tile: {fileID: 11400000, guid: 2f2bd50059916bb45b4aecb698103e25, type: 2}
   hbc: {fileID: 484019190}
+  tdm: {fileID: 1674935314}
+--- !u!114 &1674935314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674935309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb310e0d0fe00984c932be3a689c39c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableTilemap: {fileID: 11779880}
 --- !u!1 &1710799836
 GameObject:
   m_ObjectHideFlags: 0
@@ -16541,7 +16555,7 @@ PrefabInstance:
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isDay
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
@@ -16551,13 +16565,18 @@ PrefabInstance:
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: isNight
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: nightBGM
       value: 
       objectReference: {fileID: 8300000, guid: 33ac9439cf218854f9f2d629d45a18a3, type: 3}
+    - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
+        type: 3}
+      propertyPath: dayDuration
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: 'dialogueBoxes.Array.data[0]'
@@ -16646,6 +16665,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1674935310}
+    - targetCorrespondingSourceObject: {fileID: 4975821372930303328, guid: d0b890db9a69d544eba9f048c30d738d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1674935314}
   m_SourcePrefab: {fileID: 100100000, guid: d0b890db9a69d544eba9f048c30d738d, type: 3}
 --- !u!1001 &2490118610821656498
 PrefabInstance:
