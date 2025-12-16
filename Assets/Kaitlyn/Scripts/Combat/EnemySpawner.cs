@@ -90,7 +90,10 @@ public class EnemySpawner : MonoBehaviour
     {
         esp.canSpawn = false;
 
-        Instantiate(esp.enemyType, esp.spawnPoint.position, Quaternion.identity);
+        for (int i = 0; i < esp.spawnPoints.Count; i++)
+        {
+            Instantiate(esp.enemyType, esp.spawnPoints[i].position, Quaternion.identity);
+        }
 
         yield return new WaitForSeconds(esp.respawnTime);
 
@@ -116,7 +119,7 @@ public class EnemySpawnPoint
 {
     [Tooltip("Start at 1 and go on from there. 1 will be the weakest enemy type with the lowest cooldown.")] public int ID;
     public GameObject enemyType;
-    public Transform spawnPoint;
+    public List<Transform> spawnPoints;
     public float respawnTime;
     public bool canSpawn;
 }

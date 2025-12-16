@@ -54,7 +54,8 @@ public class TileManager : MonoBehaviour
 
     public void SetInteracted(Vector3 position)
     {
-        if(hbc != null)
+
+        if (hbc != null)
         {
             if (hbc.usingPlow)
             {
@@ -66,15 +67,15 @@ public class TileManager : MonoBehaviour
             }
             else if (hbc.usingSeed1)
             {
-                tdm.TriggerBool(position, 0);
+                //tdm.TriggerBool(position, 0);
                 interactableMap.SetTile(interactableMap.WorldToCell(position), Seed1Tile);
-                tdm.GetData(position);
+                //tdm.GetData(position);
             }
             else if (hbc.usingSeed2)
             {
-                tdm.TriggerBool(position, 1);
+                //tdm.TriggerBool(position, 1);
                 interactableMap.SetTile(interactableMap.WorldToCell(position), Seed2Tile);
-                tdm.GetData(position);
+                //tdm.GetData(position);
             }
             else
             {
