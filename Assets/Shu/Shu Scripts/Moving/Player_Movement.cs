@@ -46,8 +46,15 @@ public class Player_Movement : MonoBehaviour
 
         if (myAnimator != null)
         {
-            myAnimator.SetFloat("Xmv", myRigidbody.linearVelocity.x);
-            myAnimator.SetFloat("Zmv", myRigidbody.linearVelocity.z);
+            if ((Input.GetKey(KeyCode.LeftArrow) == true || Input.GetKey(KeyCode.A) == true) ||
+                (Input.GetKey(KeyCode.RightArrow) == true || Input.GetKey(KeyCode.D) == true)||
+                (Input.GetKey(KeyCode.DownArrow) == true || Input.GetKey(KeyCode.S) == true)||
+                (Input.GetKey(KeyCode.UpArrow) == true || Input.GetKey(KeyCode.W) == true))
+            { 
+                myAnimator.SetFloat("Xmv", myRigidbody.linearVelocity.normalized.x);
+                myAnimator.SetFloat("Zmv", myRigidbody.linearVelocity.normalized.z);
+            }
+
             myAnimator.SetBool("Ismoving", myRigidbody.linearVelocity.magnitude > 0);
         }
     }
