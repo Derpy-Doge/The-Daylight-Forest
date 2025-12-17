@@ -12154,7 +12154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1642506279}
   movespeed: 2.5
-  myAnimator: {fileID: 0}
+  myAnimator: {fileID: 2023581239}
 --- !u!65 &1642506281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13649,7 +13649,7 @@ Animator:
   m_GameObject: {fileID: 2023581237}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5342875c124f41646809e3c8a1404367, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7a9276bf1dc580947a9c0e155b938bd5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
