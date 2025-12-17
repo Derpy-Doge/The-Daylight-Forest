@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class FarmingManager : MonoBehaviour
 {
     private GameObject player;
+    private TileDataManager tdm;
 
     void Awake()
     {

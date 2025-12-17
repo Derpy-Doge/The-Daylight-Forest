@@ -42,19 +42,25 @@ namespace Inventory.UI
 
             List<InventoryItem> hotbarItems = hotbarController.GetHotbarItems() ?? new List<InventoryItem>();
 
-            for (int i = 0; i <= hotbarItems.Count; i++) // this isnt wrking rn but its not my biggest issue rn either...
+            foreach(var image in slotImages)
             {
-                Debug.Log("blink");
-                Sprite sprite = slotImages[i].sprite;
-                sprite = null;
-                var item = hotbarItems[i];
+                for (int i = 0; i <= hotbarItems.Count;) // this isnt wrking rn but its not my biggest issue rn either...
+                {
+                    Debug.Log("blink");
+                    image.sprite = null;
+                    var item = hotbarItems[i];
 
-                if (!item.IsEmpty && item.item != null)
-                    sprite = item.item.ItemImage;
-                else
-                    Debug.Log("didnt wrk");
-                    return;
+                    if (item.IsEmpty || item.item == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        image.sprite = hotbarItems[i].item.ItemImage;
+                    }
+                }
             }
+
 
             UpdateSelectionVisuals(hotbarController != null ? hotbarController.SelectedIndex : -1);
         }

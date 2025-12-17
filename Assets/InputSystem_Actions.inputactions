@@ -672,6 +672,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Hacks",
+                    "type": "Button",
+                    "id": "85212615-00fa-469f-b85b-563a3e75c195",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1101,6 +1110,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08a9ce42-177e-44e1-939c-c3ffb7c75faf",
+                    "path": "<Keyboard>/pageUp",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hacks",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

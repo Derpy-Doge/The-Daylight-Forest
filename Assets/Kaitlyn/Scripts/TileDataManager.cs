@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
 public class TileDataManager : MonoBehaviour
 {
-    public static TileDataManager Instance;
+    private static TileDataManager Instance;
     public Tilemap interactableTilemap;
 
-    private Dictionary<Vector3Int, TileData> tileData = new Dictionary<Vector3Int, TileData>();
+    public Dictionary<Vector3Int, TileData> tileData = new Dictionary<Vector3Int, TileData>();
 
     private void Awake()
     {
@@ -26,21 +27,31 @@ public class TileDataManager : MonoBehaviour
     {
         foreach (var position in interactableTilemap.cellBounds.allPositionsWithin)
         {
-            TileBase tile = interactableTilemap.GetTile(interactableTilemap.WorldToCell(position));
 
-            if (tile != null)
+            if (interactableTilemap.HasTile(position))
             {
-                tileData[position] = new TileData(new List<bool>() { false, false });
+                SetData(position, new TileData());
             }
+        }
+    }
+
+    public void SetData(Vector3Int pos, TileData data)
+    {
+        if(tileData.ContainsKey(pos))
+        {
+            tileData[pos] = data;
+        }
+        else
+        {
+            tileData.Add(pos, data);
         }
     }
 
     public TileData GetData(Vector3Int position)
     {
-        if (!tileData.ContainsKey(position))
+        if (tileData.TryGetValue(position, out TileData data))
         {
-            Debug.Log(tileData[position]);
-            return tileData[position];
+            return data;
         }
 
         return null;
@@ -49,34 +60,46 @@ public class TileDataManager : MonoBehaviour
 
     public void TriggerBool(Vector3Int tilePosition, int boolIndex)
     {
-        if(tilePosition == null)
+        TileData data = GetData(tilePosition);
+        if (data != null)
         {
-            Debug.Log("yo do smth");
+            data.TriggerSpecificBool(boolIndex);
         }
         else
         {
-            if (tileData.ContainsKey(tilePosition))
-            {
-                if (boolIndex >= 0 && boolIndex < tileData[tilePosition].seedsPlanted.Count)
-                {
-                    tileData[tilePosition].seedsPlanted[boolIndex] = !tileData[tilePosition].seedsPlanted[boolIndex];
-                    Debug.Log("Bool at index {boolIndex} for tile {tilePosition} is now: {tileData[tilePosition].seedsPlanted[boolIndex]}");
-                }
-            }
+            Debug.LogWarning("no data found at position {tilePosition}");
         }
-        
+    }
+
+    public void DisplayDictionaryContent(InputAction.CallbackContext ctx)
+    {
+        if(ctx.ReadValue<float>() == 0)
+        {
+            return;
+        }
+
+        Debug.Log("----------Dictionary Contents----------");
+        foreach(KeyValuePair<Vector3Int, TileData> tile in tileData)
+        {
+            Debug.Log("Tile Position: " + tile.Key + " | Data:" + tile.Value.seedsPlanted);
+        }
+        Debug.Log("---------------------------------------");
     }
 }
 
+[System.Serializable]
 public class TileData
 {
-    public List<bool> seedsPlanted;
+    public List<bool> seedsPlanted = new List<bool> { false, false};
 
     //public bool seed1Planted = false; the first bool will be seed 1 
     //public bool seed2Planted = false; 2nd one will be seed 2 
 
-    public TileData(List<bool> initialBools)
+    public void TriggerSpecificBool(int index)
     {
-        seedsPlanted = initialBools ?? new List<bool>();
-    }
+        if(index >= 0 && index < seedsPlanted.Count)
+        {
+            seedsPlanted[index] = !seedsPlanted[index];
+        }
+    }    
 }
