@@ -1,8 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
 using Inventory.Model;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Inventory.UI
 {
@@ -42,25 +41,30 @@ namespace Inventory.UI
 
             List<InventoryItem> hotbarItems = hotbarController.GetHotbarItems() ?? new List<InventoryItem>();
 
-            foreach(var image in slotImages)
+            int slotCount = slotImages?.Count ?? 0;
+            for (int i = 0; i < slotCount; i++)
             {
-                for (int i = 0; i <= hotbarItems.Count;) // this isnt wrking rn but its not my biggest issue rn either...
-                {
-                    Debug.Log("blink");
-                    image.sprite = null;
-                    var item = hotbarItems[i];
+                var image = slotImages[i];
+                if (image == null) continue;
 
-                    if (item.IsEmpty || item.item == null)
+                Sprite spriteToUse = null;
+
+                if (i < hotbarItems.Count)
+                {
+                    var invItem = hotbarItems[i];
+                    if (!invItem.IsEmpty && invItem.item != null && invItem.item.ItemImage != null)
                     {
-                        continue;
+                        image.enabled = true;
+                        spriteToUse = invItem.item.ItemImage;
                     }
                     else
                     {
-                        image.sprite = hotbarItems[i].item.ItemImage;
+                        image.enabled = false;
                     }
                 }
-            }
 
+                image.sprite = spriteToUse;
+            }
 
             UpdateSelectionVisuals(hotbarController != null ? hotbarController.SelectedIndex : -1);
         }
@@ -69,12 +73,15 @@ namespace Inventory.UI
         {
             if (selectionHighlights == null || selectionHighlights.Count == 0) return;
 
-            int len = selectionHighlights.Count;
-            for (int i = 0; i < len; i++)
+            int highlightsCount = selectionHighlights.Count;
+            
+            int normalizedIndex = (selectedIndex >= 0 && selectedIndex < highlightsCount) ? selectedIndex : -1;
+
+            for (int i = 0; i < highlightsCount; i++)
             {
-                var go = selectionHighlights[i];
-                if (go == null) continue;
-                go.SetActive(i == selectedIndex);
+                var highlight = selectionHighlights[i];
+                if (highlight == null) continue;
+                highlight.SetActive(i == normalizedIndex);
             }
         }
     }

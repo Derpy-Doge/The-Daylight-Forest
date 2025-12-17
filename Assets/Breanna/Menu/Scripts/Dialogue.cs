@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 
 public struct DialoguePiece
 {
-    public string name;
     [TextArea] public string dialogue;
 }
 
@@ -18,7 +17,6 @@ public class Dialogue : MonoBehaviour
     public List<DialoguePiece> dialogue;
     public float textSpeed = 0.1f;
 
-    public TMPro.TMP_Text dialogueName; 
     public TMPro.TMP_Text dialogueText;
 
     private int dialogueIndex;
@@ -60,7 +58,6 @@ public class Dialogue : MonoBehaviour
 
     public IEnumerator WriteDialoguePiece(DialoguePiece dialogue)
     {
-        dialogueName.SetText(dialogue.name);
         dialogueText.SetText("");
 
         IsDialogueRunning = true;
