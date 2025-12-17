@@ -149,8 +149,8 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: x
     m_Mirror: 0
-  m_BlendParameter: x
-  m_BlendParameterY: y
+  m_BlendParameter: Xmv
+  m_BlendParameterY: Zmv
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
@@ -165,13 +165,13 @@ AnimatorController:
   m_Name: Test
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: x
+  - m_Name: Xmv
     m_Type: 1
     m_DefaultFloat: -1
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: y
+  - m_Name: Zmv
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -268,8 +268,8 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: x
-  m_BlendParameterY: y
+  m_BlendParameter: Xmv
+  m_BlendParameterY: Zmv
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 1
