@@ -37,4 +37,6 @@ public class FarmingManager : MonoBehaviour
             Debug.Log("nah twn");
         }
     }
+
+
 }

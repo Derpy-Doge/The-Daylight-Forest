@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 // if days go from 7am to 8pm(or 20:00) itll be abt 6 and a half minutes of farm play time

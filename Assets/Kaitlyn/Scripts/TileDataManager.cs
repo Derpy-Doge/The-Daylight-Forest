@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class TileDataManager : MonoBehaviour
 {
     private static TileDataManager Instance;
-    public Tilemap interactableTilemap;
+    private GameObject interactableMapObject;
+    private Tilemap interactableTilemap;
 
     public Dictionary<Vector3Int, TileData> tileData = new Dictionary<Vector3Int, TileData>();
 
@@ -22,17 +21,13 @@ public class TileDataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        interactableMapObject = GameObject.FindWithTag("InteractableMap");
+        interactableTilemap = interactableMapObject.GetComponent<Tilemap>();
     }
     void Start()
     {
-        foreach (var position in interactableTilemap.cellBounds.allPositionsWithin)
-        {
-
-            if (interactableTilemap.HasTile(position))
-            {
-                SetData(position, new TileData());
-            }
-        }
+        
     }
 
     public void SetData(Vector3Int pos, TileData data)
@@ -90,7 +85,7 @@ public class TileDataManager : MonoBehaviour
 [System.Serializable]
 public class TileData
 {
-    public List<bool> seedsPlanted = new List<bool> { false, false};
+    public List<bool> seedsPlanted = new List<bool> { false, false };
 
     //public bool seed1Planted = false; the first bool will be seed 1 
     //public bool seed2Planted = false; 2nd one will be seed 2 
