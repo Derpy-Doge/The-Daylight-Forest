@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: WETdelete
+  m_Name: WTBN2869_42
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 6a093672b7c10a04e82c91feabe77d19, type: 3}
+  m_Sprite: {fileID: 80962151, guid: 9b8712f035cae7541b429bea38a57514, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
