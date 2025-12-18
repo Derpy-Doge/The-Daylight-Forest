@@ -1145,12 +1145,12 @@ PrefabInstance:
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -1165,12 +1165,12 @@ PrefabInstance:
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42.043594
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859189035008376097, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -43.8347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4309463981747101675, guid: 9413a1fe72c93c14693fb8e41ecc4c61,
         type: 3}
@@ -12664,6 +12664,8 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: a69a7baa906f59c40b417d7a2f20ac47, type: 2}
   - quantity: 18
     item: {fileID: 11400000, guid: e9f3c35abc502e04eb5cb41ac9e1b9f3, type: 2}
+  - quantity: 2
+    item: {fileID: 11400000, guid: 8f1aedd4a86bc4144806c44b5e2a06df, type: 2}
 --- !u!1 &1657478403
 GameObject:
   m_ObjectHideFlags: 0
