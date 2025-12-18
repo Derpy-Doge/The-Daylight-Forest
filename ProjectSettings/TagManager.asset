@@ -10,6 +10,7 @@ TagManager:
   - GlobalLight
   - Fog
   - InteractableMap
+  - Hotbar
   layers:
   - Default
   - TransparentFX

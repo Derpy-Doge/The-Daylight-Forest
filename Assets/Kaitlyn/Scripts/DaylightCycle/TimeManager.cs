@@ -47,6 +47,10 @@ public class TimeManager : MonoBehaviour
     public TimeStateChange tsc;
 
     public PlayerAttackManager pam;
+    private GameObject player;
+    private Player_Movement playerMovement;
+    private Animator playerAnimator;
+    
 
     private GameObject fog;
 
@@ -76,6 +80,9 @@ public class TimeManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+        player = GameObject.FindWithTag("Player");
+        playerMovement = player.GetComponent<Player_Movement>();
+        playerAnimator = player.GetComponentInChildren<Animator>();
         BGM = FindFirstObjectByType<AudioSource>();
         saveData = GameObject.FindWithTag("SaveData");
         sd = saveData.GetComponent<SaveData>();
@@ -174,6 +181,8 @@ public class TimeManager : MonoBehaviour
                 pam.OnNightEnable();
             if (fog != null)
                 fog.GetComponentInChildren<Collider>().enabled = false;
+            playerAnimator.SetBool("isDay", false);
+            playerAnimator.SetBool("isNIght", true);
         }
         else if (isDay)
         {
@@ -181,14 +190,20 @@ public class TimeManager : MonoBehaviour
                 pam.OnDayDisable();
             if (fog != null)
                 fog.GetComponentInChildren<Collider>().enabled = true;
+            playerAnimator.SetBool("isNIght", false);
+            playerAnimator.SetBool("isDay", true);
         }
 
         if(hours == 21 && minutes == 0 && isDay)
         {
+            StartCoroutine(WaitForTransformationEnd("Poof"));
+
             //dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
         }
         else if(hours == 7 && minutes == 0 && isNight)
         {
+            StartCoroutine(WaitForTransformationEnd("Transform"));
+
             //dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
         }
 
@@ -288,5 +303,18 @@ public class TimeManager : MonoBehaviour
         }
         globalLight.intensity = endIntensity;
         globalLight.colorTemperature = endTemp;
+    }
+
+    public IEnumerator WaitForTransformationEnd(string triggerName) // only for "Transform" and "Poof"
+    {
+        playerAnimator.SetTrigger(triggerName);
+
+        yield return null;
+
+        playerMovement.enabled = false;
+
+        yield return new WaitUntil(() => playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+
+        playerMovement.enabled = true;
     }
 }

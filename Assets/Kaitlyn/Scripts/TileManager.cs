@@ -19,15 +19,25 @@ public class TileManager : MonoBehaviour
     [SerializeField] private Tile Seed1Tile;
     [SerializeField] private Tile Seed2Tile;
 
-    [SerializeField] private HotbarController hbc;
     [SerializeField] private TileDataManager tdm;
-    [SerializeField] private FarmingManager fm;
+    private HotbarController hbc;
+    private FarmingManager fm;
 
     public GameObject farmSprite;
     [SerializeField] private Transform spriteParent;
 
     [SerializeField] private InventorySO inventoryData;
     [SerializeField] private List<InventoryItem> Plants; // 0 for seed1, 1 for seed2
+
+    private void Awake()
+    {
+       GameObject hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+        hbc = hotbar.GetComponent<HotbarController>();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        fm = player.GetComponent<FarmingManager>();
+    }
+
     void Start()
     {
         foreach(var position in interactableMap.cellBounds.allPositionsWithin)
