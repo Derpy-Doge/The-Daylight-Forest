@@ -56,6 +56,7 @@ public class Player_Movement : MonoBehaviour
             }
 
             myAnimator.SetBool("Ismoving", myRigidbody.linearVelocity.magnitude > 0);
+            myAnimator.SetBool("Iswolf", TimeManager.instance.isNight);
         }
     }
 }
