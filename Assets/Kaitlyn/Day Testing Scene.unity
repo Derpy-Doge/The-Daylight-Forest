@@ -12634,6 +12634,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47244cd515188b049a452e706fa6b9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileManager: {fileID: 1674935310}
+  seed1GrowthStages:
+  - {fileID: 21300000, guid: 8fea4202d9b4dfb4398f5e639d4b3288, type: 3}
+  - {fileID: 21300000, guid: f0ce8e9e849f3e747a55cd9efe290638, type: 3}
+  - {fileID: 21300000, guid: f25a8b81ec14d3e4dbb50d2e09c4764f, type: 3}
+  seed1GrowthTime: 5
+  seed2GrowthStages: []
+  seed2GrowthTime: 720
 --- !u!114 &1642506290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12714,8 +12722,15 @@ MonoBehaviour:
   Seed2Tile: {fileID: 11400000, guid: 2f2bd50059916bb45b4aecb698103e25, type: 2}
   hbc: {fileID: 484019190}
   tdm: {fileID: 1674935314}
+  fm: {fileID: 1642506289}
   farmSprite: {fileID: 11701696}
   spriteParent: {fileID: 16310023}
+  inventoryData: {fileID: 11400000, guid: bc813d581c186e74eb7d9850c7cefa48, type: 2}
+  Plants:
+  - quantity: 1
+    item: {fileID: 11400000, guid: 8f1aedd4a86bc4144806c44b5e2a06df, type: 2}
+  - quantity: 1
+    item: {fileID: 11400000, guid: 284e89e1509f6ba4398f95de0fbecbeb, type: 2}
 --- !u!114 &1674935314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14836,6 +14851,11 @@ PrefabInstance:
       propertyPath: dayDuration
       value: 360
       objectReference: {fileID: 0}
+    - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
+        type: 3}
+      propertyPath: tileManager
+      value: 
+      objectReference: {fileID: 1674935310}
     - target: {fileID: 4122714094544422211, guid: d0b890db9a69d544eba9f048c30d738d,
         type: 3}
       propertyPath: 'dialogueBoxes.Array.data[0]'

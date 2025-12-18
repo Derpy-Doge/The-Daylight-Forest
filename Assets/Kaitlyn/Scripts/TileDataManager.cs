@@ -85,10 +85,7 @@ public class TileDataManager : MonoBehaviour
 [System.Serializable]
 public class TileData
 {
-    public List<bool> seedsPlanted = new List<bool> { false, false };
-
-    //public bool seed1Planted = false; the first bool will be seed 1 
-    //public bool seed2Planted = false; 2nd one will be seed 2 
+    public List<bool> seedsPlanted = new List<bool> { false, false, false }; //seed1 planted, seed2 planted, seed grown
 
     public void TriggerSpecificBool(int index)
     {

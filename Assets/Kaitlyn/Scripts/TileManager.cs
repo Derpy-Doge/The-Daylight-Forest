@@ -1,4 +1,7 @@
+using Inventory.Model;
 using Inventory.UI;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -18,9 +21,13 @@ public class TileManager : MonoBehaviour
 
     [SerializeField] private HotbarController hbc;
     [SerializeField] private TileDataManager tdm;
+    [SerializeField] private FarmingManager fm;
 
-    [SerializeField] private GameObject farmSprite;
+    public GameObject farmSprite;
     [SerializeField] private Transform spriteParent;
+
+    [SerializeField] private InventorySO inventoryData;
+    [SerializeField] private List<InventoryItem> Plants; // 0 for seed1, 1 for seed2
     void Start()
     {
         foreach(var position in interactableMap.cellBounds.allPositionsWithin)
@@ -36,8 +43,9 @@ public class TileManager : MonoBehaviour
     public bool IsInteractable(Vector3 position)
     {
         TileBase tile = interactableMap.GetTile(interactableMap.WorldToCell(position));
-       
-        if(tile != null)
+        Vector3Int intPos = new Vector3Int((int)position.x, (int)position.y, (int)position.z);
+
+        if (tile != null)
         {
             if(tile == hiddenInteractableTile && hbc.usingPlow)
             {
@@ -48,6 +56,10 @@ public class TileManager : MonoBehaviour
                 return true;
             }
             else if(tile == WateredTile && hbc.usingSeed1 || tile == WateredTile && hbc.usingSeed2)
+            {
+                return true;
+            }
+            else if(tdm.tileData[intPos].seedsPlanted[2]) 
             {
                 return true;
             }
@@ -65,9 +77,8 @@ public class TileManager : MonoBehaviour
         {
             if (hbc.usingPlow)
             {
-                tdm.SetData(intPos, new TileData());
-
-                interactableMap.SetTile(interactableMap.WorldToCell(position), PlowedTile);
+               tdm.SetData(intPos, new TileData());
+               interactableMap.SetTile(interactableMap.WorldToCell(position), PlowedTile);
             }
             else if (hbc.usingWateringCan)
             {
@@ -76,10 +87,11 @@ public class TileManager : MonoBehaviour
             else if (hbc.usingSeed1)
             {
                 tdm.TriggerBool(intPos, 0);
-                PutSpritesOnFarmTiles();
+                //PutSpriteOnTile(position);
 
                 interactableMap.SetTile(interactableMap.WorldToCell(position), Seed1Tile);
 
+                StartCoroutine(fm.GrowSeed1());
                 if (tdm.tileData[intPos].seedsPlanted[0])
                 {
                     Debug.Log("Gurt: Yo");
@@ -90,7 +102,7 @@ public class TileManager : MonoBehaviour
             else if (hbc.usingSeed2)
             {
                 tdm.TriggerBool(intPos, 1);
-                PutSpritesOnFarmTiles();
+                //PutSpriteOnTile(position);
 
                 interactableMap.SetTile(interactableMap.WorldToCell(position), Seed2Tile);
                 tdm.GetData(intPos);
@@ -100,8 +112,58 @@ public class TileManager : MonoBehaviour
                 return;
             }
         }
+        if (tdm.tileData[intPos].seedsPlanted[2]) // if a fully grown plant is there
+        {
+            interactableMap.SetTile(interactableMap.WorldToCell(position), hiddenInteractableTile);
+
+            if (tdm.tileData[intPos].seedsPlanted[0])
+            {
+                inventoryData.AddItem(Plants[0]);
+                tdm.TriggerBool(intPos, 0);
+            }
+
+            if (tdm.tileData[intPos].seedsPlanted[1])
+            {
+                inventoryData.AddItem(Plants[1]);
+                tdm.TriggerBool(intPos, 1);
+            }
+
+            tdm.TriggerBool(intPos, 2);
+        }
 
         return;
+    }
+
+    public void PutSpriteOnTile(Vector3 pos)
+    {
+        if (interactableMap == null || farmSprite == null)
+            return;
+
+        TileBase tile = interactableMap.GetTile(interactableMap.WorldToCell(pos));
+        if (tile == null)
+            return;
+
+        Vector3Int intPos = new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z);
+
+        Vector3 worldPos = interactableMap.GetCellCenterWorld(intPos);
+
+        if (spriteParent != null)
+        {
+            foreach (Transform child in spriteParent)
+            {
+                if (Vector3.Distance(child.position, worldPos) < 0.01f)
+                {
+                    return; //if theres already have a sprite at this tile
+                }
+            }
+        }
+
+        GameObject instance = Instantiate(farmSprite, worldPos, Quaternion.identity);
+
+        if (spriteParent != null)
+        {
+            instance.transform.SetParent(spriteParent, true);
+        }
     }
 
     public void PutSpritesOnFarmTiles()

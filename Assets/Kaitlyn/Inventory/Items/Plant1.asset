@@ -16,4 +16,5 @@ MonoBehaviour:
   <MaxStackSize>k__BackingField: 18
   <Name>k__BackingField: plant type 1
   <Description>k__BackingField: 'uhhhh [insrt description here or smth...]'
-  <ItemImage>k__BackingField: {fileID: 0}
+  <ItemImage>k__BackingField: {fileID: 7482667652216324306, guid: 3cb3f03c750ca1740b49449ee1fea154,
+    type: 3}
