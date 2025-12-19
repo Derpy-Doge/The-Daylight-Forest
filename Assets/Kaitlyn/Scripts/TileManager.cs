@@ -20,7 +20,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private Tile Seed2Tile;
 
     [SerializeField] private TileDataManager tdm;
-    private HotbarController hbc;
+    public HotbarController hbc;
     private FarmingManager fm;
 
     public GameObject farmSprite;
@@ -61,15 +61,15 @@ public class TileManager : MonoBehaviour
             {
                 return true;
             }
-            else if(tile == PlowedTile && hbc.usingWateringCan)
+            else if(tile == PlowedTile && hbc.usingSeed1 || tile == PlowedTile && hbc.usingSeed1)
             {
                 return true;
             }
-            else if(tile == WateredTile && hbc.usingSeed1 || tile == WateredTile && hbc.usingSeed2)
+            else if(tdm.tileData[intPos].seedsPlanted[0] && hbc.usingWateringCan || tdm.tileData[intPos].seedsPlanted[1] && hbc.usingWateringCan)
             {
                 return true;
             }
-            else if(tdm.tileData[intPos].seedsPlanted[2]) 
+            else if(tdm.tileData[intPos].seedsPlanted[2] && hbc.handsEmpty) 
             {
                 return true;
             }
@@ -93,26 +93,30 @@ public class TileManager : MonoBehaviour
             else if (hbc.usingWateringCan)
             {
                 interactableMap.SetTile(interactableMap.WorldToCell(position), WateredTile);
+
+                tdm.GetData(intPos);
+                if (tdm.tileData[intPos].seedsPlanted[0])
+                {
+                    StartCoroutine(fm.GrowSeed1());
+                    Debug.Log("Gurt: Yo");
+                }
+                else if (tdm.tileData[intPos].seedsPlanted[1])
+                {
+                    StartCoroutine(fm.GrowSeed2());
+                    Debug.Log("Yo: Gurt");
+                }
             }
             else if (hbc.usingSeed1)
             {
                 tdm.TriggerBool(intPos, 0);
-                //PutSpriteOnTile(position);
+                PutSpriteOnTile(position);
 
                 interactableMap.SetTile(interactableMap.WorldToCell(position), Seed1Tile);
-
-                StartCoroutine(fm.GrowSeed1());
-                if (tdm.tileData[intPos].seedsPlanted[0])
-                {
-                    Debug.Log("Gurt: Yo");
-                }
-
-                tdm.GetData(intPos);
             }
             else if (hbc.usingSeed2)
             {
                 tdm.TriggerBool(intPos, 1);
-                //PutSpriteOnTile(position);
+                PutSpriteOnTile(position);
 
                 interactableMap.SetTile(interactableMap.WorldToCell(position), Seed2Tile);
                 tdm.GetData(intPos);
@@ -130,6 +134,8 @@ public class TileManager : MonoBehaviour
             {
                 inventoryData.AddItem(Plants[0]);
                 tdm.TriggerBool(intPos, 0);
+
+
             }
 
             if (tdm.tileData[intPos].seedsPlanted[1])
@@ -155,20 +161,18 @@ public class TileManager : MonoBehaviour
 
         Vector3Int intPos = new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z);
 
-        Vector3 worldPos = interactableMap.GetCellCenterWorld(intPos);
-
         if (spriteParent != null)
         {
             foreach (Transform child in spriteParent)
             {
-                if (Vector3.Distance(child.position, worldPos) < 0.01f)
+                if (Vector3.Distance(child.position, intPos) < 0.01f)
                 {
                     return; //if theres already have a sprite at this tile
                 }
             }
         }
 
-        GameObject instance = Instantiate(farmSprite, worldPos, Quaternion.identity);
+        GameObject instance = Instantiate(farmSprite, intPos, Quaternion.identity);
 
         if (spriteParent != null)
         {

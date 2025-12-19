@@ -38,7 +38,7 @@ public class FarmingManager : MonoBehaviour
     {
         if (ctx.ReadValue<float>() == 0) return;
 
-
+        if(tileManager.hbc.usingPlant1)
         if (TimeManager.instance.tileManager.IsInteractable(player.transform.position))
         {
             TimeManager.instance.tileManager.SetInteracted(player.transform.position);

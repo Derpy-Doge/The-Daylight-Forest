@@ -49,7 +49,6 @@ public class TimeManager : MonoBehaviour
     public PlayerAttackManager pam;
     private GameObject player;
     private Player_Movement playerMovement;
-    private Animator playerAnimator;
     
 
     private GameObject fog;
@@ -82,7 +81,6 @@ public class TimeManager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerMovement = player.GetComponent<Player_Movement>();
-        playerAnimator = player.GetComponentInChildren<Animator>();
         BGM = FindFirstObjectByType<AudioSource>();
         saveData = GameObject.FindWithTag("SaveData");
         sd = saveData.GetComponent<SaveData>();
@@ -91,9 +89,6 @@ public class TimeManager : MonoBehaviour
 
         if (isDay && globalLight != null) // hopefully doing this stops me from having to do a seperate cycle for time on the farm and time in the forest :sob:
         {
-
-            Time.timeScale = 1f; // __ times faster than rl seconds... didnt end up using it cause like i cant do math :skull:
-
             globalLight.intensity = .75f;
             hours = 7;
             globalLight.colorTemperature = 2981f;
@@ -105,9 +100,6 @@ public class TimeManager : MonoBehaviour
         }
         else if (isNight && globalLight != null)
         {
-
-            Time.timeScale = 1f; ;
-
             globalLight.intensity = .4f;
             hours = 21; // i keep almost forgetting to do 24 hr time :sob:
             globalLight.colorTemperature = 15000f;
@@ -145,10 +137,13 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
-
+        if (hours == 7 && minutes == 30)
+        {
+            dialogueBoxes[3].GetComponent<Dialogue>().StartDialogue();
+        }
 
         tempSeconds = Time.deltaTime + tempSeconds;
-        if(tempSeconds >= .25f) // the seconds in each minute, resets each minute
+        if(tempSeconds >= .1f) // the seconds in each minute, resets each minute
         {
             minutes ++;
             tempSeconds = 0;
@@ -163,7 +158,7 @@ public class TimeManager : MonoBehaviour
 
         currentTime = Time.deltaTime + currentTime;
 
-        float rotationAngle = ((currentTime / 720f) * 360f);
+        float rotationAngle = ((currentTime / 360f) * 360f);
 
         if(globalLight != null)
         {
@@ -181,8 +176,6 @@ public class TimeManager : MonoBehaviour
                 pam.OnNightEnable();
             if (fog != null)
                 fog.GetComponentInChildren<Collider>().enabled = false;
-            playerAnimator.SetBool("isDay", false);
-            playerAnimator.SetBool("isNIght", true);
         }
         else if (isDay)
         {
@@ -190,20 +183,14 @@ public class TimeManager : MonoBehaviour
                 pam.OnDayDisable();
             if (fog != null)
                 fog.GetComponentInChildren<Collider>().enabled = true;
-            playerAnimator.SetBool("isNIght", false);
-            playerAnimator.SetBool("isDay", true);
         }
 
         if(hours == 21 && minutes == 0 && isDay)
         {
-            StartCoroutine(WaitForTransformationEnd("Poof"));
-
             //dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
         }
         else if(hours == 7 && minutes == 0 && isNight)
         {
-            StartCoroutine(WaitForTransformationEnd("Transform"));
-
             //dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
         }
 
@@ -242,6 +229,7 @@ public class TimeManager : MonoBehaviour
         else if (value == 7 && isNight) // when youre locked from doing stuff caus you gotta go back to the farm
         {
             isDay = true;
+            StartCoroutine(WaitForPoofEnd());
             isNight = false;
             if (dayBGM != null)
             {
@@ -272,6 +260,7 @@ public class TimeManager : MonoBehaviour
         else if (value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
         {
             isNight = true;
+            StartCoroutine(WaitForTransformationEnd());
             isDay = false;
         }
     }
@@ -305,16 +294,32 @@ public class TimeManager : MonoBehaviour
         globalLight.colorTemperature = endTemp;
     }
 
-    public IEnumerator WaitForTransformationEnd(string triggerName) // only for "Transform" and "Poof"
+    public IEnumerator WaitForTransformationEnd() // only for "Transform" and "Poof"
     {
-        playerAnimator.SetTrigger(triggerName);
+        playerMovement.myAnimator.SetTrigger("Transform");
 
         yield return null;
 
         playerMovement.enabled = false;
 
-        yield return new WaitUntil(() => playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+        yield return new WaitUntil(() => playerMovement.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
 
         playerMovement.enabled = true;
+        playerMovement.myAnimator.SetBool("Iswolf", true);
+    }
+
+
+    public IEnumerator WaitForPoofEnd()
+    {
+        playerMovement.myAnimator.SetTrigger("Poof");
+
+        yield return null;
+
+        playerMovement.enabled = false;
+
+        yield return new WaitUntil(() => playerMovement.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+
+        playerMovement.enabled = true;
+        playerMovement.myAnimator.SetBool("Iswolf", false);
     }
 }

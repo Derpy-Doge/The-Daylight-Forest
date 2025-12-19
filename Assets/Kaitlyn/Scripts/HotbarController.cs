@@ -17,10 +17,13 @@ namespace Inventory.UI
 
         public event Action<int, InventoryItem, bool> OnHotbarSelectionChanged;
 
+        public bool handsEmpty = true;
         public bool usingPlow = false;
         public bool usingWateringCan = false;
         public bool usingSeed1 = false;
         public bool usingSeed2 = false;
+        public bool usingPlant1 = false; ///uhhhh i mightve lost the plot atp
+        public bool usingPlant2 = false;
 
         private void Update()
         {
@@ -52,12 +55,14 @@ namespace Inventory.UI
             if (SelectedIndex < 0 || SelectedIndex >= hotbarSize)
             {
                 if (SelectedIndex != -1) Deselect();
+                handsEmpty = true;
                 return;
             }
 
             if (!HasItemAt(SelectedIndex))
             {
                 Deselect();
+                handsEmpty = true;
             }
             else
             {
@@ -122,6 +127,7 @@ namespace Inventory.UI
             if (SelectedIndex == -1) return;
 
             SelectedIndex = -1;
+            handsEmpty = true;
             usingPlow = false;
             usingWateringCan = false;
             usingSeed1 = false;
@@ -152,6 +158,7 @@ namespace Inventory.UI
                 Debug.Log(selectedItem.item.name);
                 if(selectedItem.item.name == "Hands(plow)")
                 {
+                    handsEmpty = false;
                     usingPlow = true;
                     usingWateringCan = false;
                     usingSeed1 = false;
@@ -159,6 +166,7 @@ namespace Inventory.UI
                 }
                 if (selectedItem.item.name == "Watering Can")
                 {
+                    handsEmpty = false;
                     usingWateringCan = true;
                     usingPlow = false;
                     usingSeed1 = false;
@@ -166,6 +174,7 @@ namespace Inventory.UI
                 }
                 if (selectedItem.item.name == "Seed1")
                 {
+                    handsEmpty = false;
                     usingSeed1 = true;
                     usingPlow = false;
                     usingWateringCan = false;
@@ -173,6 +182,7 @@ namespace Inventory.UI
                 }
                 if (selectedItem.item.name == "Seed2")
                 {
+                    handsEmpty = false;
                     usingSeed2 = true;
                     usingPlow = false;
                     usingWateringCan = false;
@@ -182,6 +192,11 @@ namespace Inventory.UI
             }
 
             return false;
+        }
+
+        public void UseItem()
+        {
+            inventory.inventoryItems[SelectedIndex].ChangeQuantity(inventory.inventoryItems[SelectedIndex].quantity - 1);
         }
     }
 }
