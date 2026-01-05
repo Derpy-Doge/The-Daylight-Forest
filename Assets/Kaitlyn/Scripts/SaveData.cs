@@ -226,6 +226,7 @@ public class SaveData : MonoBehaviour
     {
         saveButton.onClick.RemoveAllListeners();
         saveButton.onClick.AddListener(SavePlayerData);
+        SavePlayerData();
     }
 }
 
