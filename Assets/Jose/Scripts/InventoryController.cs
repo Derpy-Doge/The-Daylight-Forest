@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Inventory
 {
@@ -20,16 +21,45 @@ namespace Inventory
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
 
-        private void Awake()
+        private string mainScene;
+
+        public void Awake()
         {
             inventoryUI = GameObject.FindGameObjectWithTag("UIInventoryPage").GetComponent<UIInventoryPage>();
             hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+
+            mainScene = SaveData.instance.mainScene;
         }
+
 
         private void Start()
         {
-            PrepareUI();
             PrepareInventoryData();
+            PrepareUI();
+        }
+
+        public void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        public void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == mainScene)
+            {
+                inventoryUI = GameObject.FindGameObjectWithTag("UIInventoryPage").GetComponent<UIInventoryPage>();
+                hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+            }
+            else
+            {
+                inventoryUI = null;
+                hotbar = null;
+            }
         }
 
         private void PrepareInventoryData()

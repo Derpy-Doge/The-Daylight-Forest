@@ -277,7 +277,7 @@ public class TimeManager : MonoBehaviour
             fogs.ForEach(fogPart =>
             {
                 fogPart.GetComponent<Collider>().isTrigger = true;
-                OnTriggerStay(player.GetComponent<Collider>());
+                OnTriggerStay(fogPart.GetComponent<Collider>());
             });
         }
     }

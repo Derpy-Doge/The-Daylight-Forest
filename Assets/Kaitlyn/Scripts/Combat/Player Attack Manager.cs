@@ -71,7 +71,7 @@ public class PlayerAttackManager : MonoBehaviour
         {
             fm.enabled = false;
             ic.enabled = false;
-            hotbar.SetActive(false);
+            hotbar = null;
         }
     }
 
