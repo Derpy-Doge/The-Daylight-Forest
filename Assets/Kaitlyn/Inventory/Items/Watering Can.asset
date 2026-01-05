@@ -16,5 +16,5 @@ MonoBehaviour:
   <MaxStackSize>k__BackingField: 1
   <Name>k__BackingField: Watering Can
   <Description>k__BackingField: ...I can't carry enough water in my hands.
-  <ItemImage>k__BackingField: {fileID: 21300000, guid: 586ee520bd36806419b4dae8eb33c9e2,
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 4767ab82cb566864ea903e489a9c34bb,
     type: 3}
