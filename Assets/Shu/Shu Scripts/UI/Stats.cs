@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class Stats : MonoBehaviour
 {
     public float Health_Max;
-    [HideInInspector] public float Health_Current;
+    public float Health_Current;
 
     public float Attack_Speed;
     public float Attack_Power;
