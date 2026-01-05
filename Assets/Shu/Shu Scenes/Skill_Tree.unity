@@ -613,6 +613,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 35c0520b-5bff-4e4a-a2a2-38c50a2c5d73
     m_ActionName: 'UI/Pause[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 85212615-00fa-469f-b85b-563a3e75c195
+    m_ActionName: 'UI/Hacks[/Keyboard/pageUp]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2563,16 +2567,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645503988}
-  m_LocalRotation: {x: -0, y: -0, z: -0.93752337, w: 0.3479224}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.033651542, y: -0.00941924, z: -0.8494091, w: 0.52657676}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 3.6785293, y: 3.6785293, z: 3.6785293}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2007197457}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -139.279}
+  m_LocalEulerAnglesHint: {x: 1.114, y: -3.847, z: -116.445}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1294.9, y: -162.74}
+  m_AnchoredPosition: {x: 434, y: 600}
   m_SizeDelta: {x: 99.7281, y: 9.2715}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645503990
@@ -4264,7 +4268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 379, y: -130}
+  m_AnchoredPosition: {x: 111, y: 64}
   m_SizeDelta: {x: 125, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1196959726

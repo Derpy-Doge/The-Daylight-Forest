@@ -25,27 +25,7 @@ public class Player_Movement : MonoBehaviour
         mainScene = SaveData.instance.mainScene;
     }
 
-    public void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    public void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == mainScene)
-        {
-           this.enabled = true;
-        }
-        else
-        {
-            this.enabled = false;
-        }
-    }
+   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
