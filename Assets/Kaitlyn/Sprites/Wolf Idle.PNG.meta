@@ -368,10 +368,10 @@ TextureImporter:
       name: Wolf Idle_11
       rect:
         serializedVersion: 2
-        x: 4519
+        x: 4525
         y: 972
         width: 1129
-        height: 966
+        height: 962
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,7 +390,7 @@ TextureImporter:
       name: Wolf Idle_12
       rect:
         serializedVersion: 2
-        x: 5662
+        x: 5652
         y: 976
         width: 1129
         height: 962
@@ -412,7 +412,7 @@ TextureImporter:
       name: Wolf Idle_13
       rect:
         serializedVersion: 2
-        x: 6790
+        x: 6781
         y: 976
         width: 1113
         height: 962
@@ -568,7 +568,7 @@ TextureImporter:
         serializedVersion: 2
         x: 3188
         y: 0
-        width: 514
+        width: 524
         height: 962
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

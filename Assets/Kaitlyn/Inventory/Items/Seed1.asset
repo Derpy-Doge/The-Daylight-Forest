@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Seed1
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 18
-  <Name>k__BackingField: one type of seed
+  <MaxStackSize>k__BackingField: 20
+  <Name>k__BackingField: Carrot Seed
   <Description>k__BackingField: Ol' reliable, grows fast and heals a decent amount,
     it also give a bit of EXP
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 1e42e750931826e4cb9701e163efd917,

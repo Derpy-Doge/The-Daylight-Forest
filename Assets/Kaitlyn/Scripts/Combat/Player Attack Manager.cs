@@ -1,3 +1,4 @@
+using Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,11 @@ public class PlayerAttackManager : MonoBehaviour
     private SpawnHitBox shb;
     private HealthBar hb;
 
+    private FarmingManager fm;
+    private InventoryController ic;
+
     private GameObject healthBar;
+    private GameObject hotbar;
 
     private GameObject player;
     private PlayerInput playerInput;
@@ -27,6 +32,9 @@ public class PlayerAttackManager : MonoBehaviour
         shb = player.GetComponent<SpawnHitBox>();
         healthBar = FindFirstObjectByType<HealthBar>().gameObject;
         hb = healthBar.GetComponent<HealthBar>();
+        hotbar = GameObject.FindWithTag("Hotbar");  
+        fm = player.GetComponent<FarmingManager>();
+        ic = player.GetComponent<InventoryController>();
     }
 
     public void OnEnable()
@@ -48,6 +56,7 @@ public class PlayerAttackManager : MonoBehaviour
             shb = player.GetComponent<SpawnHitBox>();
             healthBar = FindFirstObjectByType<HealthBar>().gameObject;
             hb = healthBar.GetComponent<HealthBar>();
+            hotbar = GameObject.FindWithTag("Hotbar");
         }
         else if (scene.name == mainMenu)
         {
@@ -56,6 +65,13 @@ public class PlayerAttackManager : MonoBehaviour
             shb = null;
             healthBar = null;
             hb = null;
+            hotbar = null;
+        }
+        else
+        {
+            fm.enabled = false;
+            ic.enabled = false;
+            hotbar.SetActive(false);
         }
     }
 
@@ -68,13 +84,18 @@ public class PlayerAttackManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == mainScene)
         {
-        shb.enabled = false;
-        hb.enabled = false;
-        healthBar.SetActive(false);
+            fm.enabled = true;
+            ic.enabled = true;
+            hotbar.SetActive(true);
 
-        playerInput.actions.FindAction("Slash").Disable();
-        playerInput.actions.FindAction("Stun").Disable();
-        playerInput.actions.FindAction("Knockback").Disable();
+
+            shb.enabled = false;
+            hb.enabled = false;
+            healthBar.SetActive(false);
+
+            playerInput.actions.FindAction("Slash").Disable();
+            playerInput.actions.FindAction("Stun").Disable();
+            playerInput.actions.FindAction("Knockback").Disable();
         }
         else
         {
@@ -86,6 +107,11 @@ public class PlayerAttackManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == mainScene)
         {
+            fm.enabled = false;
+            ic.enabled = false;
+            hotbar.SetActive(false);
+
+
             shb.enabled = true;
             hb.enabled = true;
             healthBar.SetActive(true);

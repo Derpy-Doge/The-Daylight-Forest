@@ -20,6 +20,12 @@ namespace Inventory
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
 
+        private void Awake()
+        {
+            inventoryUI = GameObject.FindGameObjectWithTag("UIInventoryPage").GetComponent<UIInventoryPage>();
+            hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+        }
+
         private void Start()
         {
             PrepareUI();
@@ -40,7 +46,7 @@ namespace Inventory
 
         private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
         {
-            inventoryUI.ResetAllItems();
+            inventoryUI.ResetAllItems(); 
             foreach (var item in inventoryState)
             {
               inventoryUI.UpdateData(item.Key,

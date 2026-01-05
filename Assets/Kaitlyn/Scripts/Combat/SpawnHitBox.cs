@@ -87,16 +87,18 @@ public class SpawnHitBox : MonoBehaviour
         Physics.SphereCast(transform.position, slashRadius, dh.playerDirection * .3f, out RaycastHit hitInfo, slashRange, attackLayer);
 
         if (hitInfo.collider)
-        {
-            
-
-            if (hitInfo.collider.TryGetComponent(out Stats enemy) && TryGetComponent(out Stats player))
+        { 
+            if (hitInfo.collider.TryGetComponent(out Stats enemy) && hitInfo.collider.TryGetComponent(out Rigidbody enemyrb) && TryGetComponent(out Stats player))
             {
                 float calculatedDamage = player.Attack_Power - enemy.Defense;
                 enemy.Health_Current -= calculatedDamage;
+                Vector3 knockbackDirection = (hitInfo.collider.transform.position - transform.position).normalized;
+                float slashKnockbackForce = knockbackForce * 0.2f;
+                enemyrb.AddForce(knockbackDirection * slashKnockbackForce, ForceMode.Impulse);
 
                 Debug.Log("Hit " + hitInfo.collider.gameObject.name + " took " + calculatedDamage + " damage");
             }
+
         }
         isSlashing = false;
 
@@ -105,7 +107,7 @@ public class SpawnHitBox : MonoBehaviour
         canSlash = true;
     }
 
-    IEnumerator Stun() // uhhh so like thi sdidnt work :sob: 
+    IEnumerator Stun() 
     //"setting linear velocity of a kenematic rigidbody is not supported" ... ill figure it our later
     // its just cause enemy movement sets velocity even when kinematic is on so ill just ignore it :man_juggling:
     {

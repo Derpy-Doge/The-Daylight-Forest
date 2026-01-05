@@ -1,7 +1,6 @@
 using Inventory.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Inventory.UI
@@ -132,6 +131,8 @@ namespace Inventory.UI
             usingWateringCan = false;
             usingSeed1 = false;
             usingSeed2 = false;
+            usingPlant1 = false;
+            usingPlant2 = false;
             OnHotbarSelectionChanged?.Invoke(-1, InventoryItem.GetEmptyItem(), false);
         }
 
@@ -163,6 +164,8 @@ namespace Inventory.UI
                     usingWateringCan = false;
                     usingSeed1 = false;
                     usingSeed2 = false;
+                    usingPlant1 = false;
+                    usingPlant2 = false;
                 }
                 if (selectedItem.item.name == "Watering Can")
                 {
@@ -171,6 +174,8 @@ namespace Inventory.UI
                     usingPlow = false;
                     usingSeed1 = false;
                     usingSeed2 = false;
+                    usingPlant1 = false;
+                    usingPlant2 = false;
                 }
                 if (selectedItem.item.name == "Seed1")
                 {
@@ -179,6 +184,8 @@ namespace Inventory.UI
                     usingPlow = false;
                     usingWateringCan = false;
                     usingSeed2 = false;
+                    usingPlant1 = false;
+                    usingPlant2 = false;
                 }
                 if (selectedItem.item.name == "Seed2")
                 {
@@ -187,6 +194,28 @@ namespace Inventory.UI
                     usingPlow = false;
                     usingWateringCan = false;
                     usingSeed1 = false;
+                    usingPlant1 = false;
+                    usingPlant2 = false;
+                }
+                if (selectedItem.item.name == "Plant1")
+                {
+                    handsEmpty = false;
+                    usingPlant1 = true;
+                    usingPlow = false;
+                    usingWateringCan = false;
+                    usingSeed1 = false;
+                    usingSeed2 = false;
+                    usingPlant2 = false;
+                }
+                if (selectedItem.item.name == "Plant2")
+                {
+                    handsEmpty = false;
+                    usingPlant2 = true;
+                    usingPlow = false;
+                    usingWateringCan = false;
+                    usingSeed1 = false;
+                    usingSeed2 = false;
+                    usingPlant1 = false;
                 }
                 return true;
             }
@@ -196,7 +225,21 @@ namespace Inventory.UI
 
         public void UseItem()
         {
-            inventory.inventoryItems[SelectedIndex].ChangeQuantity(inventory.inventoryItems[SelectedIndex].quantity - 1);
+            if (!IsItemSelected || inventory == null) return;
+
+            var current = inventory.GetItemAt(SelectedIndex);
+            var newQty = Math.Max(0, current.quantity - 1);
+            var updated = current.ChangeQuantity(newQty);
+
+            if(current.quantity == 0)
+            {
+                current.IsEmpty.Equals(true);
+            }
+            else
+            {
+                inventory.inventoryItems[SelectedIndex] = updated;
+                inventory.InformAboutChange();
+            }
         }
     }
 }

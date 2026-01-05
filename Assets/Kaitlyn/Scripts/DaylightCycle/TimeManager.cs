@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,13 +39,10 @@ public class TimeManager : MonoBehaviour
     public Light globalLight;
 
     private float currentTime;
-    public float dayDuration = 720; // minutes? idek atp...
+    public float dayDuration = 360;
 
     public bool isDay;
     public bool isNight;
-
-    public GameStateManager gsm;
-    public TimeStateChange tsc;
 
     public PlayerAttackManager pam;
     private GameObject player;
@@ -52,8 +50,12 @@ public class TimeManager : MonoBehaviour
     
 
     private GameObject fog;
+    private List<GameObject> fogs = new List<GameObject>();
 
-    public GameObject[] dialogueBoxes;
+    private EnemySpawner enemySpawner;
+
+    private GameObject dialogueParent;
+    private List<GameObject> dialogueBoxes = new List<GameObject>();
 
     private AudioSource BGM;
     public AudioClip dayBGM;
@@ -87,7 +89,7 @@ public class TimeManager : MonoBehaviour
         mainMenu = sd.mainMenu;
         mainScene = sd.mainScene;
 
-        if (isDay && globalLight != null) // hopefully doing this stops me from having to do a seperate cycle for time on the farm and time in the forest :sob:
+        if (isDay && globalLight != null)
         {
             globalLight.intensity = .75f;
             hours = 7;
@@ -126,7 +128,21 @@ public class TimeManager : MonoBehaviour
         {
             globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
             fog = GameObject.FindWithTag("Fog"); // make sure all fog is childed to one thing with the fog tag and the individual fogs dont have the tag
+            foreach(Transform child in fog.transform)
+            {
+                fogs.Add(child.gameObject);
+            }
             tileManager = GetComponent<TileManager>();
+            dialogueParent = GameObject.FindWithTag("DialogueBoxes");
+            foreach(Transform child in dialogueParent.transform)
+            {
+                dialogueBoxes.Add(child.gameObject);
+            }
+
+            if (SaveData.firstLoad)
+            {
+
+            }
         }
         else if (scene.name == mainMenu)
         {
@@ -137,11 +153,6 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
-        if (hours == 7 && minutes == 30)
-        {
-            dialogueBoxes[3].GetComponent<Dialogue>().StartDialogue();
-        }
-
         tempSeconds = Time.deltaTime + tempSeconds;
         if(tempSeconds >= .1f) // the seconds in each minute, resets each minute
         {
@@ -167,7 +178,7 @@ public class TimeManager : MonoBehaviour
 
         if(minutes == 1 && hours == 6 || minutes == 1 && hours == 20)
         {
-            //dialogueBoxes[4].GetComponent<Dialogue>().StartDialogue(); // make "Turning Dialogue" 5th in the array
+            dialogueBoxes[4].GetComponent<Dialogue>().StartDialogue(); // make "Turning Dialogue" 5th in the array
         }
 
         if (isNight)
@@ -187,11 +198,11 @@ public class TimeManager : MonoBehaviour
 
         if(hours == 21 && minutes == 0 && isDay)
         {
-            //dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
+            dialogueBoxes[0].GetComponents<Dialogue>()[0].StartDialogue(); // its mad ineffecient but pls make sure "night dialogue" is first in the array 
         }
         else if(hours == 7 && minutes == 0 && isNight)
         {
-            //dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
+            dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
         }
 
         if(hours == 7 && minutes == 0 && days > 0)
@@ -259,9 +270,31 @@ public class TimeManager : MonoBehaviour
         }
         else if (value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
         {
-            isNight = true;
             StartCoroutine(WaitForTransformationEnd());
+            isNight = true;           
             isDay = false;
+
+            fogs.ForEach(fogPart =>
+            {
+                fogPart.GetComponent<Collider>().isTrigger = true;
+                OnTriggerStay(player.GetComponent<Collider>());
+            });
+        }
+    }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player left fog trigger");
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player entered fog trigger");
         }
     }
 
@@ -294,32 +327,186 @@ public class TimeManager : MonoBehaviour
         globalLight.colorTemperature = endTemp;
     }
 
-    public IEnumerator WaitForTransformationEnd() // only for "Transform" and "Poof"
+    
+    public IEnumerator WaitForTransformationEnd(float timeout = 2f)
     {
-        playerMovement.myAnimator.SetTrigger("Transform");
+        if (playerMovement?.myAnimator == null)
+            yield break;
 
-        yield return null;
+        var animator = playerMovement.myAnimator;
 
+        animator.SetBool("isTransforming", true);
         playerMovement.enabled = false;
+        animator.Update(0f);
 
-        yield return new WaitUntil(() => playerMovement.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+        int transformHash = Animator.StringToHash("Transform");
 
+        // Stage 1: wait for Transform to start (or transition to it) up to timeout
+        float timer = 0f;
+        bool started = false;
+        while (timer < timeout)
+        {
+            var current = animator.GetCurrentAnimatorStateInfo(0);
+            var next = animator.GetNextAnimatorStateInfo(0);
+
+            if (current.shortNameHash == transformHash)
+            {
+                started = true;
+                break;
+            }
+            // If we're in transition and the next state is Transform, treat as started
+            if (animator.IsInTransition(0) && next.shortNameHash == transformHash)
+            {
+                started = true;
+                break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (!started)
+        {
+            // Transform never started within timeout -> cleanup and exit
+            animator.SetBool("isTransforming", false);
+            playerMovement.enabled = true;
+            yield break;
+        }
+
+        // Stage 2: wait for Transform to finish
+        timer = 0f;
+        while (timer < timeout)
+        {
+            var current = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (current.shortNameHash != transformHash && !animator.IsInTransition(0))
+                break;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        animator.SetBool("isTransforming", false);
         playerMovement.enabled = true;
-        playerMovement.myAnimator.SetBool("Iswolf", true);
+        animator.SetBool("Iswolf", true);
     }
 
-
-    public IEnumerator WaitForPoofEnd()
+    public IEnumerator WaitForPoofEnd(float timeout = 2f)
     {
-        playerMovement.myAnimator.SetTrigger("Poof");
+        if (playerMovement?.myAnimator == null)
+            yield break;
 
-        yield return null;
+        var animator = playerMovement.myAnimator;
 
+        animator.SetBool("isUntransforming", true);
         playerMovement.enabled = false;
+        animator.Update(0f);
 
-        yield return new WaitUntil(() => playerMovement.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+        int transformHash = Animator.StringToHash("Poof");
 
+        float timer = 0f;
+        bool started = false;
+        while (timer < timeout)
+        {
+            var current = animator.GetCurrentAnimatorStateInfo(0);
+            var next = animator.GetNextAnimatorStateInfo(0);
+
+            if (current.shortNameHash == transformHash)
+            {
+                started = true;
+                break;
+            }
+            
+            if (animator.IsInTransition(0) && next.shortNameHash == transformHash)
+            {
+                started = true;
+                break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (!started)
+        {
+            animator.SetBool("isUntransforming", false);
+            playerMovement.enabled = true;
+            yield break;
+        }
+
+        timer = 0f;
+        while (timer < timeout)
+        {
+            var current = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (current.shortNameHash != transformHash && !animator.IsInTransition(0))
+                break;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        animator.SetBool("isUntransforming", false);
         playerMovement.enabled = true;
-        playerMovement.myAnimator.SetBool("Iswolf", false);
+        animator.SetBool("Iswolf", false);
+    }
+
+    public IEnumerator WaitForAnimationEnd(string animationName, string animationBool, float timeout = 1f) // for tools
+    {
+        if (playerMovement?.myAnimator == null)
+            yield break;
+
+        var animator = playerMovement.myAnimator;
+
+        animator.SetBool(animationBool, true);
+        playerMovement.enabled = false;
+        animator.Update(0f);
+
+        int transformHash = Animator.StringToHash(animationName);
+
+        float timer = 0f;
+        bool started = false;
+        while (timer < timeout)
+        {
+            var current = animator.GetCurrentAnimatorStateInfo(0);
+            var next = animator.GetNextAnimatorStateInfo(0);
+
+            if (current.shortNameHash == transformHash)
+            {
+                started = true;
+                break;
+            }
+            
+            if (animator.IsInTransition(0) && next.shortNameHash == transformHash)
+            {
+                started = true;
+                break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (!started)
+        {
+            animator.SetBool(animationBool, false);
+            playerMovement.enabled = true;
+            yield break;
+        }
+
+        timer = 0f;
+        while (timer < timeout)
+        {
+            var current = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (current.shortNameHash != transformHash && !animator.IsInTransition(0))
+                break;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        animator.SetBool(animationBool, false);
+        playerMovement.enabled = true;
     }
 }

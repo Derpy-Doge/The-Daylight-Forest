@@ -1,5 +1,6 @@
 using Inventory.Model;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace Inventory.UI
     {
         [SerializeField] private HotbarController hotbarController;
         [SerializeField] private List<Image> slotImages; // uh i guess make sure there are 6 elements i nthe list 
+        [SerializeField]private List<TMP_Text> quantityText;
         [SerializeField] private Sprite emptySprite;
         [SerializeField] private List<GameObject> selectionHighlights; // optional: one per slot
 
@@ -45,9 +47,11 @@ namespace Inventory.UI
             for (int i = 0; i < slotCount; i++)
             {
                 var image = slotImages[i];
+                var quantity = quantityText[i];
                 if (image == null) continue;
 
                 Sprite spriteToUse = null;
+                string number = null; // for quantity (im runnin out of name ideas :skull:)
 
                 if (i < hotbarItems.Count)
                 {
@@ -55,15 +59,19 @@ namespace Inventory.UI
                     if (!invItem.IsEmpty && invItem.item != null && invItem.item.ItemImage != null)
                     {
                         image.enabled = true;
+                        quantity.enabled = true;
                         spriteToUse = invItem.item.ItemImage;
+                        number = invItem.quantity.ToString();
                     }
                     else
                     {
                         image.enabled = false;
+                        quantity.enabled = false;
                     }
                 }
 
                 image.sprite = spriteToUse;
+                quantity.text = number;
             }
 
             UpdateSelectionVisuals(hotbarController != null ? hotbarController.SelectedIndex : -1);

@@ -131,7 +131,7 @@ TextureImporter:
         width: 478
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,7 +153,7 @@ TextureImporter:
         width: 470
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,7 +175,7 @@ TextureImporter:
         width: 458
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -197,7 +197,7 @@ TextureImporter:
         width: 456
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -219,7 +219,7 @@ TextureImporter:
         width: 460
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -241,7 +241,7 @@ TextureImporter:
         width: 546
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -250,6 +250,28 @@ TextureImporter:
       bones: []
       spriteID: d488fe19c3b778342b5468c52ee5f7d3
       internalID: -1626546843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Sludgeball_drip_sheet_RED_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2871
+        height: 814
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 613cff1b587253c4cb9fb58eb50c0d65
+      internalID: 768136028
       vertices: []
       indices: 
       edges: []
@@ -274,6 +296,7 @@ TextureImporter:
       Enemy_Sludgeball_drip_sheet_RED_3: -1003585453
       Enemy_Sludgeball_drip_sheet_RED_4: 2138069651
       Enemy_Sludgeball_drip_sheet_RED_5: -1626546843
+      Enemy_Sludgeball_drip_sheet_RED_6: 768136028
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

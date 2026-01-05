@@ -254,6 +254,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Enemy_Sludgeball_drip_sheet_6
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 2868
+        height: 814
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4f1b7fdfdea6dc41863ab44b383b5de
+      internalID: -477095928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -274,6 +296,7 @@ TextureImporter:
       Enemy_Sludgeball_drip_sheet_3: -870770661
       Enemy_Sludgeball_drip_sheet_4: -95168210
       Enemy_Sludgeball_drip_sheet_5: -475298243
+      Enemy_Sludgeball_drip_sheet_6: -477095928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

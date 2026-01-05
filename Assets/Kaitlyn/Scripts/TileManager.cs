@@ -1,46 +1,52 @@
 using Inventory.Model;
 using Inventory.UI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class TileManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap interactableMap;
+    public Tilemap interactableMap;
 
     [SerializeField] private Tile hiddenInteractableTile; 
 
     [SerializeField] private Tile PlowedTile;
     [SerializeField] private Tile WateredTile;
-    [SerializeField] private Tile Seed1Tile;
-    [SerializeField] private Tile Seed2Tile;
 
     [SerializeField] private TileDataManager tdm;
     public HotbarController hbc;
     private FarmingManager fm;
 
     public GameObject farmSprite;
-    [SerializeField] private Transform spriteParent;
+    private Transform spriteParent;
 
     [SerializeField] private InventorySO inventoryData;
     [SerializeField] private List<InventoryItem> Plants; // 0 for seed1, 1 for seed2
+    public static bool plant2Unlocked = false;
+
+    private TimeManager tm;
+
+    public Dictionary<Vector3Int, GameObject> farmTileSprites = new Dictionary<Vector3Int, GameObject>();
 
     private void Awake()
     {
-       GameObject hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+        GameObject hotbar = GameObject.FindGameObjectWithTag("Hotbar");
         hbc = hotbar.GetComponent<HotbarController>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         fm = player.GetComponent<FarmingManager>();
+
+        spriteParent = GameObject.FindGameObjectWithTag("FarmSpriteParent").transform;
+        farmSprite = GameObject.FindGameObjectWithTag("FarmSprite");
+
+        tm = FindFirstObjectByType<TimeManager>();
     }
 
     void Start()
     {
-        foreach(var position in interactableMap.cellBounds.allPositionsWithin)
+        interactableMap = GameObject.FindGameObjectWithTag("InteractableMap").GetComponent<Tilemap>();
+
+        foreach (var position in interactableMap.cellBounds.allPositionsWithin)
         {
             TileBase tile = interactableMap.GetTile(position);
             if (tile != null && tile.name == "Interactable_Visible")
@@ -48,11 +54,13 @@ public class TileManager : MonoBehaviour
                 interactableMap.SetTile(position, hiddenInteractableTile);
             }
         }
+
     }
 
     public bool IsInteractable(Vector3 position)
     {
-        TileBase tile = interactableMap.GetTile(interactableMap.WorldToCell(position));
+        Vector3Int cellPos = interactableMap.WorldToCell(position);
+        TileBase tile = interactableMap.GetTile(cellPos);
         Vector3Int intPos = new Vector3Int((int)position.x, (int)position.y, (int)position.z);
 
         if (tile != null)
@@ -61,16 +69,17 @@ public class TileManager : MonoBehaviour
             {
                 return true;
             }
-            else if(tile == PlowedTile && hbc.usingSeed1 || tile == PlowedTile && hbc.usingSeed1)
+            else if(tile == PlowedTile && hbc.usingSeed1 || tile == PlowedTile && hbc.usingSeed2 && plant2Unlocked)
             {
                 return true;
             }
-            else if(tdm.tileData[intPos].seedsPlanted[0] && hbc.usingWateringCan || tdm.tileData[intPos].seedsPlanted[1] && hbc.usingWateringCan)
+            else if(tdm.tileData[cellPos].seedsPlanted[0] && hbc.usingWateringCan || tdm.tileData[cellPos].seedsPlanted[1] && hbc.usingWateringCan)
             {
                 return true;
             }
-            else if(tdm.tileData[intPos].seedsPlanted[2] && hbc.handsEmpty) 
+            else if(tdm.tileData[cellPos].seedsPlanted[2] && hbc.handsEmpty) 
             {
+                Debug.Log("plus ultra");
                 return true;
             }
         }
@@ -82,72 +91,87 @@ public class TileManager : MonoBehaviour
     public void SetInteracted(Vector3 position)
     {
         Vector3Int intPos = new Vector3Int((int)position.x, (int)position.y, (int)position.z);
+        Vector3Int cellPos = interactableMap.WorldToCell(position);
 
         if (hbc != null)
         {
             if (hbc.usingPlow)
             {
-               tdm.SetData(intPos, new TileData());
+                tm.StartCoroutine(tm.WaitForAnimationEnd("Plow", "isPlowing")); // (name, bool) ..also uhh great bool name i guess :skull:
+               tdm.SetData(cellPos, new TileData());
                interactableMap.SetTile(interactableMap.WorldToCell(position), PlowedTile);
             }
             else if (hbc.usingWateringCan)
             {
+                tm.StartCoroutine(tm.WaitForAnimationEnd("Water", "isWatering"));
                 interactableMap.SetTile(interactableMap.WorldToCell(position), WateredTile);
 
-                tdm.GetData(intPos);
-                if (tdm.tileData[intPos].seedsPlanted[0])
+                tdm.GetData(cellPos);
+                if (tdm.tileData[cellPos].seedsPlanted[2])
                 {
-                    StartCoroutine(fm.GrowSeed1());
-                    Debug.Log("Gurt: Yo");
+                    return;
                 }
-                else if (tdm.tileData[intPos].seedsPlanted[1])
+                else
                 {
-                    StartCoroutine(fm.GrowSeed2());
-                    Debug.Log("Yo: Gurt");
+                    if(tdm.tileData[cellPos].seedsPlanted[0])
+                    {
+                        StartCoroutine(fm.GrowSeed1());
+                        Debug.Log("Gurt: Yo");
+                    }
+                    else if (tdm.tileData[cellPos].seedsPlanted[1])
+                    {
+                        StartCoroutine(fm.GrowSeed2());
+                        Debug.Log("Yo: Gurt");
+                    }
                 }
+               
             }
-            else if (hbc.usingSeed1)
+            else if (hbc.usingSeed1 && hbc.inventory.GetItemAt(hbc.SelectedIndex).quantity > 0 && !tdm.tileData[cellPos].seedsPlanted[0])
             {
-                tdm.TriggerBool(intPos, 0);
+                tm.StartCoroutine(tm.WaitForAnimationEnd("Plant Seed", "isPlanting"));
                 PutSpriteOnTile(position);
-
-                interactableMap.SetTile(interactableMap.WorldToCell(position), Seed1Tile);
+                tdm.TriggerBool(cellPos, 0);
+                hbc.UseItem();
             }
-            else if (hbc.usingSeed2)
+            else if (hbc.usingSeed2 && hbc.inventory.GetItemAt(hbc.SelectedIndex).quantity > 0 && !tdm.tileData[cellPos].seedsPlanted[1])
             {
-                tdm.TriggerBool(intPos, 1);
+                tm.StartCoroutine(tm.WaitForAnimationEnd("Plant Seed", "isPlanting"));
                 PutSpriteOnTile(position);
+                tdm.TriggerBool(cellPos, 1);
+                hbc.UseItem();
+            }
+            else if (hbc.handsEmpty)
+            {
+                farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj);
 
-                interactableMap.SetTile(interactableMap.WorldToCell(position), Seed2Tile);
-                tdm.GetData(intPos);
+                if (farmSpriteObj != null)
+                {
+                    Destroy(farmSpriteObj);
+                    farmTileSprites.Remove(cellPos);
+                }
+
+                interactableMap.SetTile(interactableMap.WorldToCell(position), hiddenInteractableTile);
+
+                if (tdm.tileData[cellPos].seedsPlanted[0])
+                {
+                    inventoryData.AddItem(Plants[0]);
+                    tdm.TriggerBool(cellPos, 0);
+
+
+                }
+                else if (tdm.tileData[cellPos].seedsPlanted[1])
+                {
+                    inventoryData.AddItem(Plants[1]);
+                    tdm.TriggerBool(cellPos, 1);
+                }
+
+                tdm.TriggerBool(cellPos, 2);
             }
             else
             {
                 return;
             }
-        }
-        if (tdm.tileData[intPos].seedsPlanted[2]) // if a fully grown plant is there
-        {
-            interactableMap.SetTile(interactableMap.WorldToCell(position), hiddenInteractableTile);
-
-            if (tdm.tileData[intPos].seedsPlanted[0])
-            {
-                inventoryData.AddItem(Plants[0]);
-                tdm.TriggerBool(intPos, 0);
-
-
-            }
-
-            if (tdm.tileData[intPos].seedsPlanted[1])
-            {
-                inventoryData.AddItem(Plants[1]);
-                tdm.TriggerBool(intPos, 1);
-            }
-
-            tdm.TriggerBool(intPos, 2);
-        }
-
-        return;
+        }       
     }
 
     public void PutSpriteOnTile(Vector3 pos)
@@ -155,24 +179,29 @@ public class TileManager : MonoBehaviour
         if (interactableMap == null || farmSprite == null)
             return;
 
-        TileBase tile = interactableMap.GetTile(interactableMap.WorldToCell(pos));
+        Vector3Int cellPos = interactableMap.WorldToCell(pos);
+        TileBase tile = interactableMap.GetTile(cellPos);
         if (tile == null)
             return;
 
-        Vector3Int intPos = new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z);
+        Vector3 spawnPos = interactableMap.GetCellCenterWorld(cellPos);
 
         if (spriteParent != null)
         {
             foreach (Transform child in spriteParent)
             {
-                if (Vector3.Distance(child.position, intPos) < 0.01f)
+                if (Vector3.Distance(child.position, spawnPos) < 0.01f)
                 {
-                    return; //if theres already have a sprite at this tile
+                    return; //if theres already a sprite at this tile
                 }
             }
         }
 
-        GameObject instance = Instantiate(farmSprite, intPos, Quaternion.identity);
+        if (farmTileSprites.ContainsKey(cellPos))
+            return;
+
+        GameObject instance = Instantiate(farmSprite, spawnPos, Quaternion.identity);
+        farmTileSprites.Add(cellPos, instance);
 
         if (spriteParent != null)
         {
@@ -192,7 +221,7 @@ public class TileManager : MonoBehaviour
 
                 GameObject instance = Instantiate(farmSprite, worldPos, Quaternion.identity);
 
-                if(spriteParent != null)
+                if (spriteParent != null)
                 {
                     instance.transform.parent = spriteParent;
                 }

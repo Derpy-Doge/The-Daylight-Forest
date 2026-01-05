@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Plant2
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 18
+  <MaxStackSize>k__BackingField: 20
   <Name>k__BackingField: plant type 2
   <Description>k__BackingField: 'uhhhh [insrt description here or smth...pt2]'
   <ItemImage>k__BackingField: {fileID: 0}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SaveData : MonoBehaviour
 {
     public static SaveData instance;
-    private static bool firstLoad = true;
+    public static bool firstLoad = true;
 
     public string mainMenu = "Start Menu";
     public string mainScene;
@@ -142,6 +142,8 @@ public class SaveData : MonoBehaviour
         #region stats
         playerData.health = playerStats.Health_Current;
         playerData.exp = XPController.CurrentXp;
+        playerData.level = XPController.Level;
+        playerData.skillPoints = XPController.Skill;
         playerData.attackSpeed = playerStats.Attack_Speed;
         playerData.attackPower = playerStats.Attack_Power;
         playerData.defense = playerStats.Defense;
@@ -186,6 +188,8 @@ public class SaveData : MonoBehaviour
             #region stats
             playerStats.Health_Current = playerData.health;
             XPController.CurrentXp = playerData.exp;
+            XPController.Level = playerData.level;
+            XPController.Skill = playerData.skillPoints;
             playerStats.Attack_Speed = playerData.attackSpeed;
             playerStats.Attack_Power = playerData.attackPower;
             playerStats.Defense = playerData.defense;
@@ -232,6 +236,8 @@ public class PlayerData : ScriptableObject
 
     public float health;
     public float exp;
+    public int level;
+    public int skillPoints;
     public float attackSpeed;
     public float attackPower;
     public float defense;

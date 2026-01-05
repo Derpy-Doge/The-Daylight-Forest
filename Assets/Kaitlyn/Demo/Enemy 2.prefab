@@ -161,6 +161,7 @@ MonoBehaviour:
   dashTimer: 0
   dashTimerLength: 5
   dashLength: 0.2
+  isDashing: 0
 --- !u!114 &8364488241943980086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +185,8 @@ MonoBehaviour:
   Passive_Attack: 0
   ai: {fileID: 0}
   ai_dashing: {fileID: 812518332787176959}
+  seed1: {fileID: 11400000, guid: e9f3c35abc502e04eb5cb41ac9e1b9f3, type: 2}
+  seed2: {fileID: 11400000, guid: c1951048cbc854b42b7320ec89b272af, type: 2}
 --- !u!114 &815316310080631557
 MonoBehaviour:
   m_ObjectHideFlags: 0

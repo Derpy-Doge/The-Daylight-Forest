@@ -1,3 +1,4 @@
+using Inventory.Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +10,7 @@ public class Stats : MonoBehaviour
     public float Attack_Speed;
     public float Attack_Power;
     public float Defense;
-    public float Crop_Exp;
+    public float Crop_Exp; // make sure this starts at 0
     public float Crop_Growth;
     public float Speed;
     [HideInInspector] public float Passive_Attack; // for enemies only, damage you take when you run into them
@@ -22,12 +23,18 @@ public class Stats : MonoBehaviour
     private XPController xp;
     private TimeManager tm; //trust me on this :skull:
 
+    [SerializeField] private ItemSO seed1;
+    [SerializeField] private ItemSO seed2;
+
+    private string mainScene;
+
     void Awake()
     {
         spawner = FindFirstObjectByType<EnemySpawner>();
         xp = FindFirstObjectByType<XPController>();
         player = GetComponent<Player_Movement>();
         tm = FindFirstObjectByType<TimeManager>();
+        mainScene = SaveData.instance.mainScene;
     }
 
     void Start()
@@ -46,30 +53,66 @@ public class Stats : MonoBehaviour
         {
             Speed = ai_dashing.Emovespeed;
         }
+
     }
+
+    public void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == mainScene)
+        {
+            spawner = FindFirstObjectByType<EnemySpawner>();
+        }
+        else
+        {
+            spawner = null;
+        }
+    }
+
 
     void Update()
     {
-        if (Health_Current <= 0 && ai != null || ai_dashing != null || tm.isDay && ai != null || ai_dashing != null)
-        { 
-            foreach(EnemySpawnPoint esp in spawner.spawners)
+        bool isEnemy = ai != null || ai_dashing != null;
+        bool isPlayer = player != null;
+        bool expAwarded = false;
+
+        if (Health_Current <= 0 && isEnemy && !expAwarded)
+        {
+            foreach (LevelSpawnpoints level in spawner.spawners)
             {
-                if (esp.ID == 1)
+                foreach (EnemySpawnPoint esp in level.spawners)
                 {
-                    xp.EnemyXp1();
-                }
-                else if (esp.ID == 2)
-                {
-                    xp.EnemyXp2();
-                }
-                else if (esp.ID == 3)
-                {
-                    xp.EnemyXp3();
+                    if (esp.ID == 1)
+                    {
+                        xp.EnemyXp1();
+                        tm.tileManager.hbc.inventory.AddItem(seed1, 1);
+                    }
+                    else if (esp.ID == 2)
+                    {
+                        xp.EnemyXp2();
+                        tm.tileManager.hbc.inventory.AddItem(seed2, 1);
+                    }
+                    else if (esp.ID == 3)
+                    {
+                        xp.EnemyXp3();
+                        tm.tileManager.hbc.inventory.AddItem(seed2, 2);
+                    }
                 }
             }
+            
+            expAwarded = true;
             Destroy(gameObject);
         }
-        if (Health_Current <= 0 && player != null)
+        if (Health_Current <= 0 && isPlayer)
         {
             SceneManager.LoadScene("Game-Over");
             if (tm != null)

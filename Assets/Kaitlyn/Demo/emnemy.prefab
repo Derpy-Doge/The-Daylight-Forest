@@ -137,6 +137,9 @@ MonoBehaviour:
   Speed: 0
   Passive_Attack: 0
   ai: {fileID: 1129991329459979940}
+  ai_dashing: {fileID: 0}
+  seed1: {fileID: 11400000, guid: e9f3c35abc502e04eb5cb41ac9e1b9f3, type: 2}
+  seed2: {fileID: 11400000, guid: c1951048cbc854b42b7320ec89b272af, type: 2}
 --- !u!114 &1129991329459979940
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,7 +27,15 @@ public class TileDataManager : MonoBehaviour
     }
     void Start()
     {
-        
+        foreach (var pos in interactableTilemap.cellBounds.allPositionsWithin)
+        {
+            TileBase tile = interactableTilemap.GetTile(pos);
+
+            if (tile != null)
+            {
+                SetData(pos, new TileData());
+            }
+        }
     }
 
     public void SetData(Vector3Int pos, TileData data)

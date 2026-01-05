@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public List<EnemySpawnPoint> spawners;
+    public List<LevelSpawnpoints> spawners;
 
     private TimeManager tm;
 
@@ -20,14 +20,17 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        foreach (EnemySpawnPoint esp in spawners)
+        foreach(LevelSpawnpoints level in spawners)
         {
-            if (tm.isNight && esp.canSpawn)
+            foreach (EnemySpawnPoint esp in level.spawners)
             {
-                StartCoroutine(SpawnEnemies(esp));
+                if (tm.isNight && esp.canSpawn)
+                {
+                    StartCoroutine(SpawnEnemies(esp));
+                }
             }
         }
-
+        
         #region dificulty scaling
 
         if (tm.Days == 0)
@@ -36,45 +39,69 @@ public class EnemySpawner : MonoBehaviour
         }
         if (tm.Days == 5 && tm.Hours == 7 && tm.Minutes == 0) //morning of day 5
         {
-            foreach(EnemySpawnPoint esp in spawners)
+            foreach (LevelSpawnpoints level in spawners)
             {
-                ChangeRespawnTime(esp.ID);
+                foreach (EnemySpawnPoint esp in level.spawners)
+                {
+                    ChangeRespawnTime(esp.ID);
+                }
             }
+           
         }
         else if(tm.Days == 10 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            foreach (EnemySpawnPoint esp in spawners)
+            foreach (LevelSpawnpoints level in spawners)
             {
-                ChangeRespawnTime(esp.ID);
+                foreach (EnemySpawnPoint esp in level.spawners)
+                {
+                    ChangeRespawnTime(esp.ID);
+                }
             }
+            
         }
         else if(tm.Days == 15 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            foreach (EnemySpawnPoint esp in spawners)
+            foreach (LevelSpawnpoints level in spawners)
             {
-                ChangeRespawnTime(esp.ID);
+                foreach (EnemySpawnPoint esp in level.spawners)
+                {
+                    ChangeRespawnTime(esp.ID);
+                }
             }
+            
         }
         else if(tm.Days == 20 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            foreach (EnemySpawnPoint esp in spawners)
+            foreach (LevelSpawnpoints level in spawners)
             {
-                ChangeRespawnTime(esp.ID);
+                foreach (EnemySpawnPoint esp in level.spawners)
+                {
+                    ChangeRespawnTime(esp.ID);
+                }
             }
+            
         }
         else if(tm.Days == 30 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            foreach (EnemySpawnPoint esp in spawners)
+            foreach (LevelSpawnpoints level in spawners)
             {
-                ChangeRespawnTime(esp.ID);
+                foreach (EnemySpawnPoint esp in level.spawners)
+                {
+                    ChangeRespawnTime(esp.ID);
+                }
             }
+            
         }
         else if (tm.Days == 40 && tm.Hours == 7 && tm.Minutes == 0)
         {
-            foreach (EnemySpawnPoint esp in spawners)
+            foreach (LevelSpawnpoints level in spawners)
             {
-                ChangeRespawnTime(esp.ID);
+                foreach (EnemySpawnPoint esp in level.spawners)
+                {
+                    ChangeRespawnTime(esp.ID);
+                }
             }
+            
         }
         else
         {
@@ -100,13 +127,16 @@ public class EnemySpawner : MonoBehaviour
 
     void ChangeRespawnTime(int enemyID)
     {
-        foreach (EnemySpawnPoint esp in spawners)
+        foreach (LevelSpawnpoints level in spawners)
         {
-            if(esp.ID == enemyID)
+            foreach (EnemySpawnPoint esp in level.spawners)
             {
-                float newCooldown = esp.respawnTime * 0.8f;
-                esp.respawnTime = newCooldown;
-                break;
+                if (esp.ID == enemyID)
+                {
+                    float newCooldown = esp.respawnTime * 0.8f;
+                    esp.respawnTime = newCooldown;
+                    break;
+                }
             }
         }
     }
@@ -120,4 +150,11 @@ public class EnemySpawnPoint
     public List<Transform> spawnPoints;
     public float respawnTime;
     public bool canSpawn;
+}
+
+[System.Serializable]
+public class LevelSpawnpoints
+{
+    public int levelID;
+    public List<EnemySpawnPoint> spawners;
 }

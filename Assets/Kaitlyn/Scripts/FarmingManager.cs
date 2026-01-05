@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.PlayerSettings;
 
 public class FarmingManager : MonoBehaviour
 {
     private GameObject player;
+    private Stats playerStats;
     private TileDataManager tdm;
+    private XPController xpc;
 
     public TileManager tileManager;
 
@@ -17,80 +20,110 @@ public class FarmingManager : MonoBehaviour
     public List<Sprite> seed2GrowthStages;
     public float seed2GrowthTime = 720f;
 
-    void Awake()
-    {
-        player = GameObject.FindWithTag("Player");
-        tdm = FindFirstObjectByType<TileDataManager>();
-    }
-
     void Start()
     {
-        
-    }
+        player = GameObject.FindWithTag("Player");
+        playerStats = player.GetComponent<Stats>();
+        tdm = FindFirstObjectByType<TileDataManager>();
+        tileManager = FindFirstObjectByType<TileManager>();
+        xpc = FindFirstObjectByType<XPController>();
 
-    
-    void Update()
-    {
-        
+        seed1GrowthTime *= playerStats.Crop_Growth;
+        seed2GrowthTime *= playerStats.Crop_Growth;
     }
 
     public void CanInteract(InputAction.CallbackContext ctx)
     {
         if (ctx.ReadValue<float>() == 0) return;
 
-        if(tileManager.hbc.usingPlant1)
-        if (TimeManager.instance.tileManager.IsInteractable(player.transform.position))
+        if (tileManager.hbc.usingPlant1 && tileManager.hbc.inventory.GetItemAt(tileManager.hbc.SelectedIndex).quantity > 0) 
         {
-            TimeManager.instance.tileManager.SetInteracted(player.transform.position);
+            tileManager.hbc.UseItem();
+            playerStats.Health_Current += 15;
+            xpc.PlantXp1();
+        }
+        else if (tileManager.hbc.usingPlant2 && tileManager.hbc.inventory.GetItemAt(tileManager.hbc.SelectedIndex).quantity > 0) 
+        {
+            tileManager.hbc.UseItem();
+            playerStats.Health_Current += 25;
+            xpc.PlantXp2();
         }
         else
         {
-            Debug.Log("nah twn");
-        }
+            if (TimeManager.instance.tileManager.IsInteractable(player.transform.position))
+            {
+                TimeManager.instance.tileManager.SetInteracted(player.transform.position);
+            }
+            else
+            {
+                Debug.Log("nah twn");
+            }
+        }       
     }
 
     public IEnumerator GrowSeed1()
     {
-        Vector3Int intPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+        Vector3Int cellPos = tileManager.interactableMap.WorldToCell(transform.position);
 
-        Sprite growthStage = tileManager.farmSprite.GetComponent<Sprite>();
-        float stageGrowthTime = seed1GrowthTime / 3;
+        if (!tileManager.farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj) || farmSpriteObj == null)
+        {
+            Debug.LogWarning($"no farm sprite for cell {cellPos}");
+            yield break;
+        }
 
-        yield return new WaitForSeconds(stageGrowthTime);
+        var farmSpriteRenderer = farmSpriteObj.GetComponent<SpriteRenderer>();
 
-        growthStage = seed1GrowthStages[1];
+        int stageCount = seed1GrowthStages?.Count ?? 0;
+        if (stageCount == 0)
+        {
+            Debug.LogWarning("No seed1 growth stages assigned");
+            yield break;
+        }
 
-        yield return new WaitForSeconds(stageGrowthTime);
+        float stageGrowthTime = seed1GrowthTime / stageCount;
+        farmSpriteRenderer.enabled = true;
 
-        growthStage = seed1GrowthStages[2];
+        for (int i = 0; i < stageCount; i++)
+        {
+            farmSpriteRenderer.sprite = seed1GrowthStages[i];
+            yield return new WaitForSeconds(stageGrowthTime);
+        }
 
-        yield return new WaitForSeconds(stageGrowthTime);
-
-        Debug.Log("plant.");
-        tdm.TriggerBool(intPos, 2);
-        yield return null;
-
+        tdm.TriggerBool(cellPos, 2);
+        Debug.Log("plant.");     
+        yield break;
     }
 
     public IEnumerator GrowSeed2()
     {
-        Vector3Int intPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+        Vector3Int cellPos = tileManager.interactableMap.WorldToCell(transform.position);
 
-        Sprite growthStage = tileManager.farmSprite.GetComponent<Sprite>();
-        float stageGrowthTime = seed2GrowthTime / 3;
+        if (!tileManager.farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj) || farmSpriteObj == null)
+        {
+            Debug.LogWarning($"no farm sprite for cell {cellPos}");
+            yield break;
+        }
 
-        yield return new WaitForSeconds(stageGrowthTime);
+        var farmSpriteRenderer = farmSpriteObj.GetComponent<SpriteRenderer>();
 
-        growthStage = seed2GrowthStages[1];
+        int stageCount = seed1GrowthStages?.Count ?? 0;
+        if (stageCount == 0)
+        {
+            Debug.LogWarning("No seed1 growth stages assigned");
+            yield break;
+        }
 
-        yield return new WaitForSeconds(stageGrowthTime);
+        float stageGrowthTime = seed1GrowthTime / stageCount;
+        farmSpriteRenderer.enabled = true;
 
-        growthStage = seed2GrowthStages[2];
+        for (int i = 0; i < stageCount; i++)
+        {
+            farmSpriteRenderer.sprite = seed1GrowthStages[i];
+            yield return new WaitForSeconds(stageGrowthTime);
+        }
 
-        yield return new WaitForSeconds(stageGrowthTime);
-
-        tdm.TriggerBool(intPos, 2);
+        Debug.Log(".tnalp");
+        tdm.TriggerBool(cellPos, 2);
         yield return null;
-
     }
 }

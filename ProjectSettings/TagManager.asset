@@ -11,6 +11,13 @@ TagManager:
   - Fog
   - InteractableMap
   - Hotbar
+  - DialogueBoxes
+  - LevelText
+  - SkillPointText
+  - EXPBar
+  - FarmSpriteParent
+  - FarmSprite
+  - UIInventoryPage
   layers:
   - Default
   - TransparentFX
