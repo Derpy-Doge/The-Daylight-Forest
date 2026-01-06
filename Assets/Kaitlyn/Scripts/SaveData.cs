@@ -61,9 +61,10 @@ public class SaveData : MonoBehaviour
             {
                 pauseMenu = GameObject.FindWithTag("PauseMenu");
                 saveButtonObject = GameObject.FindWithTag("SaveButton");
-                saveButton = saveButtonObject.GetComponent<Button>();
-                SaveButton();
+                saveButton = saveButtonObject.GetComponent<Button>();         
                 pauseMenu.SetActive(false);
+                saveButton.onClick.RemoveAllListeners();
+                saveButton.onClick.AddListener(SavePlayerData);
 
                 player = GameObject.FindWithTag("Player");
                 XPController = FindFirstObjectByType<XPController>();
@@ -81,10 +82,12 @@ public class SaveData : MonoBehaviour
                 pauseMenu = GameObject.FindWithTag("PauseMenu");
                 saveButtonObject = GameObject.FindWithTag("SaveButton");
                 saveButton = saveButtonObject.GetComponent<Button>();
-                SaveButton();
                 pauseMenu.SetActive(false);
+                saveButton.onClick.RemoveAllListeners();
+                saveButton.onClick.AddListener(SavePlayerData);
 
                 player = GameObject.FindWithTag("Player");
+                XPController = FindFirstObjectByType<XPController>();
                 playerStats = player.GetComponent<Stats>();
                 attackStats = player.GetComponent<SpawnHitBox>();
                 moveSpeed = player.GetComponent<Player_Movement>();
@@ -135,10 +138,7 @@ public class SaveData : MonoBehaviour
     }
 
     public void SavePlayerData()
-    {
-        string json = JsonUtility.ToJson(playerData);
-        File.WriteAllText(savePath, json);
-
+    {       
         #region stats
         playerData.health = playerStats.Health_Current;
         playerData.exp = XPController.CurrentXp;
@@ -175,6 +175,8 @@ public class SaveData : MonoBehaviour
         }
         #endregion
 
+        string json = JsonUtility.ToJson(playerData);
+        File.WriteAllText(savePath, json);
         Debug.Log("Player Data Saved to " + savePath);
     }
 
@@ -225,8 +227,7 @@ public class SaveData : MonoBehaviour
     public void SaveButton()
     {
         saveButton.onClick.RemoveAllListeners();
-        saveButton.onClick.AddListener(SavePlayerData);
-        SavePlayerData();
+        saveButton.onClick.AddListener(this.SavePlayerData);
     }
 }
 

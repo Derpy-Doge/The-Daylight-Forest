@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
@@ -24,12 +23,21 @@ public class Dialogue : MonoBehaviour
 
     private static Dialogue currentDialogue;
 
+    private GameObject hotbar;
+
+    public void Start()
+    {
+        hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+    }
+
     public void StartDialogue()
     {
         currentDialogue = this;
 
         StopAllCoroutines();
         gameObject.SetActive(true);
+            if (hotbar != null)
+                hotbar.SetActive(false);
         dialogueIndex = 0;
 
         StartCoroutine(WriteDialoguePiece(dialogue[0]));
@@ -38,6 +46,8 @@ public class Dialogue : MonoBehaviour
     public void StopDialogue()
     {
         gameObject.SetActive(false);
+        if (hotbar != null)
+            hotbar.SetActive(true);
     }
 
     public void NextDialogueOrStop(InputAction.CallbackContext ctx)

@@ -33,9 +33,13 @@ namespace Inventory.Ui
 
         private void Awake()
         {
-            Hide();
             mouseFollower.Toggle(false);
             inventoryItemUIDescription.ResetDescription();
+        }
+
+        void Start()
+        {
+            Hide();
         }
 
         public void InitializeInventoryUI(int inventorysize)

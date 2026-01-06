@@ -1,7 +1,9 @@
+using Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class FarmingManager : MonoBehaviour
@@ -19,9 +21,13 @@ public class FarmingManager : MonoBehaviour
     public List<Sprite> seed2GrowthStages;
     public float seed2GrowthTime = 720f;
 
+    public string mainScene;
+
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        mainScene = SaveData.instance.mainScene;
+
+        player = this.gameObject;
         playerStats = player.GetComponent<Stats>();
         tdm = FindFirstObjectByType<TileDataManager>();
         tileManager = FindFirstObjectByType<TileManager>();
@@ -29,6 +35,42 @@ public class FarmingManager : MonoBehaviour
 
         seed1GrowthTime *= playerStats.Crop_Growth;
         seed2GrowthTime *= playerStats.Crop_Growth;
+
+        // subscribe to growth updates
+        if (tdm != null)
+            tdm.OnTileGrowthUpdated += HandleTileGrowthUpdated;
+    }
+
+    private void OnDestroy()
+    {
+        if (tdm != null)
+            tdm.OnTileGrowthUpdated -= HandleTileGrowthUpdated;
+    }
+
+    public void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == mainScene)
+        {
+            tdm = FindFirstObjectByType<TileDataManager>();
+            tileManager = FindFirstObjectByType<TileManager>();
+            xpc = FindFirstObjectByType<XPController>();
+        }
+        else
+        {
+            tdm = null;
+            tileManager = null;
+            xpc = null;
+        }
     }
 
     public void CanInteract(InputAction.CallbackContext ctx)
@@ -60,69 +102,37 @@ public class FarmingManager : MonoBehaviour
         }       
     }
 
-    public IEnumerator GrowSeed1()
+
+    // called by TileManager when planting instead of starting a coroutine
+    public void PlantSeedAtCell(Vector3Int cellPos, int seedType)
     {
-        Vector3Int cellPos = tileManager.interactableMap.WorldToCell(transform.position);
-
-        if (!tileManager.farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj) || farmSpriteObj == null)
-        {
-            Debug.LogWarning($"no farm sprite for cell {cellPos}");
-            yield break;
-        }
-
-        var farmSpriteRenderer = farmSpriteObj.GetComponent<SpriteRenderer>();
-
-        int stageCount = seed1GrowthStages?.Count ?? 0;
-        if (stageCount == 0)
-        {
-            Debug.LogWarning("No seed1 growth stages assigned");
-            yield break;
-        }
-
-        float stageGrowthTime = seed1GrowthTime / stageCount;
-        farmSpriteRenderer.enabled = true;
-
-        for (int i = 0; i < stageCount; i++)
-        {
-            farmSpriteRenderer.sprite = seed1GrowthStages[i];
-            yield return new WaitForSeconds(stageGrowthTime);
-        }
-
-        tdm.TriggerBool(cellPos, 2);
-        Debug.Log("plant.");     
-        yield break;
+        if (seedType == 0)
+            tdm.PlantSeed(cellPos, 0, seed1GrowthTime, seed1GrowthStages.Count);
+        else if (seedType == 1)
+            tdm.PlantSeed(cellPos, 1, seed2GrowthTime, seed2GrowthStages.Count);
     }
 
-    public IEnumerator GrowSeed2()
+    // event handler to update visual sprites when TileDataManager advances growth
+    private void HandleTileGrowthUpdated(Vector3Int pos, TileData data)
     {
-        Vector3Int cellPos = tileManager.interactableMap.WorldToCell(transform.position);
+        // find the spawned farm sprite for this cell (TileManager keeps farmTileSprites)
+        if (tileManager == null) tileManager = FindFirstObjectByType<TileManager>();
 
-        if (!tileManager.farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj) || farmSpriteObj == null)
+        if (!tileManager.farmTileSprites.TryGetValue(pos, out GameObject farmSpriteObj) || farmSpriteObj == null)
+            return;
+
+        var sr = farmSpriteObj.GetComponent<SpriteRenderer>();
+        if (sr == null) return;
+
+        if (data.SeedType == 0)
         {
-            Debug.LogWarning($"no farm sprite for cell {cellPos}");
-            yield break;
+            int stage = Mathf.Clamp(data.GrowthStage, 0, seed1GrowthStages.Count - 1);
+            sr.sprite = seed1GrowthStages[stage];
         }
-
-        var farmSpriteRenderer = farmSpriteObj.GetComponent<SpriteRenderer>();
-
-        int stageCount = seed1GrowthStages?.Count ?? 0;
-        if (stageCount == 0)
+        else if (data.SeedType == 1)
         {
-            Debug.LogWarning("No seed1 growth stages assigned");
-            yield break;
+            int stage = Mathf.Clamp(data.GrowthStage, 0, seed2GrowthStages.Count - 1);
+            sr.sprite = seed2GrowthStages[stage];
         }
-
-        float stageGrowthTime = seed1GrowthTime / stageCount;
-        farmSpriteRenderer.enabled = true;
-
-        for (int i = 0; i < stageCount; i++)
-        {
-            farmSpriteRenderer.sprite = seed1GrowthStages[i];
-            yield return new WaitForSeconds(stageGrowthTime);
-        }
-
-        Debug.Log(".tnalp");
-        tdm.TriggerBool(cellPos, 2);
-        yield return null;
     }
 }

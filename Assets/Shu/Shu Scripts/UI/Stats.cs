@@ -34,7 +34,7 @@ public class Stats : MonoBehaviour
         xp = FindFirstObjectByType<XPController>();
         player = GetComponent<Player_Movement>();
         tm = FindFirstObjectByType<TimeManager>();
-        mainScene = SaveData.instance.mainScene;
+
     }
 
     void Start()
@@ -54,6 +54,8 @@ public class Stats : MonoBehaviour
             Speed = ai_dashing.Emovespeed;
         }
 
+        mainScene = SaveData.instance.mainScene;
+
     }
 
     public void OnEnable()
@@ -71,6 +73,8 @@ public class Stats : MonoBehaviour
         if (scene.name == mainScene)
         {
             spawner = FindFirstObjectByType<EnemySpawner>();
+            xp = FindFirstObjectByType<XPController>();
+            tm = FindFirstObjectByType<TimeManager>();
         }
         else
         {

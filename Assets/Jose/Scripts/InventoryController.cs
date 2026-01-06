@@ -1,5 +1,6 @@
 using Inventory.Model;
 using Inventory.Ui;
+using Inventory.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,10 +23,8 @@ namespace Inventory
 
         public void Awake()
         {
-            inventoryUI = GameObject.FindGameObjectWithTag("UIInventoryPage").GetComponent<UIInventoryPage>();
-            hotbar = GameObject.FindGameObjectWithTag("Hotbar");
-
-            mainScene = SaveData.instance.mainScene;
+            if (SaveData.instance != null)
+                mainScene = SaveData.instance.mainScene;
         }
 
 
@@ -47,16 +46,28 @@ namespace Inventory
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (scene.name == mainScene)
+            if (scene.name == mainScene && !SaveData.firstLoad)
             {
-                inventoryUI = GameObject.FindGameObjectWithTag("UIInventoryPage").GetComponent<UIInventoryPage>();
-                hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+                FindUIAndHotbar();
             }
             else
             {
                 inventoryUI = null;
                 hotbar = null;
             }
+        }
+
+        private void FindUIAndHotbar()
+        {
+            var uiGameObject = GameObject.FindGameObjectWithTag("UIInventoryPage");
+            inventoryUI = uiGameObject.GetComponent<UIInventoryPage>();
+            hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+            HotbarController hbc = hotbar.GetComponent<HotbarController>();
+            HotbarView hbv = hotbar.GetComponent<HotbarView>();
+
+            hbv.RefreshHotbar();
+            hbc.UpdateHotbarFromInventory();
+
         }
 
         private void PrepareInventoryData()

@@ -2,10 +2,13 @@ using Inventory.Model;
 using Inventory.UI;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
+    public string mainScene;
+
     public Tilemap interactableMap;
 
     [SerializeField] private Tile hiddenInteractableTile; 
@@ -36,32 +39,159 @@ public class TileManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         fm = player.GetComponent<FarmingManager>();
 
-        spriteParent = GameObject.FindGameObjectWithTag("FarmSpriteParent").transform;
-        farmSprite = GameObject.FindGameObjectWithTag("FarmSprite");
+        var parentGo = GameObject.FindGameObjectWithTag("FarmSpriteParent");
+        spriteParent = parentGo != null ? parentGo.transform : null;
+
+        // Prefer inspector-assigned prefab. fallback to any scene object with tag "FarmSprite"
+        if (farmSprite == null)
+        {
+            var prefabGo = GameObject.FindGameObjectWithTag("FarmSprite");
+            if (prefabGo != null)
+                farmSprite = prefabGo;
+        }
 
         tm = FindFirstObjectByType<TimeManager>();
+        tdm = FindFirstObjectByType<TileDataManager>();
+        if (tdm != null)
+        {
+            // avoid duplicate subscription
+            tdm.OnTileGrowthUpdated -= HandleTileGrowthUpdated;
+            tdm.OnTileGrowthUpdated += HandleTileGrowthUpdated;
+        }
     }
 
     void Start()
     {
+        mainScene = SaveData.instance.mainScene;
         interactableMap = GameObject.FindGameObjectWithTag("InteractableMap").GetComponent<Tilemap>();
 
+        // Initialize TileData entries for visible interactable tiles if missing,
+        // but don't overwrite existing persistent data in tdm.
         foreach (var position in interactableMap.cellBounds.allPositionsWithin)
         {
             TileBase tile = interactableMap.GetTile(position);
             if (tile != null && tile.name == "Interactable_Visible")
             {
                 interactableMap.SetTile(position, hiddenInteractableTile);
+
+                var existing = tdm?.GetData(position);
+                if (existing == null)
+                {
+                    var td = new TileData();
+                    td.tileType = hiddenInteractableTile.name;
+                    tdm?.SetData(position, td);
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(existing.tileType))
+                    {
+                        existing.tileType = hiddenInteractableTile.name;
+                        tdm?.SetData(position, existing);
+                    }
+                }
             }
         }
+    }
 
+    public void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == mainScene && !SaveData.firstLoad)
+        {
+            interactableMap = GameObject.FindGameObjectWithTag("InteractableMap").GetComponent<Tilemap>();
+
+            GameObject hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+            hbc = hotbar.GetComponent<HotbarController>();
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            fm = player.GetComponent<FarmingManager>();
+
+            var parentGo = GameObject.FindGameObjectWithTag("FarmSpriteParent");
+            spriteParent = parentGo != null ? parentGo.transform : null;
+            var farmPrefabObj = GameObject.FindGameObjectWithTag("FarmSprite");
+            if (farmSprite == null && farmPrefabObj != null)
+                farmSprite = farmPrefabObj;
+
+            tm = FindFirstObjectByType<TimeManager>();
+            tdm = FindFirstObjectByType<TileDataManager>();
+
+            if (tdm != null)
+            {
+                tdm.OnTileGrowthUpdated -= HandleTileGrowthUpdated;
+                tdm.OnTileGrowthUpdated += HandleTileGrowthUpdated;
+            }
+
+            // Restore tilemap tile assets using saved tileType and recreate farm sprites for planted tiles
+            if (tdm != null && interactableMap != null)
+            {
+                foreach (var kv in tdm.tileData)
+                {
+                    var pos = kv.Key;
+                    var data = kv.Value;
+
+                    // Restore tile asset from saved tileType
+                    TileBase tileToSet = null;
+                    if (!string.IsNullOrEmpty(data.tileType))
+                    {
+                        if (data.tileType == PlowedTile?.name) tileToSet = PlowedTile;
+                        else if (data.tileType == WateredTile?.name) tileToSet = WateredTile;
+                        else if (data.tileType == hiddenInteractableTile?.name) tileToSet = hiddenInteractableTile;
+                        // If you have more tiles, add checks here or expose a lookup in TileDataManager
+                    }
+
+                    if (tileToSet != null)
+                    {
+                        interactableMap.SetTile(pos, tileToSet);
+                        Debug.Log($"Restored tile at {pos} -> {tileToSet.name}");
+                    }
+
+                    // Recreate farm sprite for planted tiles (and set the right growth stage via handler)
+                    if (data != null && data.IsPlanted)
+                    {
+                        if (!farmTileSprites.ContainsKey(pos))
+                        {
+                            Vector3 worldPos = interactableMap.GetCellCenterWorld(pos);
+                            if (farmSprite == null)
+                            {
+                                Debug.LogWarning("TileManager: farmSprite prefab is null. Assign it in inspector.");
+                            }
+                            else
+                            {
+                                GameObject instance = Instantiate(farmSprite, worldPos, Quaternion.identity);
+                                if (spriteParent != null) instance.transform.SetParent(spriteParent, true);
+                                farmTileSprites[pos] = instance;
+                            }
+                        }
+
+                        // update sprite to correct stage
+                        HandleTileGrowthUpdated(pos, data);
+                    }
+                }
+            }
+        }
+        else if (scene.name == mainScene && SaveData.firstLoad)
+        {
+            return;
+        }
+        else
+        {
+            return;
+        }
     }
 
     public bool IsInteractable(Vector3 position)
     {
         Vector3Int cellPos = interactableMap.WorldToCell(position);
         TileBase tile = interactableMap.GetTile(cellPos);
-        Vector3Int intPos = new Vector3Int((int)position.x, (int)position.y, (int)position.z);
+        var data = tdm?.GetData(cellPos);
 
         if (tile != null)
         {
@@ -69,15 +199,15 @@ public class TileManager : MonoBehaviour
             {
                 return true;
             }
-            else if(tile == PlowedTile && hbc.usingSeed1 || tile == PlowedTile && hbc.usingSeed2 && plant2Unlocked)
+            else if(tile == PlowedTile && (hbc.usingSeed1 || (hbc.usingSeed2 && plant2Unlocked)))
             {
                 return true;
             }
-            else if(tdm.tileData[cellPos].seedsPlanted[0] && hbc.usingWateringCan || tdm.tileData[cellPos].seedsPlanted[1] && hbc.usingWateringCan)
+            else if((data != null && data.SeedsPlanted[0] && hbc.usingWateringCan) || (data != null && data.SeedsPlanted[1] && hbc.usingWateringCan))
             {
                 return true;
             }
-            else if(tdm.tileData[cellPos].seedsPlanted[2] && hbc.handsEmpty) 
+            else if(data != null && data.SeedsPlanted[2] && hbc.handsEmpty) 
             {
                 Debug.Log("plus ultra");
                 return true;
@@ -90,88 +220,111 @@ public class TileManager : MonoBehaviour
 
     public void SetInteracted(Vector3 position)
     {
-        Vector3Int intPos = new Vector3Int((int)position.x, (int)position.y, (int)position.z);
         Vector3Int cellPos = interactableMap.WorldToCell(position);
+        TileBase tile = interactableMap.GetTile(cellPos);
 
-        if (hbc != null)
+        if (hbc == null)
+            return;
+
+        // PLOW
+        if (hbc.usingPlow)
         {
-            if (hbc.usingPlow)
+            tm.StartCoroutine(tm.WaitForAnimationEnd("Plow", "isPlowing"));
+            interactableMap.SetTile(cellPos, PlowedTile);
+
+            var dataPlow = tdm?.GetData(cellPos) ?? new TileData();
+            dataPlow.tileType = PlowedTile.name;
+            tdm?.SetData(cellPos, dataPlow);
+            return;
+        }
+
+        // WATERING CAN
+        if (hbc.usingWateringCan)
+        {
+            tm.StartCoroutine(tm.WaitForAnimationEnd("Water", "isWatering"));
+            interactableMap.SetTile(cellPos, WateredTile);
+
+            var dataWater = tdm?.GetData(cellPos) ?? new TileData();
+
+            // If already watered/growing, do nothing
+            if (dataWater.SeedsPlanted[2])
+                return;
+
+            if (dataWater.SeedsPlanted[0] || dataWater.SeedsPlanted[1])
             {
-                tm.StartCoroutine(tm.WaitForAnimationEnd("Plow", "isPlowing")); // (name, bool) ..also uhh great bool name i guess :skull:
-               tdm.SetData(cellPos, new TileData());
-               interactableMap.SetTile(interactableMap.WorldToCell(position), PlowedTile);
-            }
-            else if (hbc.usingWateringCan)
-            {
-                tm.StartCoroutine(tm.WaitForAnimationEnd("Water", "isWatering"));
-                interactableMap.SetTile(interactableMap.WorldToCell(position), WateredTile);
-
-                tdm.GetData(cellPos);
-                if (tdm.tileData[cellPos].seedsPlanted[2])
-                {
-                    return;
-                }
-                else
-                {
-                    if(tdm.tileData[cellPos].seedsPlanted[0])
-                    {
-                        StartCoroutine(fm.GrowSeed1());
-                        Debug.Log("Gurt: Yo");
-                    }
-                    else if (tdm.tileData[cellPos].seedsPlanted[1])
-                    {
-                        StartCoroutine(fm.GrowSeed2());
-                        Debug.Log("Yo: Gurt");
-                    }
-                }
-               
-            }
-            else if (hbc.usingSeed1 && hbc.inventory.GetItemAt(hbc.SelectedIndex).quantity > 0 && !tdm.tileData[cellPos].seedsPlanted[0])
-            {
-                tm.StartCoroutine(tm.WaitForAnimationEnd("Plant Seed", "isPlanting"));
-                PutSpriteOnTile(position);
-                tdm.TriggerBool(cellPos, 0);
-                hbc.UseItem();
-            }
-            else if (hbc.usingSeed2 && hbc.inventory.GetItemAt(hbc.SelectedIndex).quantity > 0 && !tdm.tileData[cellPos].seedsPlanted[1])
-            {
-                tm.StartCoroutine(tm.WaitForAnimationEnd("Plant Seed", "isPlanting"));
-                PutSpriteOnTile(position);
-                tdm.TriggerBool(cellPos, 1);
-                hbc.UseItem();
-            }
-            else if (hbc.handsEmpty)
-            {
-                farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj);
-
-                if (farmSpriteObj != null)
-                {
-                    Destroy(farmSpriteObj);
-                    farmTileSprites.Remove(cellPos);
-                }
-
-                interactableMap.SetTile(interactableMap.WorldToCell(position), hiddenInteractableTile);
-
-                if (tdm.tileData[cellPos].seedsPlanted[0])
-                {
-                    inventoryData.AddItem(Plants[0]);
-                    tdm.TriggerBool(cellPos, 0);
-
-
-                }
-                else if (tdm.tileData[cellPos].seedsPlanted[1])
-                {
-                    inventoryData.AddItem(Plants[1]);
-                    tdm.TriggerBool(cellPos, 1);
-                }
-
-                tdm.TriggerBool(cellPos, 2);
+                // Start growth / mark watered
+                dataWater.SeedsPlanted[2] = true;
+                dataWater.tileType = WateredTile.name;
+                tdm?.SetData(cellPos, dataWater);
             }
             else
             {
-                return;
+                // No seed planted: persist the visual watered state
+                dataWater.tileType = WateredTile.name;
+                tdm?.SetData(cellPos, dataWater);
             }
-        }       
+            return;
+        }
+
+        // PLANT SEED1
+        if (hbc.usingSeed1 &&
+            hbc.inventory.GetItemAt(hbc.SelectedIndex).quantity > 0 &&
+            !(tdm?.GetData(cellPos)?.SeedsPlanted[0] ?? false))
+        {
+            tm.StartCoroutine(tm.WaitForAnimationEnd("Plant Seed", "isPlanting"));
+            tdm?.PlantSeed(cellPos, 0, fm.seed1GrowthTime, fm.seed1GrowthStages.Count);
+            PutSpriteOnTile(position);
+            hbc.UseItem();
+            return;
+        }
+
+        // PLANT SEED2
+        if (hbc.usingSeed2 &&
+            hbc.inventory.GetItemAt(hbc.SelectedIndex).quantity > 0 &&
+            !(tdm?.GetData(cellPos)?.SeedsPlanted[1] ?? false))
+        {
+            tm.StartCoroutine(tm.WaitForAnimationEnd("Plant Seed", "isPlanting"));
+            tdm?.PlantSeed(cellPos, 1, fm.seed2GrowthTime, fm.seed2GrowthStages.Count);
+            PutSpriteOnTile(position);
+            hbc.UseItem();
+            return;
+        }
+
+        // HARVEST
+        if (hbc.handsEmpty)
+        {
+            farmTileSprites.TryGetValue(cellPos, out GameObject farmSpriteObj);
+
+            if (farmSpriteObj != null)
+            {
+                Destroy(farmSpriteObj);
+                farmTileSprites.Remove(cellPos);
+            }
+
+            interactableMap.SetTile(cellPos, hiddenInteractableTile);
+
+            var dataHarvest = tdm?.GetData(cellPos);
+            if (dataHarvest != null)
+            {
+                if (dataHarvest.SeedsPlanted[0])
+                {
+                    inventoryData.AddItem(Plants[0]);
+                    dataHarvest.SeedsPlanted[0] = false;
+                }
+                else if (dataHarvest.SeedsPlanted[1])
+                {
+                    inventoryData.AddItem(Plants[1]);
+                    dataHarvest.SeedsPlanted[1] = false;
+                }
+
+                dataHarvest.SeedsPlanted[2] = false;
+                tdm?.SetData(cellPos, dataHarvest);
+            }
+            return;
+        }
+
+        // No valid action
+        return;
     }
 
     public void PutSpriteOnTile(Vector3 pos)
@@ -209,24 +362,27 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public void PutSpritesOnFarmTiles()
+    private void HandleTileGrowthUpdated(Vector3Int pos, TileData data)
     {
-        foreach(var pos in interactableMap.cellBounds.allPositionsWithin)
+        // set sprite according to seed type and growthstage
+        if (!farmTileSprites.TryGetValue(pos, out var obj))
         {
-            TileBase tile = interactableMap.GetTile(pos);
-
-            if (tile != null )
-            {
-                Vector3 worldPos = interactableMap.GetCellCenterWorld(pos);
-
-                GameObject instance = Instantiate(farmSprite, worldPos, Quaternion.identity);
-
-                if (spriteParent != null)
-                {
-                    instance.transform.parent = spriteParent;
-                }
-            }
+            Vector3 worldPos = interactableMap.GetCellCenterWorld(pos);
+            obj = Instantiate(farmSprite, worldPos, Quaternion.identity, spriteParent);
+            farmTileSprites[pos] = obj;
         }
-    }
 
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        if (sr == null) return;
+
+        if (data.SeedType == 0)
+        {
+            sr.sprite = fm.seed1GrowthStages[Mathf.Clamp(data.GrowthStage, 0, fm.seed1GrowthStages.Count - 1)];
+        }
+        else if (data.SeedType == 1)
+        {
+            sr.sprite = fm.seed2GrowthStages[Mathf.Clamp(data.GrowthStage, 0, fm.seed2GrowthStages.Count - 1)];
+        }
+
+    }
 }

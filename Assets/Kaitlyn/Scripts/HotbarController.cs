@@ -24,6 +24,12 @@ namespace Inventory.UI
         public bool usingPlant1 = false; ///uhhhh i mightve lost the plot atp
         public bool usingPlant2 = false;
 
+        public void Awake()
+        {
+            barItems = GetHotbarItems();
+            UpdateHotbarFromInventory();
+        }
+
         private void Update()
         {
             barItems = GetHotbarItems();
@@ -31,11 +37,10 @@ namespace Inventory.UI
             GetHotbarItems();
         }
 
-        private void OnEnable()
+        public void OnEnable()
         {
             if (inventory != null)
                 inventory.OnInventoryUpdated += OnInventoryUpdated;
-            UpdateHotbarFromInventory(); // make sure its synced at first
         }
 
         private void OnDisable()
@@ -49,7 +54,7 @@ namespace Inventory.UI
             UpdateHotbarFromInventory();
         }
 
-        private void UpdateHotbarFromInventory()
+        public void UpdateHotbarFromInventory()
         {
             if (SelectedIndex < 0 || SelectedIndex >= hotbarSize)
             {

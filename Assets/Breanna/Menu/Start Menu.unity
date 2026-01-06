@@ -1473,7 +1473,7 @@ PrefabInstance:
     - target: {fileID: 8753578902209517235, guid: 6bc181f3936fa2648b36b22a0c8dc752,
         type: 3}
       propertyPath: mainScene
-      value: updated map
+      value: Main Map
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -37,6 +38,11 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenuButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Start Menu");
+        SceneManager.LoadScene("Start Menu");
+    }
+
+    public void SkillsTreeButton()
+    {
+        SceneManager.LoadScene("Skill_Tree", LoadSceneMode.Additive);
     }
 }

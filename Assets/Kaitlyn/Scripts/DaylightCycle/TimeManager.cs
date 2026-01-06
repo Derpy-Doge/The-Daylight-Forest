@@ -139,10 +139,40 @@ public class TimeManager : MonoBehaviour
                 dialogueBoxes.Add(child.gameObject);
             }
 
-            if (SaveData.firstLoad)
+            if (saveData == null)
             {
-
+                saveData = GameObject.FindWithTag("SaveData");
+                if (saveData != null)
+                    sd = saveData.GetComponent<SaveData>();
             }
+
+            if (sd != null && sd.playerData != null && !SaveData.firstLoad)
+            {
+                hours = sd.playerData.hours;
+                minutes = sd.playerData.minutes;
+                days = sd.playerData.days;
+
+                float dayFraction = (hours * 60f + minutes) / (24f * 60f);
+                currentTime = dayFraction * dayDuration;
+
+                SetLightingToTime();
+
+                if (hours >= 7 && hours < 21)
+                {
+                    isDay = true;
+                    isNight = false;
+                    BGM.clip = dayBGM;
+                    BGM.Play();
+                }
+                else
+                {
+                    isNight = true;
+                    isDay = false;
+                    BGM.clip = nightBGM;
+                    BGM.Play();
+                }
+            }
+
         }
         else if (scene.name == mainMenu)
         {
@@ -508,5 +538,39 @@ public class TimeManager : MonoBehaviour
 
         animator.SetBool(animationBool, false);
         playerMovement.enabled = true;
+    }
+
+    private void SetLightingToTime()
+    {
+        if (globalLight == null) return;
+
+        float rotationAngle = ((currentTime / dayDuration) * 360f);
+        globalLight.transform.rotation = Quaternion.Euler(50f, rotationAngle, 0f);
+
+        // Adjust light color and intensity based on time of day
+        if (hours >= 6 && hours < 8) // Sunrise
+        {
+            globalLight.intensity = .75f;
+            globalLight.colorTemperature = 2981f;
+            globalLight.color = new Color(1f, 0.8039216f, 0.627451f);
+        }
+        else if (hours >= 8 && hours < 18) // Day
+        {
+            globalLight.intensity = 1f;
+            globalLight.colorTemperature = 5000f;
+            globalLight.color = new Color(1f, 0.9568627f, 0.8392157f);
+        }
+        else if (hours >= 18 && hours < 20) // Sunset
+        {
+            globalLight.intensity = .75f;
+            globalLight.colorTemperature = 2981f;
+            globalLight.color = new Color(1f, 0.8039216f, 0.627451f);
+        }
+        else // Night
+        {
+            globalLight.intensity = .4f;
+            globalLight.colorTemperature = 15000f;
+            globalLight.color = new Color(0.6862745f, 0.8117647f, 0.9058824f);
+        }
     }
 }
