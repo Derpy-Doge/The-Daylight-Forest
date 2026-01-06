@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -139,6 +140,11 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    public static implicit operator EnemySpawner(Spawner v)
+    {
+        throw new NotImplementedException();
     }
 }
 
