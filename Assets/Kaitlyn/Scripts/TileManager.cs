@@ -91,6 +91,9 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+
+        // Drain any growth updates that were enqueued while resources were not ready.
+        DrainPendingGrowthUpdates();
     }
 
     public void OnEnable()
@@ -246,23 +249,18 @@ public class TileManager : MonoBehaviour
 
             var dataWater = tdm?.GetData(cellPos) ?? new TileData();
 
-            // If already watered/growing, do nothing
-            if (dataWater.SeedsPlanted[2])
+            // don't use the "grown" flag for water. use explicit IsWatered
+            if (dataWater.IsWatered)
                 return;
 
-            if (dataWater.SeedsPlanted[0] || dataWater.SeedsPlanted[1])
-            {
-                // Start growth / mark watered
-                dataWater.SeedsPlanted[2] = true;
-                dataWater.tileType = WateredTile.name;
-                tdm?.SetData(cellPos, dataWater);
-            }
-            else
-            {
-                // No seed planted: persist the visual watered state
-                dataWater.tileType = WateredTile.name;
-                tdm?.SetData(cellPos, dataWater);
-            }
+            // mark watered (growth will start progressing in TileDataManager.Update)
+            dataWater.IsWatered = true;
+            dataWater.tileType = WateredTile.name;
+            tdm?.SetData(cellPos, dataWater);
+
+            // ensure a visual is present / updated immediately
+            HandleTileGrowthUpdated(cellPos, dataWater);
+
             return;
         }
 
@@ -318,6 +316,8 @@ public class TileManager : MonoBehaviour
                 }
 
                 dataHarvest.SeedsPlanted[2] = false;
+                // reset watered/grown state when harvesting
+                dataHarvest.IsWatered = false;
                 tdm?.SetData(cellPos, dataHarvest);
             }
             return;
@@ -362,8 +362,43 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    private List<(Vector3Int pos, TileData data)> pendingGrowthUpdates = new List<(Vector3Int pos, TileData data)>();
+
+    private void DrainPendingGrowthUpdates()
+    {
+        if (pendingGrowthUpdates == null || pendingGrowthUpdates.Count == 0)
+            return;
+
+        // Process snapshot to avoid re-entrancy issues modifying the list while iterating.
+        var snapshot = pendingGrowthUpdates.ToArray();
+        pendingGrowthUpdates.Clear();
+
+        foreach (var entry in snapshot)
+        {
+            // Call the handler; now that we drained and cleared the queue, the handler will run immediately.
+            HandleTileGrowthUpdated(entry.pos, entry.data);
+        }
+    }
+
     private void HandleTileGrowthUpdated(Vector3Int pos, TileData data)
     {
+        // If necessary resources aren't ready yet (commonly happens during scene re-entry),
+        // enqueue the update for later once OnSceneLoaded finishes setting up maps/prefabs.
+        if (interactableMap == null || fm == null || farmSprite == null || spriteParent == null)
+        {
+            int existingIndex = pendingGrowthUpdates.FindIndex(t => t.pos == pos);
+            if (existingIndex >= 0)
+            {
+                // replace stale data for the same position with fresh data
+                pendingGrowthUpdates[existingIndex] = (pos, data);
+            }
+            else
+            {
+                pendingGrowthUpdates.Add((pos, data));
+            }
+            return;
+        }
+
         // set sprite according to seed type and growthstage
         if (!farmTileSprites.TryGetValue(pos, out var obj))
         {
@@ -383,6 +418,6 @@ public class TileManager : MonoBehaviour
         {
             sr.sprite = fm.seed2GrowthStages[Mathf.Clamp(data.GrowthStage, 0, fm.seed2GrowthStages.Count - 1)];
         }
-
     }
+
 }
