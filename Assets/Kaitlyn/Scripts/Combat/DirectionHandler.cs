@@ -9,7 +9,7 @@ public class DirectionHandler : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     void Update()

@@ -8,7 +8,9 @@ public class InteractableScene : MonoBehaviour
     public string sceneToReturn = "updated map";   
     public float interactDistance = 3f;            
     public KeyCode interactKey = KeyCode.E;        
-    public Transform player;                        
+    public Transform player;     
+    
+    public GameObject skillTree; //emergency fallback
 
     void Update()
     {
@@ -25,7 +27,7 @@ public class InteractableScene : MonoBehaviour
         // Check if player is close enough
         if (Vector3.Distance(player.position, transform.position) <= interactDistance)
         {
-            SceneManager.LoadScene(sceneToLoad);
+            skillTree.SetActive(true);
         }
     }
 

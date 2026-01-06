@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class Skill_Tree : MonoBehaviour
 {
+
+    [SerializeField] private GameObject skillTree;
     private SaveData sd;
 
     public Player_Movement player_Movement;
@@ -38,6 +40,8 @@ public class Skill_Tree : MonoBehaviour
                 upgrades[i].interactable = false;
             }
         }
+
+        skillTree.SetActive(false);
     }
 
     public void Update()
@@ -277,10 +281,9 @@ public class Skill_Tree : MonoBehaviour
         xpc.SpendXp();
         sd.SavePlayerData();
     }
+
     public void Return(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-        sd.LoadPlayerData();
     }
-
 }
