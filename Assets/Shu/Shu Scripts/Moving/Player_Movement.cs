@@ -19,7 +19,7 @@ public class Player_Movement : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
 
         mainScene = SaveData.instance.mainScene;
