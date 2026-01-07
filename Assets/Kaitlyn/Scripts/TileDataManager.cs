@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class TileDataManager : MonoBehaviour
 {
     private static TileDataManager Instance;
-    private Tilemap interactableTilemap;
+    [SerializeField] private Tilemap interactableTilemap;
 
     [SerializeField] private List<TileBase> tileTypes;
 
@@ -56,12 +56,12 @@ public class TileDataManager : MonoBehaviour
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+       // SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

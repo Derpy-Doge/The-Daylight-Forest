@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Shu/Shu Scenes/Game-Over.unity
     guid: 63f81808a3b39054899532735fde4611
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kaitlyn/Day Testing Scene.unity
     guid: e2e10ee6a8d99b249a49fcd2b5c16304
   - enabled: 0
@@ -50,6 +50,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Breanna/Menu/Jose.unity
     guid: 710d6e1f2d4384348b7f5e96fb8d81c8
+  - enabled: 1
+    path: Assets/Breanna/Menu/Misc.unity
+    guid: 175e989e3aa160847b4de00256d5da49
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c465cf6eef8c49444904123cb4809af2,
       type: 2}

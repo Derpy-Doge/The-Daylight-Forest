@@ -1,5 +1,6 @@
+//using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -21,8 +22,9 @@ public class Player_Movement : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        mainScene = "updataed map";
 
-        mainScene = SaveData.instance.mainScene;
+        //mainScene = SaveData.instance.mainScene;
     }
 
    

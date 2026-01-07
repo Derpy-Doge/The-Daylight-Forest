@@ -60,11 +60,11 @@ public class SaveData : MonoBehaviour
             if (firstLoad)
             {
                 pauseMenu = GameObject.FindWithTag("PauseMenu");
-                saveButtonObject = GameObject.FindWithTag("SaveButton");
-                saveButton = saveButtonObject.GetComponent<Button>();         
+                //saveButtonObject = GameObject.FindWithTag("SaveButton");
+                //saveButton = saveButtonObject.GetComponent<Button>();         
                 pauseMenu.SetActive(false);
-                saveButton.onClick.RemoveAllListeners();
-                saveButton.onClick.AddListener(SavePlayerData);
+                //saveButton.onClick.RemoveAllListeners();
+                //saveButton.onClick.AddListener(SavePlayerData);
 
                 player = GameObject.FindWithTag("Player");
                 XPController = FindFirstObjectByType<XPController>();
@@ -80,11 +80,11 @@ public class SaveData : MonoBehaviour
             else if (!firstLoad)
             {
                 pauseMenu = GameObject.FindWithTag("PauseMenu");
-                saveButtonObject = GameObject.FindWithTag("SaveButton");
-                saveButton = saveButtonObject.GetComponent<Button>();
+                //saveButtonObject = GameObject.FindWithTag("SaveButton");
+                //saveButton = saveButtonObject.GetComponent<Button>();
                 pauseMenu.SetActive(false);
-                saveButton.onClick.RemoveAllListeners();
-                saveButton.onClick.AddListener(SavePlayerData);
+                //saveButton.onClick.RemoveAllListeners();
+                //saveButton.onClick.AddListener(SavePlayerData);
 
                 player = GameObject.FindWithTag("Player");
                 XPController = FindFirstObjectByType<XPController>();
@@ -103,8 +103,8 @@ public class SaveData : MonoBehaviour
         else if (scene.name == mainMenu)
         {
             pauseMenu = null;
-            saveButtonObject = null;
-            saveButton = null;
+            //saveButtonObject = null;
+            //saveButton = null;
 
             player = null;
             playerStats = null;
@@ -116,8 +116,8 @@ public class SaveData : MonoBehaviour
         else if (scene.name == "Game-Over")
         {
             pauseMenu = null;
-            saveButtonObject = null;
-            saveButton = null;
+            //saveButtonObject = null;
+            //saveButton = null;
             player = null;
             playerStats = null;
             attackStats = null;
@@ -127,8 +127,8 @@ public class SaveData : MonoBehaviour
         else if (scene.name == "Skill_Tree")
         {
             pauseMenu = null;
-            saveButtonObject = null;
-            saveButton = null;
+            //saveButtonObject = null;
+            //saveButton = null;
 
             player = GameObject.FindWithTag("Player");
             playerStats = player.GetComponent<Stats>();

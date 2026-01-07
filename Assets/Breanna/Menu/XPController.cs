@@ -30,7 +30,6 @@ public class XPController : MonoBehaviour
     void Start()
     {
         sd = FindFirstObjectByType<SaveData>();
-        mainScene = sd.mainScene;
         xpBar = GameObject.FindGameObjectWithTag("EXPBar");
         XpProgressBar = xpBar.GetComponent<Image>();
         LevelText = GameObject.FindGameObjectWithTag("LevelText").GetComponent<TextMeshProUGUI>();
@@ -44,12 +43,12 @@ public class XPController : MonoBehaviour
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

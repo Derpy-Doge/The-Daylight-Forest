@@ -23,10 +23,8 @@ public class PlayerAttackManager : MonoBehaviour
 
     public void Awake()
     {
-        sd = GameObject.FindGameObjectWithTag("SaveData").GetComponent<SaveData>();
-        mainMenu = sd.mainMenu;
-        mainScene = sd.mainScene;
-
+        //sd = GameObject.FindGameObjectWithTag("SaveData").GetComponent<SaveData>();
+        mainScene = "updated map";
         player = GameObject.FindWithTag("Player");
         playerInput = player.GetComponent<PlayerInput>();
         shb = player.GetComponent<SpawnHitBox>();
@@ -39,12 +37,12 @@ public class PlayerAttackManager : MonoBehaviour
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+       // SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -88,10 +86,10 @@ public class PlayerAttackManager : MonoBehaviour
             ic.enabled = true;
             hotbar.SetActive(true);
 
+            playerInput.actions.FindAction("Interact").Enable();
+
 
             shb.enabled = false;
-            hb.enabled = false;
-            healthBar.SetActive(false);
 
             playerInput.actions.FindAction("Slash").Disable();
             playerInput.actions.FindAction("Stun").Disable();
@@ -111,10 +109,9 @@ public class PlayerAttackManager : MonoBehaviour
             ic.enabled = false;
             hotbar.SetActive(false);
 
+            playerInput.actions.FindAction("Interact").Disable();
 
             shb.enabled = true;
-            hb.enabled = true;
-            healthBar.SetActive(true);
 
             playerInput.actions.FindAction("Slash").Enable();
             playerInput.actions.FindAction("Stun").Enable();

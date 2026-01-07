@@ -11,6 +11,11 @@ public class PauseMenu : MonoBehaviour
         container = GameObject.FindGameObjectWithTag("PauseMenu");
     }
 
+    private void Start()
+    {
+        container.SetActive(false);
+    }
+
 
     void Update()
     {

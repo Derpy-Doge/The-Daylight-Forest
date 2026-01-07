@@ -126,10 +126,10 @@ TextureImporter:
       name: Enemy_Sludgeball_drip_sheet_RED_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 50
         y: 0
-        width: 478
-        height: 814
+        width: 422
+        height: 764
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: Enemy_Sludgeball_drip_sheet_RED_1
       rect:
         serializedVersion: 2
-        x: 479
+        x: 494
         y: 0
-        width: 470
-        height: 814
+        width: 422
+        height: 760
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: Enemy_Sludgeball_drip_sheet_RED_2
       rect:
         serializedVersion: 2
-        x: 948
+        x: 966
         y: 0
-        width: 458
-        height: 814
+        width: 422
+        height: 764
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Enemy_Sludgeball_drip_sheet_RED_3
       rect:
         serializedVersion: 2
-        x: 1407
+        x: 1420
         y: 0
-        width: 456
-        height: 814
+        width: 422
+        height: 770
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: Enemy_Sludgeball_drip_sheet_RED_4
       rect:
         serializedVersion: 2
-        x: 1863
+        x: 1880
         y: 0
-        width: 460
-        height: 814
+        width: 422
+        height: 771
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: Enemy_Sludgeball_drip_sheet_RED_5
       rect:
         serializedVersion: 2
-        x: 2323
+        x: 2342
         y: 0
-        width: 546
-        height: 814
+        width: 422
+        height: 767
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,7 +263,7 @@ TextureImporter:
         width: 2871
         height: 814
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

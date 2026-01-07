@@ -24,9 +24,10 @@ public class Stats : MonoBehaviour
     private TimeManager tm; //trust me on this :skull:
 
     [SerializeField] private ItemSO seed1;
-    [SerializeField] private ItemSO seed2;
 
     private string mainScene;
+
+    public static bool isDead = false;
 
     void Awake()
     {
@@ -54,18 +55,18 @@ public class Stats : MonoBehaviour
             Speed = ai_dashing.Emovespeed;
         }
 
-        mainScene = SaveData.instance.mainScene;
+        //mainScene = SaveData.instance.mainScene;
 
     }
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -103,12 +104,7 @@ public class Stats : MonoBehaviour
                     else if (esp.ID == 2)
                     {
                         xp.EnemyXp2();
-                        tm.tileManager.hbc.inventory.AddItem(seed2, 1);
-                    }
-                    else if (esp.ID == 3)
-                    {
-                        xp.EnemyXp3();
-                        tm.tileManager.hbc.inventory.AddItem(seed2, 2);
+                        tm.tileManager.hbc.inventory.AddItem(seed1, 3);
                     }
                 }
             }
@@ -116,8 +112,13 @@ public class Stats : MonoBehaviour
             expAwarded = true;
             Destroy(gameObject);
         }
-        if (Health_Current <= 0 && isPlayer)
+        if (tm.isDay && isEnemy)
         {
+            Destroy(gameObject);
+        }
+        if (Health_Current <= 0 && isPlayer && !isDead)
+        {
+            isDead = true;
             SceneManager.LoadScene("Game-Over");
             if (tm != null)
             {

@@ -28,6 +28,7 @@ public class Dialogue : MonoBehaviour
     public void Start()
     {
         hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+        this.gameObject.SetActive(false);
     }
 
     public void StartDialogue()

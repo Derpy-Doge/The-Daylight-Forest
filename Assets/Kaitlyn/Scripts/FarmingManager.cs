@@ -23,7 +23,7 @@ public class FarmingManager : MonoBehaviour
 
     void Start()
     {
-        mainScene = SaveData.instance.mainScene;
+        //mainScene = SaveData.instance.mainScene;
 
         player = this.gameObject;
         playerStats = player.GetComponent<Stats>();
@@ -47,12 +47,12 @@ public class FarmingManager : MonoBehaviour
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

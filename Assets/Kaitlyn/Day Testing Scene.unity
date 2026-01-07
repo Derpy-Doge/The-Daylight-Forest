@@ -1213,20 +1213,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawners:
-  - ID: 1
-    enemyType: {fileID: 1810832288220622077, guid: bed0740cf6984a34981c8e42fa6940c3,
-      type: 3}
-    spawnPoints:
-    - {fileID: 2001148996}
-    respawnTime: 15
-    canSpawn: 1
-  - ID: 2
-    enemyType: {fileID: 1867383962364050655, guid: 6d6e7a4a8a1d52c46ae5da38afb89fdf,
-      type: 3}
-    spawnPoints:
-    - {fileID: 1657478404}
-    respawnTime: 25
-    canSpawn: 1
+  - levelID: 0
+    spawners: []
+  - levelID: 0
+    spawners: []
 --- !u!224 &151312325 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7764975165196248857, guid: 9b581db8db8e6a844b345d88d8bfbce9,
@@ -10397,8 +10387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeef64e1453be1c4fb88daf71d31a616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelText: {fileID: 971378523}
-  SkillText: {fileID: 846824052}
   Level: 1
   Skill: 0
   CurrentXp: 0
@@ -13313,6 +13301,7 @@ MonoBehaviour:
   seed1GrowthTime: 10
   seed2GrowthStages: []
   seed2GrowthTime: 720
+  mainScene: 
 --- !u!114 &1642506290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13386,6 +13375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf18718ca090364f8e9ef8ff63a76cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainScene: 
   interactableMap: {fileID: 11779880}
   hiddenInteractableTile: {fileID: 11400000, guid: 3ec44c43f98b91947a1184711148444e,
     type: 2}
@@ -13394,7 +13384,6 @@ MonoBehaviour:
   tdm: {fileID: 1674935314}
   hbc: {fileID: 0}
   farmSprite: {fileID: 11701696}
-  spriteParent: {fileID: 16310023}
   inventoryData: {fileID: 11400000, guid: bc813d581c186e74eb7d9850c7cefa48, type: 2}
   Plants:
   - quantity: 1
@@ -13413,6 +13402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb310e0d0fe00984c932be3a689c39c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileTypes: []
+  mainScene: 
 --- !u!1 &1710799836
 GameObject:
   m_ObjectHideFlags: 0
@@ -14853,6 +14844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2775954182555464972, guid: 68abbf359cbe3084f868657868fa6dd4,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3329525287126012752, guid: 68abbf359cbe3084f868657868fa6dd4,
         type: 3}
@@ -16301,12 +16297,12 @@ PrefabInstance:
     - target: {fileID: 8393889439726765419, guid: 488f7f527717c6648acdc7cc74c8123c,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8393889439726765419, guid: 488f7f527717c6648acdc7cc74c8123c,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8393889439726765419, guid: 488f7f527717c6648acdc7cc74c8123c,
         type: 3}
@@ -16321,12 +16317,12 @@ PrefabInstance:
     - target: {fileID: 8393889439726765419, guid: 488f7f527717c6648acdc7cc74c8123c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 42.043594
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8393889439726765419, guid: 488f7f527717c6648acdc7cc74c8123c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -43.8347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8516184299280487588, guid: 488f7f527717c6648acdc7cc74c8123c,
         type: 3}

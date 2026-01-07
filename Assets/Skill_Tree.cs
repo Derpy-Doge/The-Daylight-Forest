@@ -24,7 +24,7 @@ public class Skill_Tree : MonoBehaviour
 
     private void Awake()
     {
-        sd = GameObject.FindGameObjectWithTag("SaveData").GetComponent<SaveData>();
+        //sd = GameObject.FindGameObjectWithTag("SaveData").GetComponent<SaveData>();
     }
 
     public void Start()
@@ -75,7 +75,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[0] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Enemy_Speed_and_Move_Speed() //1
     {
@@ -89,7 +89,7 @@ public class Skill_Tree : MonoBehaviour
         enemy_AI.movespeed += 2;
         purchasedUpgrades[1] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Move_Speed() //2
     {
@@ -102,7 +102,7 @@ public class Skill_Tree : MonoBehaviour
         stats.Speed += 1;
         purchasedUpgrades[2] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Farming() //3
     {
@@ -124,7 +124,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[3] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void EXP_Gain() //4 
     {
@@ -141,7 +141,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[4] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void New_Plant() //5
     {
@@ -156,7 +156,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[5] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Grow_Speed() //6
     {
@@ -174,7 +174,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[6] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Grow_SpeedE() //7
     {
@@ -189,7 +189,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[7] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Grow_SpeedS() //8
     {
@@ -204,7 +204,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[8] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Attack() //9
     {
@@ -223,7 +223,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[9] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Attack_Power() //10
     {
@@ -237,7 +237,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[10] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Defense() //11
     {
@@ -251,7 +251,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[11] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Knockback() //12
     {
@@ -265,7 +265,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[12] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
     public void Stun() //13
     {
@@ -279,7 +279,7 @@ public class Skill_Tree : MonoBehaviour
 
         purchasedUpgrades[13] = true;
         xpc.SpendXp();
-        sd.SavePlayerData();
+        //sd.SavePlayerData();
     }
 
     public void Return(string sceneName)

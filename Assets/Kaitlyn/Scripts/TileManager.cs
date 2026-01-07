@@ -62,7 +62,6 @@ public class TileManager : MonoBehaviour
 
     void Start()
     {
-        mainScene = SaveData.instance.mainScene;
         interactableMap = GameObject.FindGameObjectWithTag("InteractableMap").GetComponent<Tilemap>();
 
         // Initialize TileData entries for visible interactable tiles if missing,
@@ -98,12 +97,12 @@ public class TileManager : MonoBehaviour
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

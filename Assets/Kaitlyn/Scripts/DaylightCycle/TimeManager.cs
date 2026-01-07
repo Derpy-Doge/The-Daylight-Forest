@@ -80,14 +80,22 @@ public class TimeManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-
+        mainScene = "updated map";
         player = GameObject.FindWithTag("Player");
         playerMovement = player.GetComponent<Player_Movement>();
+        fog = GameObject.FindWithTag("Fog"); // make sure all fog is childed to one thing with the fog tag and the individual fogs dont have the tag
+        foreach (Transform child in fog.transform)
+        {
+            fogs.Add(child.gameObject);
+        }
+        dialogueParent = GameObject.FindWithTag("DialogueBoxes");
+        foreach (Transform child in dialogueParent.transform)
+        {
+            dialogueBoxes.Add(child.gameObject);
+        }
         BGM = FindFirstObjectByType<AudioSource>();
-        saveData = GameObject.FindWithTag("SaveData");
-        sd = saveData.GetComponent<SaveData>();
-        mainMenu = sd.mainMenu;
-        mainScene = sd.mainScene;
+        //saveData = GameObject.FindWithTag("SaveData");
+        //sd = saveData.GetComponent<SaveData>();
 
         if (isDay && globalLight != null)
         {
@@ -114,12 +122,12 @@ public class TimeManager : MonoBehaviour
 
     public void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -183,8 +191,10 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
+        
+
         tempSeconds = Time.deltaTime + tempSeconds;
-        if(tempSeconds >= .25f) // the seconds in each minute, resets each minute
+        if(tempSeconds >= .125f) // the seconds in each minute, resets each minute
         {
             minutes ++;
             tempSeconds = 0;
@@ -206,7 +216,13 @@ public class TimeManager : MonoBehaviour
             globalLight.transform.rotation = Quaternion.Euler(50f, rotationAngle, 0f);
         }
 
-        if(minutes == 1 && hours == 6 || minutes == 1 && hours == 20)
+        if (minutes == 15 && hours == 7 && days == 0)
+        {
+            dialogueBoxes[3].GetComponent<Dialogue>().StartDialogue();
+        }
+
+
+        if (minutes == 1 && hours == 6 || minutes == 1 && hours == 20)
         {
             dialogueBoxes[4].GetComponent<Dialogue>().StartDialogue(); // make "Turning Dialogue" 5th in the array
         }
@@ -233,12 +249,6 @@ public class TimeManager : MonoBehaviour
         else if(hours == 7 && minutes == 0 && isNight)
         {
             dialogueBoxes[2].GetComponent<Dialogue>().StartDialogue(); // make "morning dialogue" 3rd in the array
-        }
-
-        if(hours == 7 && minutes == 0 && days > 0)
-        {
-            sd.SavePlayerData();
-            Debug.Log("Daily Auto Save!");
         }
     }
 
@@ -272,6 +282,7 @@ public class TimeManager : MonoBehaviour
             isDay = true;
             StartCoroutine(WaitForPoofEnd());
             isNight = false;
+
             if (dayBGM != null)
             {
                 BGM.clip = dayBGM;
@@ -282,6 +293,13 @@ public class TimeManager : MonoBehaviour
         {
             StartCoroutine(LerpLight(gradientSunriseToDay, 5f));
             StartCoroutine(FadeLightIntesity(1f, 5000, 5f));
+        }
+        else if(value == 12)
+        {
+            fogs.ForEach(fogPart =>
+            {
+                fogPart.GetComponent<Collider>().enabled = true;
+            });
         }
         else if (value == 18) //sunset
         {
@@ -301,13 +319,17 @@ public class TimeManager : MonoBehaviour
         else if (value == 21 && isDay) // when youre locked from doing stuff cause you gotta go to the forest (copilot replicated my spelling error im gonna cry :wilted_rose:)
         {
             StartCoroutine(WaitForTransformationEnd());
-            isNight = true;           
+            isNight = true;
             isDay = false;
+
+            if (days == 0)
+            {
+                dialogueBoxes[1].GetComponent<Dialogue>().StartDialogue();
+            }
 
             fogs.ForEach(fogPart =>
             {
-                fogPart.GetComponent<Collider>().isTrigger = true;
-                OnTriggerStay(fogPart.GetComponent<Collider>());
+                fogPart.GetComponent<Collider>().enabled = false;
             });
         }
     }
